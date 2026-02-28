@@ -7,7 +7,8 @@ export default defineConfig({
             input: {
                 main: resolve(__dirname, 'index.html'),
                 insights: resolve(__dirname, 'insights.html'),
-                whitepaper: resolve(__dirname, 'the-human-helm.html')
+                whitepaper: resolve(__dirname, 'the-human-helm.html'),
+                success: resolve(__dirname, 'success.html')
             }
         }
     }
