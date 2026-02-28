@@ -406,6 +406,50 @@ a:hover {
   padding: 4rem 0 2rem 0;
 }
 
+/* Tooltip Styles */
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-container .tooltip-text {
+  visibility: hidden;
+  width: max-content;
+  background-color: var(--surface);
+  color: var(--text-secondary);
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 12px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s, background-color 0.3s, color 0.3s;
+  font-size: 0.85rem;
+  border: 1px solid rgba(251, 224, 228, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+}
+
+.tooltip-container .tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: var(--surface) transparent transparent transparent;
+  transition: border-color 0.3s;
+}
+
+.tooltip-container:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
 /* Scroll Animations */
 .reveal {
   opacity: 0;
