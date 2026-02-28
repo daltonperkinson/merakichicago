@@ -470,6 +470,48 @@ a:hover {
   transform: translateY(0);
 }
 
+/* Contact Form */
+.contact-form {
+  background: rgba(251, 224, 228, 0.03);
+  border: 1px solid rgba(251, 224, 228, 0.1);
+  padding: 2.5rem;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(251, 224, 228, 0.2);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(225, 41, 75, 0.2);
+}
+
+.form-control::placeholder {
+  color: var(--text-muted);
+}
 
 /* Button Component */
 .btn {
