@@ -326,6 +326,19 @@ a:hover {
   .hero-actions {
     flex-direction: column;
   }
+
+  .service-icon {
+    display: none;
+  }
+
+  .service-row {
+    text-align: center;
+    justify-content: center;
+  }
+
+  .grid.cards-2.text-left {
+    text-align: center;
+  }
 }
 
 /* Grid & Cards (Glassmorphism) */
@@ -340,6 +353,7 @@ a:hover {
 
 .cards-2 {
   grid-template-columns: 1fr;
+  gap: 1.25rem;
 }
 
 /* Changing cards-2 to a stacked list layout for services */
