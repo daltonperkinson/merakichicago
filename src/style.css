@@ -513,6 +513,77 @@ a:hover {
   color: var(--text-muted);
 }
 
+/* Radio Grid for Intake Form */
+.radio-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.radio-card {
+  position: relative;
+  display: block;
+  cursor: pointer;
+  height: 100%;
+}
+
+.radio-card input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.radio-card span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(251, 224, 228, 0.2);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  text-align: center;
+  height: 100%;
+}
+
+.radio-card:hover span {
+  border-color: rgba(251, 224, 228, 0.4);
+}
+
+.radio-card input:checked~span {
+  background: rgba(225, 41, 75, 0.15);
+  /* pom-500 tint */
+  border-color: var(--accent);
+  color: var(--pom-100);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+.form-step {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .radio-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Button Component */
 .btn {
   display: inline-flex;

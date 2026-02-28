@@ -124,42 +124,94 @@
     <section id="contact" class="section hero text-center">
       <div class="container reveal">
         <h2 class="section-title">Ready to take the next step?</h2>
-        <p class="section-subtitle mb-4">Complete the form below to share a bit about your business, and we'll reach out
-          to schedule your complimentary discovery call.</p>
+        <p class="section-subtitle mb-4">Tell us about your hurdles, and our guided intake will structure a brief so we
+          can hit the ground running on our call.</p>
 
         <form action="https://formsubmit.co/info@merakichicago.com" method="POST" class="contact-form text-left"
-          style="max-width: 600px; margin: 2rem auto;">
-          <!-- Honeypot for spam -->
+          id="needsAssessmentForm" style="max-width: 600px; margin: 2rem auto; position: relative;">
+          <!-- Hidden fields for formsubmit -->
           <input type="text" name="_honey" style="display:none">
-          <!-- Subject line -->
-          <input type="hidden" name="_subject" value="New Lead: Meraki Chicago Consultation Request">
-          <!-- Disable captcha for lower friction -->
+          <input type="hidden" name="_subject" value="New Lead: Needs Assessment">
           <input type="hidden" name="_captcha" value="false">
-          <!-- Success page redirect -->
           <input type="hidden" name="_next" value="https://merakichicago.com/">
 
-          <div class="form-group">
-            <label for="name">Full Name</label>
-            <input type="text" id="name" name="name" required class="form-control" placeholder="Jane Doe">
+          <!-- Hidden field to store the compiled brief -->
+          <input type="hidden" name="Compiled_Brief" id="compiledBrief" value="">
+
+          <!-- Step 1: Contact Details -->
+          <div class="form-step active" id="step1">
+            <h3 style="color: var(--pom-100); margin-bottom: 1.5rem; font-size: 1.25rem;">Step 1: The Basics</h3>
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input type="text" id="name" name="Name" required class="form-control" placeholder="Jane Doe">
+            </div>
+            <div class="form-group">
+              <label for="email">Work Email</label>
+              <input type="email" id="email" name="Email" required class="form-control" placeholder="jane@company.com">
+            </div>
+            <div class="form-group">
+              <label for="company">Company Name</label>
+              <input type="text" id="company" name="Company" required class="form-control" placeholder="Acme Bookstore">
+            </div>
+            <button type="button" class="btn btn-primary" style="width: 100%; margin-top: 1rem;"
+              onclick="nextStep(2)">Continue &rarr;</button>
           </div>
 
-          <div class="form-group">
-            <label for="email">Work Email</label>
-            <input type="email" id="email" name="email" required class="form-control" placeholder="jane@company.com">
+          <!-- Step 2: Core Problem -->
+          <div class="form-step" id="step2" style="display:none;">
+            <h3 style="color: var(--pom-100); margin-bottom: 1.5rem; font-size: 1.25rem;">Step 2: The Core Challenge
+            </h3>
+            <div class="form-group">
+              <label for="coreProblem">In a few words, what is the primary operational hurdle you are facing right
+                now?</label>
+              <textarea id="coreProblem" name="Core_Problem" rows="4" required class="form-control"
+                placeholder="e.g., We spend way too much time manually entering data into spreadsheets..."></textarea>
+            </div>
+            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+              <button type="button" class="btn btn-outline" style="flex: 1;" onclick="prevStep(1)">&larr; Back</button>
+              <button type="button" class="btn btn-primary" style="flex: 2;" onclick="nextStep(3)">Analyze Challenge
+                &rarr;</button>
+            </div>
           </div>
 
-          <div class="form-group">
-            <label for="company">Company Name</label>
-            <input type="text" id="company" name="company" class="form-control" placeholder="Acme Bookstore">
-          </div>
+          <!-- Step 3: Context & Impact (Multiple Choice) -->
+          <div class="form-step" id="step3" style="display:none;">
+            <h3 style="color: var(--pom-100); margin-bottom: 1.5rem; font-size: 1.25rem;">Step 3: Business Context</h3>
 
-          <div class="form-group">
-            <label for="message">How can we help?</label>
-            <textarea id="message" name="message" rows="4" required class="form-control"
-              placeholder="Tell us a little bit about your current challenges or goals..."></textarea>
-          </div>
+            <div class="form-group">
+              <label>Where is this bottleneck costing you the most?</label>
+              <div class="radio-grid">
+                <label class="radio-card"><input type="radio" name="Cost_Area" value="Employee Time & Efficiency"
+                    required><span>Time & Efficiency</span></label>
+                <label class="radio-card"><input type="radio" name="Cost_Area"
+                    value="Direct Revenue / Sales"><span>Direct Revenue</span></label>
+                <label class="radio-card"><input type="radio" name="Cost_Area"
+                    value="Customer Experience"><span>Customer Experience</span></label>
+                <label class="radio-card"><input type="radio" name="Cost_Area"
+                    value="Employee Burnout & Turnover"><span>Employee Burnout</span></label>
+              </div>
+            </div>
 
-          <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Inquiry</button>
+            <div class="form-group">
+              <label>What is your current technology landscape like?</label>
+              <div class="radio-grid">
+                <label class="radio-card"><input type="radio" name="Tech_Landscape"
+                    value="Mostly manual/paper/spreadsheets" required><span>Manual & Spreadsheets</span></label>
+                <label class="radio-card"><input type="radio" name="Tech_Landscape"
+                    value="Legacy/outdated software"><span>Legacy Software</span></label>
+                <label class="radio-card"><input type="radio" name="Tech_Landscape"
+                    value="Modern SaaS stack"><span>Modern SaaS Stack</span></label>
+                <label class="radio-card"><input type="radio" name="Tech_Landscape"
+                    value="We've started exploring AI"><span>Exploring AI</span></label>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+              <button type="button" class="btn btn-outline" style="flex: 1;" onclick="prevStep(2)">&larr; Back</button>
+              <button type="submit" class="btn btn-primary" style="flex: 2;" onclick="compileBrief()">Submit
+                Assessment</button>
+            </div>
+          </div>
         </form>
 
         <p style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-muted);">Prefer to book directly? <a href="#"

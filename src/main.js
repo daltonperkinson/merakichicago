@@ -51,3 +51,68 @@ if (copyBtn && tooltip) {
     });
   });
 }
+
+// Interactive Needs Assessment Form Logic
+window.nextStep = function (stepIndex) {
+  // Basic validation before moving next
+  const currentStep = document.querySelector('.form-step.active');
+  const inputs = currentStep.querySelectorAll('input[required], textarea[required]');
+  let isValid = true;
+  inputs.forEach(input => {
+    if (!input.checkValidity()) {
+      input.reportValidity();
+      isValid = false;
+    }
+  });
+
+  if (!isValid) return;
+
+  document.querySelectorAll('.form-step').forEach(step => {
+    step.style.display = 'none';
+    step.classList.remove('active');
+  });
+
+  const nextTarget = document.getElementById(`step${stepIndex}`);
+  nextTarget.style.display = 'block';
+  nextTarget.classList.add('active');
+};
+
+window.prevStep = function (stepIndex) {
+  document.querySelectorAll('.form-step').forEach(step => {
+    step.style.display = 'none';
+    step.classList.remove('active');
+  });
+
+  const prevTarget = document.getElementById(`step${stepIndex}`);
+  prevTarget.style.display = 'block';
+  prevTarget.classList.add('active');
+};
+
+window.compileBrief = function () {
+  const form = document.getElementById('needsAssessmentForm');
+  if (!form.checkValidity()) return;
+
+  const name = document.getElementById('name').value;
+  const company = document.getElementById('company').value;
+  const coreProblem = document.getElementById('coreProblem').value;
+
+  const costArea = document.querySelector('input[name="Cost_Area"]:checked')?.value || 'Not specified';
+  const techLandscape = document.querySelector('input[name="Tech_Landscape"]:checked')?.value || 'Not specified';
+
+  const briefStr = `
+*** AI INTAKE BRIEF ***
+Lead: ${name} (${company})
+
+[Core Problem]
+${coreProblem}
+
+[Business Context & Impact]
+Primary Cost Area: ${costArea}
+Current Tech Landscape: ${techLandscape}
+----------------------------------------
+This brief was auto-compiled by the site's guided intake form.
+  `;
+
+  document.getElementById('compiledBrief').value = briefStr.trim();
+};
+
