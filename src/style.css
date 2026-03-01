@@ -261,7 +261,7 @@ a:hover {
   align-items: center;
   font-size: 1.5rem;
   font-weight: 800;
-  letter-spacing: -0.05em;
+  letter-spacing: 0em;
   color: var(--text-primary);
 }
 
@@ -619,4 +619,46 @@ a:hover {
 .btn-outline:hover {
   background-color: rgba(156, 27, 51, 0.1);
   transform: translateY(-2px);
+}
+
+/* Mobile Responsiveness & Readability Fixes */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1.25rem;
+  }
+
+  .box-padding {
+    padding: 1.5rem;
+  }
+
+  .section {
+    padding: 4rem 0;
+  }
+
+  .section-title,
+  h1.section-title {
+    font-size: 2rem !important;
+  }
+
+  .markdown-content {
+    font-size: 1.05rem;
+    padding: 0 0.5rem;
+  }
+
+  .markdown-content h2 {
+    font-size: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .markdown-content h3 {
+    font-size: 1.25rem;
+  }
+
+  .article-header {
+    padding: 2.5rem 0 1.5rem 0;
+  }
+
+  .glass-panel h3 {
+    font-size: 1.35rem !important;
+  }
 }
