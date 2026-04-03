@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meraki Chicago — Cockpit</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #FAF7F4;
+      --crimson: #8B1418;
+      --crimson-light: #a01c21;
+      --charcoal: #1C1917;
+      --charcoal-soft: #2c2a28;
+      --muted: #6b6560;
+      --border: #e8e2db;
+      --card: #ffffff;
+      --tag-green: #e6f4ea;
+      --tag-green-text: #2d6a3f;
+      --tag-yellow: #fff8e1;
+      --tag-yellow-text: #7a5c00;
+      --tag-red: #fdecea;
+      --tag-red-text: #8B1418;
+      --tag-blue: #e8f0fe;
+      --tag-blue-text: #1a56b0;
+      --tag-gray: #f1ede9;
+      --tag-gray-text: #5a5450;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--charcoal);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--cream);
+      letter-spacing: 0.04em;
+    }
+
+    .logo span {
+      color: var(--crimson);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .last-updated {
+      font-size: 0.72rem;
+      color: #888;
+      letter-spacing: 0.02em;
+    }
+
+    .refresh-btn {
+      background: none;
+      border: 1px solid #444;
+      color: #aaa;
+      padding: 0.3rem 0.75rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.15s;
+    }
+
+    .refresh-btn:hover {
+      border-color: var(--crimson);
+      color: var(--cream);
+    }
+
+    /* ── Layout ── */
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    /* ── Stats bar ── */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+    }
+
+    .stat-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-value {
+      font-size: 1.9rem;
+      font-weight: 600;
+      color: var(--charcoal);
+      line-height: 1;
+    }
+
+    .stat-value.crimson { color: var(--crimson); }
+
+    /* ── Projects grid ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .project-header {
+      padding: 1rem 1.25rem 0.85rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .project-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--charcoal);
+    }
+
+    .project-count {
+      font-size: 0.72rem;
+      background: var(--tag-gray);
+      color: var(--tag-gray-text);
+      padding: 0.2rem 0.55rem;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+
+    .issue-list {
+      padding: 0.5rem 0;
+    }
+
+    .issue-item {
+      padding: 0.65rem 1.25rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      border-bottom: 1px solid #f5f0eb;
+      transition: background 0.1s;
+    }
+
+    .issue-item:last-child { border-bottom: none; }
+    .issue-item:hover { background: #fdfaf7; }
+
+    .issue-status {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 3px;
+      border: 2px solid;
+    }
+
+    .status-todo     { border-color: #9ca3af; background: transparent; }
+    .status-progress { border-color: #f59e0b; background: #f59e0b; }
+    .status-done     { border-color: #22c55e; background: #22c55e; }
+    .status-canceled { border-color: #d1d5db; background: #d1d5db; }
+    .status-backlog  { border-color: #c4b5a0; background: transparent; border-style: dashed; }
+
+    .issue-body { flex: 1; min-width: 0; }
+
+    .issue-title {
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--charcoal);
+      line-height: 1.4;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .issue-title.done {
+      color: var(--muted);
+      text-decoration: line-through;
+    }
+
+    .issue-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 0.25rem;
+      flex-wrap: wrap;
+    }
+
+    .priority-badge {
+      font-size: 0.65rem;
+      font-weight: 600;
+      padding: 0.1rem 0.4rem;
+      border-radius: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .priority-urgent { background: var(--tag-red); color: var(--tag-red-text); }
+    .priority-high   { background: var(--tag-yellow); color: var(--tag-yellow-text); }
+    .priority-medium { background: var(--tag-blue); color: var(--tag-blue-text); }
+    .priority-low    { background: var(--tag-gray); color: var(--tag-gray-text); }
+    .priority-none   { display: none; }
+
+    /* ── Loading / error states ── */
+    .loading-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--muted);
+    }
+
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid var(--border);
+      border-top-color: var(--crimson);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .error-state {
+      background: var(--tag-red);
+      color: var(--tag-red-text);
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      font-size: 0.875rem;
+    }
+
+    /* ── Empty project ── */
+    .empty-project {
+      padding: 1.5rem 1.25rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-style: italic;
+    }
+
+    /* ── Blocked indicator ── */
+    .blocked-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+
+    /* ── Section heading ── */
+    .section-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      color: var(--charcoal);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-heading::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+      margin-left: 0.5rem;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .stats-bar { grid-template-columns: repeat(2, 1fr); }
+      main { padding: 1.25rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Meraki<span>Chicago</span> <span style="color:#555;font-family:Inter,sans-serif;font-size:0.75rem;font-weight:300;margin-left:0.5rem;">cockpit</span></div>
+  <div class="header-right">
+    <span class="last-updated" id="lastUpdated">—</span>
+    <button class="refresh-btn" onclick="loadData()">↺ Refresh</button>
+    <button class="refresh-btn" onclick="resetApiKey()" style="border-color:#333;">⚙ Key</button>
+  </div>
+</header>
+
+<main>
+  <div id="errorBanner" class="error-state" style="display:none;"></div>
+
+  <div id="statsBar" class="stats-bar">
+    <div class="stat-card"><div class="stat-label">Open Issues</div><div class="stat-value" id="statOpen">—</div></div>
+    <div class="stat-card"><div class="stat-label">In Progress</div><div class="stat-value crimson" id="statProgress">—</div></div>
+    <div class="stat-card"><div class="stat-label">Completed</div><div class="stat-value" id="statDone">—</div></div>
+    <div class="stat-card"><div class="stat-label">Projects</div><div class="stat-value" id="statProjects">—</div></div>
+  </div>
+
+  <div class="section-heading">Projects</div>
+
+  <div id="loadingState" class="loading-state">
+    <div class="spinner"></div>
+    <div>Loading workspace…</div>
+  </div>
+
+  <div id="projectsGrid" class="projects-grid" style="display:none;"></div>
+</main>
+
+<!-- API Key Setup Modal -->
+<div id="apiModal" style="display:none; position:fixed; inset:0; background:rgba(28,25,23,0.7); z-index:999; align-items:center; justify-content:center;">
+  <div style="background:#fff; border-radius:12px; padding:2rem; max-width:420px; width:90%; box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+    <div style="font-family:'Playfair Display',serif; font-size:1.2rem; margin-bottom:0.5rem; color:#1C1917;">Connect Linear</div>
+    <p style="font-size:0.85rem; color:#6b6560; margin-bottom:1.25rem; line-height:1.5;">Enter your Linear personal API key. It's saved in your browser and never sent anywhere except Linear's API.</p>
+    <input id="apiKeyInput" type="password" placeholder="lin_api_..." style="width:100%; padding:0.65rem 0.85rem; border:1px solid #e8e2db; border-radius:6px; font-size:0.875rem; font-family:monospace; margin-bottom:1rem; outline:none;" />
+    <button onclick="saveApiKey()" style="width:100%; background:#8B1418; color:#fff; border:none; padding:0.7rem; border-radius:6px; font-size:0.875rem; font-weight:500; cursor:pointer; font-family:'Inter',sans-serif;">Save & Load Dashboard</button>
+    <p style="font-size:0.72rem; color:#aaa; margin-top:0.75rem; text-align:center;">Get your key at linear.app → Settings → Security & access → API keys</p>
+  </div>
+</div>
+
+<script>
+  const ENDPOINT = 'https://api.linear.app/graphql';
+  const STORAGE_KEY = 'meraki_linear_api_key';
+
+  function getApiKey() {
+    return localStorage.getItem(STORAGE_KEY);
+  }
+
+  function saveApiKey() {
+    const val = document.getElementById('apiKeyInput').value.trim();
+    if (!val.startsWith('lin_api_')) {
+      alert('That doesn\'t look like a valid Linear API key. It should start with lin_api_');
+      return;
+    }
+    localStorage.setItem(STORAGE_KEY, val);
+    document.getElementById('apiModal').style.display = 'none';
+    loadData();
+  }
+
+  function resetApiKey() {
+    localStorage.removeItem(STORAGE_KEY);
+    document.getElementById('apiModal').style.display = 'flex';
+  }
+
+  const QUERY = `
+    query {
+      teams {
+        nodes {
+          id name
+          issues(first: 100, filter: { state: { type: { nin: ["cancelled"] } } }) {
+            nodes {
+              id title
+              state { name type }
+              priority
+              project { id name }
+              dueDate
+            }
+          }
+        }
+      }
+      projects(first: 50) {
+        nodes { id name description }
+      }
+    }
+  `;
+
+  const PRIORITY_MAP = {
+    0: { label: 'None',   cls: 'priority-none' },
+    1: { label: 'Urgent', cls: 'priority-urgent' },
+    2: { label: 'High',   cls: 'priority-high' },
+    3: { label: 'Medium', cls: 'priority-medium' },
+    4: { label: 'Low',    cls: 'priority-low' },
+  };
+
+  function statusClass(type) {
+    const map = {
+      'triage':    'status-backlog',
+      'backlog':   'status-backlog',
+      'unstarted': 'status-todo',
+      'started':   'status-progress',
+      'completed': 'status-done',
+      'cancelled': 'status-canceled',
+    };
+    return map[type] || 'status-todo';
+  }
+
+  function isDone(type) {
+    return type === 'completed' || type === 'cancelled';
+  }
+
+  async function loadData() {
+    const API_KEY = getApiKey();
+    if (!API_KEY) {
+      document.getElementById('apiModal').style.display = 'flex';
+      document.getElementById('loadingState').style.display = 'none';
+      return;
+    }
+
+    document.getElementById('loadingState').style.display = 'block';
+    document.getElementById('projectsGrid').style.display = 'none';
+    document.getElementById('errorBanner').style.display = 'none';
+
+    try {
+      const res = await fetch(ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Authorization': API_KEY,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ query: QUERY }),
+      });
+
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const { data, errors } = await res.json();
+      if (errors) throw new Error(errors[0].message);
+
+      render(data);
+
+      const now = new Date();
+      document.getElementById('lastUpdated').textContent =
+        'Updated ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    } catch (err) {
+      document.getElementById('loadingState').style.display = 'none';
+      const banner = document.getElementById('errorBanner');
+      banner.style.display = 'block';
+      banner.textContent = 'Could not load Linear data: ' + err.message;
+    }
+  }
+
+  function render(data) {
+    const allIssues = data.teams.nodes.flatMap(t => t.issues.nodes);
+    const projects  = data.projects.nodes;
+
+    // Stats
+    const open     = allIssues.filter(i => !isDone(i.state.type)).length;
+    const inProg   = allIssues.filter(i => i.state.type === 'started').length;
+    const done     = allIssues.filter(i => i.state.type === 'completed').length;
+
+    document.getElementById('statOpen').textContent     = open;
+    document.getElementById('statProgress').textContent = inProg;
+    document.getElementById('statDone').textContent     = done;
+    document.getElementById('statProjects').textContent = projects.length;
+
+    // Group issues by project
+    const byProject = {};
+    projects.forEach(p => { byProject[p.id] = { ...p, issues: [] }; });
+
+    const unassigned = { id: '__none', name: 'Unassigned', issues: [] };
+
+    allIssues.forEach(issue => {
+      if (issue.project && byProject[issue.project.id]) {
+        byProject[issue.project.id].issues.push(issue);
+      } else {
+        unassigned.issues.push(issue);
+      }
+    });
+
+    const projectList = Object.values(byProject);
+    if (unassigned.issues.length) projectList.push(unassigned);
+
+    // Sort: projects with open issues first
+    projectList.sort((a, b) => {
+      const aOpen = a.issues.filter(i => !isDone(i.state.type)).length;
+      const bOpen = b.issues.filter(i => !isDone(i.state.type)).length;
+      return bOpen - aOpen;
+    });
+
+    const grid = document.getElementById('projectsGrid');
+    grid.innerHTML = '';
+
+    projectList.forEach(project => {
+      // Sort issues: open first, then by priority
+      const sorted = [...project.issues].sort((a, b) => {
+        const aDone = isDone(a.state.type) ? 1 : 0;
+        const bDone = isDone(b.state.type) ? 1 : 0;
+        if (aDone !== bDone) return aDone - bDone;
+        const ap = a.priority === 0 ? 99 : a.priority;
+        const bp = b.priority === 0 ? 99 : b.priority;
+        return ap - bp;
+      });
+
+      const openCount = sorted.filter(i => !isDone(i.state.type)).length;
+
+      const card = document.createElement('div');
+      card.className = 'project-card';
+
+      card.innerHTML = `
+        <div class="project-header">
+          <div class="project-name">${escHtml(project.name)}</div>
+          <div class="project-count">${openCount} open</div>
+        </div>
+        <div class="issue-list">
+          ${sorted.length === 0
+            ? '<div class="empty-project">No issues yet</div>'
+            : sorted.map(issue => {
+                const p = PRIORITY_MAP[issue.priority] || PRIORITY_MAP[0];
+                const done = isDone(issue.state.type);
+                return `
+                  <div class="issue-item">
+                    <div class="issue-status ${statusClass(issue.state.type)}"></div>
+                    <div class="issue-body">
+                      <div class="issue-title${done ? ' done' : ''}">${escHtml(issue.title)}</div>
+                      <div class="issue-meta">
+                        <span class="priority-badge ${p.cls}">${p.label}</span>
+                        <span class="blocked-label">${escHtml(issue.state.name)}</span>
+                      </div>
+                    </div>
+                  </div>
+                `;
+              }).join('')
+          }
+        </div>
+      `;
+
+      grid.appendChild(card);
+    });
+
+    document.getElementById('loadingState').style.display = 'none';
+    document.getElementById('projectsGrid').style.display = 'grid';
+  }
+
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  // Load on page open
+  loadData();
+</script>
+</body>
+</html>
