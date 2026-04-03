@@ -376,17 +376,12 @@
 
   const QUERY = `
     query {
-      teams {
+      issues(first: 50) {
         nodes {
-          id name
-          issues(first: 100) {
-            nodes {
-              id title
-              state { name type }
-              priority
-              project { id name }
-            }
-          }
+          id title
+          state { name type }
+          priority
+          project { id name }
         }
       }
       projects(first: 50) {
@@ -460,7 +455,7 @@
   }
 
   function render(data) {
-    const allIssues = data.teams.nodes.flatMap(t => t.issues.nodes);
+    const allIssues = data.issues.nodes;
     const projects  = data.projects.nodes;
 
     // Stats
