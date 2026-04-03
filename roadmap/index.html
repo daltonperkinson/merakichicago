@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meraki Chicago — Year One Roadmap</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #FAF7F4;
+      --crimson: #8B1418;
+      --crimson-light: #b5292e;
+      --charcoal: #1C1917;
+      --muted: #7a7370;
+      --border: #e4ddd6;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      overflow-x: hidden;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(250,247,244,0.9);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--charcoal);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+    .nav-logo span { color: var(--crimson); }
+    .nav-back {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--crimson); }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 140px 2rem 80px;
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--crimson);
+      margin-bottom: 1rem;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      line-height: 1.15;
+      color: var(--charcoal);
+      margin-bottom: 1.25rem;
+    }
+    .hero p {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--muted);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* ── Roadmap ── */
+    .roadmap {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 2rem 100px;
+    }
+
+    /* SVG path container */
+    .path-svg {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      overflow: visible;
+    }
+
+    .snake-path {
+      fill: none;
+      stroke: var(--crimson);
+      stroke-width: 2.5;
+      stroke-dasharray: 6000;
+      stroke-dashoffset: 6000;
+      opacity: 0.25;
+      animation: drawPath 3s ease forwards 0.4s;
+    }
+
+    @keyframes drawPath {
+      to { stroke-dashoffset: 0; }
+    }
+
+    /* ── Milestone rows ── */
+    .milestone {
+      display: grid;
+      grid-template-columns: 1fr 64px 1fr;
+      align-items: center;
+      min-height: 160px;
+      margin-bottom: 0;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .milestone.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Content alternates sides */
+    .milestone.left  .content { grid-column: 1; text-align: right; padding-right: 2.5rem; }
+    .milestone.left  .node    { grid-column: 2; }
+    .milestone.left  .spacer  { grid-column: 3; }
+
+    .milestone.right .spacer  { grid-column: 1; }
+    .milestone.right .node    { grid-column: 2; }
+    .milestone.right .content { grid-column: 3; text-align: left; padding-left: 2.5rem; }
+
+    /* Node */
+    .node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
+
+    .node-circle {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: transform 0.3s ease;
+      position: relative;
+      z-index: 2;
+    }
+    .node-circle:hover { transform: scale(1.1); }
+
+    .node-circle.done {
+      background: var(--charcoal);
+      color: var(--cream);
+      box-shadow: 0 4px 16px rgba(28,25,23,0.25);
+    }
+    .node-circle.active {
+      background: var(--crimson);
+      color: var(--cream);
+      box-shadow: 0 4px 20px rgba(139,20,24,0.35);
+    }
+    .node-circle.active::after {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 2px solid var(--crimson);
+      opacity: 0.3;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .node-circle.upcoming {
+      background: var(--cream);
+      color: var(--muted);
+      border: 2px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.3; }
+      50% { transform: scale(1.15); opacity: 0.15; }
+    }
+
+    .node-label {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.4rem;
+      white-space: nowrap;
+    }
+
+    /* Content card */
+    .content {
+      padding: 1.25rem 0;
+    }
+
+    .content-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      margin-bottom: 0.6rem;
+    }
+    .tag-foundation { background: #f1ede9; color: #6b5f58; }
+    .tag-client     { background: #fdecea; color: var(--crimson); }
+    .tag-revenue    { background: #e6f4ea; color: #2d6a3f; }
+    .tag-growth     { background: #e8f0fe; color: #1a56b0; }
+    .tag-scale      { background: #fff8e1; color: #7a5c00; }
+
+    .content h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--charcoal);
+      line-height: 1.3;
+      margin-bottom: 0.5rem;
+    }
+    .content p {
+      font-size: 0.84rem;
+      line-height: 1.65;
+      color: var(--muted);
+    }
+    .content ul {
+      list-style: none;
+      margin-top: 0.5rem;
+    }
+    .content ul li {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.6;
+      position: relative;
+    }
+    .milestone.left .content ul li::after {
+      content: '·';
+      position: absolute;
+      right: -0.9rem;
+      color: var(--crimson);
+      font-weight: bold;
+    }
+    .milestone.right .content ul li::before {
+      content: '·';
+      color: var(--crimson);
+      font-weight: bold;
+      margin-right: 0.4rem;
+    }
+
+    .metric {
+      display: inline-block;
+      margin-top: 0.6rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--charcoal);
+      background: var(--cream);
+      border: 1px solid var(--border);
+      padding: 0.25rem 0.65rem;
+      border-radius: 4px;
+    }
+
+    /* ── Footer cap ── */
+    .roadmap-footer {
+      text-align: center;
+      padding: 20px 2rem 100px;
+    }
+    .roadmap-footer .year-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--charcoal);
+      color: var(--cream);
+      padding: 1rem 2rem;
+      border-radius: 60px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+    }
+    .roadmap-footer .year-badge span {
+      color: var(--crimson);
+      font-size: 1.4rem;
+    }
+
+    /* ── Bottom CTA ── */
+    .cta-strip {
+      background: var(--charcoal);
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+    .cta-strip p {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--cream);
+      margin-bottom: 1.25rem;
+    }
+    .cta-strip a {
+      display: inline-block;
+      background: var(--crimson);
+      color: var(--cream);
+      text-decoration: none;
+      padding: 0.85rem 2rem;
+      border-radius: 4px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      transition: background 0.2s;
+    }
+    .cta-strip a:hover { background: var(--crimson-light); }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .milestone {
+        grid-template-columns: 40px 1fr;
+        grid-template-rows: auto;
+      }
+      .milestone.left .node,
+      .milestone.right .node    { grid-column: 1; grid-row: 1; }
+      .milestone.left .content,
+      .milestone.right .content { grid-column: 2; grid-row: 1; text-align: left; padding-left: 1.25rem; padding-right: 0; }
+      .milestone.left .spacer,
+      .milestone.right .spacer  { display: none; }
+      .path-svg { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">Meraki<span>Chicago</span></a>
+  <a href="/" class="nav-back">← Back to site</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-eyebrow">Year One · 2026</div>
+  <h1>From Idea to<br><em>Thriving Practice</em></h1>
+  <p>A twelve-month roadmap for building Meraki Chicago into a sustainable AI consulting practice rooted in the neighborhoods where I live and work.</p>
+</section>
+
+<div class="roadmap" id="roadmap">
+
+  <!-- SVG snake path — drawn dynamically by JS -->
+  <svg class="path-svg" id="pathSvg" xmlns="http://www.w3.org/2000/svg">
+    <path class="snake-path" id="snakePath" />
+  </svg>
+
+  <!-- M1 -->
+  <div class="milestone left" data-month="1">
+    <div class="content">
+      <span class="content-tag tag-foundation">Foundation</span>
+      <h3>File, Form, and Launch</h3>
+      <ul>
+        <li>Meraki Chicago LLC filed in Illinois</li>
+        <li>merakichicago.com goes live</li>
+        <li>Operating agreement signed</li>
+        <li>EIN submitted to IRS</li>
+      </ul>
+    </div>
+    <div class="node">
+      <div class="node-circle done">M1</div>
+      <div class="node-label">March</div>
+    </div>
+    <div class="spacer"></div>
+  </div>
+
+  <!-- M2 -->
+  <div class="milestone right" data-month="2">
+    <div class="spacer"></div>
+    <div class="node">
+      <div class="node-circle active">M2</div>
+      <div class="node-label">April</div>
+    </div>
+    <div class="content">
+      <span class="content-tag tag-client">First Client</span>
+      <h3>The Wigglyville Experiment</h3>
+      <ul>
+        <li>Rebuild demo site, drop off packet</li>
+        <li>Mercury bank account opened</li>
+        <li>Contract suite finalized</li>
+        <li>Dashboard + Linear cockpit live</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- M3 -->
+  <div class="milestone left" data-month="3">
+    <div class="content">
+      <span class="content-tag tag-revenue">First Revenue</span>
+      <h3>First Paying Client Signed</h3>
+      <ul>
+        <li>Client #1 on $500/month Founding Rate</li>
+        <li>First Wave invoice sent</li>
+        <li>Business license + insurance sorted</li>
+        <li>Outreach template refined</li>
+      </ul>
+      <span class="metric">$500 MRR</span>
+    </div>
+    <div class="node">
+      <div class="node-circle upcoming">M3</div>
+      <div class="node-label">May</div>
+    </div>
+    <div class="spacer"></div>
+  </div>
+
+  <!-- M4-5 -->
+  <div class="milestone right" data-month="4">
+    <div class="spacer"></div>
+    <div class="node">
+      <div class="node-circle upcoming">M4</div>
+      <div class="node-label">June–July</div>
+    </div>
+    <div class="content">
+      <span class="content-tag tag-revenue">Momentum</span>
+      <h3>Three Clients, One Playbook</h3>
+      <ul>
+        <li>Clients #2 and #3 onboarded</li>
+        <li>Service delivery process documented</li>
+        <li>First client success story captured</li>
+        <li>Referral network starting to form</li>
+      </ul>
+      <span class="metric">$1,500 MRR</span>
+    </div>
+  </div>
+
+  <!-- M6 -->
+  <div class="milestone left" data-month="5">
+    <div class="content">
+      <span class="content-tag tag-growth">Mid-Year</span>
+      <h3>Proof of Concept Complete</h3>
+      <ul>
+        <li>5 active clients, consistent delivery</li>
+        <li>First case study published on site</li>
+        <li>Founding Rate cohort locked in</li>
+        <li>Pipeline of warm prospects building</li>
+      </ul>
+      <span class="metric">$2,500 MRR</span>
+    </div>
+    <div class="node">
+      <div class="node-circle upcoming">M6</div>
+      <div class="node-label">September</div>
+    </div>
+    <div class="spacer"></div>
+  </div>
+
+  <!-- M9 -->
+  <div class="milestone right" data-month="6">
+    <div class="spacer"></div>
+    <div class="node">
+      <div class="node-circle upcoming">M9</div>
+      <div class="node-label">October</div>
+    </div>
+    <div class="content">
+      <span class="content-tag tag-scale">Scaling</span>
+      <h3>Standard Rate Unlocked</h3>
+      <ul>
+        <li>New clients onboarding at $1,500/month</li>
+        <li>First subcontractor or referral partner</li>
+        <li>7 total active clients</li>
+        <li>Agent toolkit fully systematized</li>
+      </ul>
+      <span class="metric">$5,500 MRR</span>
+    </div>
+  </div>
+
+  <!-- M12 -->
+  <div class="milestone left" data-month="7">
+    <div class="content">
+      <span class="content-tag tag-scale">Year One Complete</span>
+      <h3>A Real, Profitable Business</h3>
+      <ul>
+        <li>8–10 active retainer clients</li>
+        <li>Founding cohort renewing at negotiated rate</li>
+        <li>Year Two plan drafted</li>
+        <li>Meraki Chicago established in the neighborhood</li>
+      </ul>
+      <span class="metric">$8–12K MRR</span>
+    </div>
+    <div class="node">
+      <div class="node-circle upcoming">M12</div>
+      <div class="node-label">March '27</div>
+    </div>
+    <div class="spacer"></div>
+  </div>
+
+</div>
+
+<div class="roadmap-footer">
+  <div class="year-badge">
+    Year One ends <span>March 2027</span>
+  </div>
+</div>
+
+<div class="cta-strip">
+  <p>Want to be part of the founding cohort?</p>
+  <a href="mailto:dalton.perkinson@merakichicago.com">Get in touch →</a>
+</div>
+
+<script>
+  // Scroll reveal
+  const milestones = document.querySelectorAll('.milestone');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.15 });
+  milestones.forEach(m => observer.observe(m));
+
+  // Draw snake path through node centers
+  function buildPath() {
+    const nodes = document.querySelectorAll('.node-circle');
+    if (!nodes.length) return;
+
+    const svg = document.getElementById('pathSvg');
+    const roadmap = document.getElementById('roadmap');
+    const rRect = roadmap.getBoundingClientRect();
+    const scrollY = window.scrollY;
+
+    const points = Array.from(nodes).map(n => {
+      const r = n.getBoundingClientRect();
+      return {
+        x: r.left + r.width / 2 - rRect.left,
+        y: r.top + r.height / 2 - rRect.top + scrollY - (rRect.top + scrollY)
+      };
+    });
+
+    // Build smooth curved path
+    let d = `M ${points[0].x} ${points[0].y}`;
+    for (let i = 1; i < points.length; i++) {
+      const prev = points[i - 1];
+      const curr = points[i];
+      const midY = (prev.y + curr.y) / 2;
+      d += ` C ${prev.x} ${midY}, ${curr.x} ${midY}, ${curr.x} ${curr.y}`;
+    }
+
+    document.getElementById('snakePath').setAttribute('d', d);
+  }
+
+  // Build after fonts load
+  if (document.fonts) {
+    document.fonts.ready.then(() => { setTimeout(buildPath, 100); });
+  } else {
+    window.addEventListener('load', () => setTimeout(buildPath, 100));
+  }
+  window.addEventListener('resize', buildPath);
+</script>
+
+</body>
+</html>

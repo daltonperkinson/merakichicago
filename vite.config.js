@@ -10,7 +10,8 @@ export default defineConfig({
                 whitepaper: resolve(__dirname, 'the-human-helm.html'),
                 success: resolve(__dirname, 'success.html'),
                 wigglyville: resolve(__dirname, 'wigglyville/index.html'),
-                dashboard: resolve(__dirname, 'dashboard/index.html')
+                dashboard: resolve(__dirname, 'dashboard/index.html'),
+                roadmap: resolve(__dirname, 'roadmap/index.html')
             }
         }
     }
