@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HAI Development Engine — Critical Analysis &amp; Roadmap</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --card: #ffffff;
+    --text: #1a1a2e;
+    --muted: #555;
+    --accent: #2d5a8e;
+    --accent-light: #e8f0fa;
+    --border: #ddd;
+    --red: #c0392b;
+    --red-light: #fdf0ef;
+    --green: #27ae60;
+    --green-light: #eafaf1;
+    --orange: #e67e22;
+    --orange-light: #fef5e7;
+    --purple: #8e44ad;
+    --purple-light: #f5eef8;
+    --tag-bg: #f0f0f0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* ===== HEADER ===== */
+  .site-header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #2d5a8e 100%);
+    color: #fff;
+    padding: 2.5rem 2rem 2rem;
+    text-align: center;
+  }
+  .site-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+    color: #fff;
+  }
+  .site-header .subtitle {
+    font-size: 1.05rem;
+    opacity: 0.85;
+    font-style: italic;
+  }
+  .site-header .meta {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 0.8rem;
+    opacity: 0.6;
+    margin-top: 0.8rem;
+  }
+
+  /* ===== TAB NAVIGATION ===== */
+  .tab-nav {
+    display: flex;
+    background: #1a1a2e;
+    border-bottom: 3px solid var(--accent);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .tab-btn {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.9rem 1.4rem;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.6);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -3px;
+  }
+  .tab-btn:hover { color: rgba(255,255,255,0.9); }
+  .tab-btn.active {
+    color: #fff;
+    border-bottom-color: #fff;
+    background: rgba(255,255,255,0.08);
+  }
+
+  /* ===== TAB CONTENT ===== */
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  .tab-body {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* ===== TYPOGRAPHY ===== */
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--accent);
+    color: var(--accent);
+  }
+  h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 1.8rem 0 0.6rem;
+    color: var(--text);
+  }
+  p { margin-bottom: 1rem; }
+
+  /* ===== ACCORDION ===== */
+  .accordion { margin-bottom: 0.6rem; }
+  .accordion-header {
+    width: 100%;
+    text-align: left;
+    padding: 1rem 1.2rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    transition: all 0.2s;
+  }
+  .accordion-header:hover { background: var(--accent-light); }
+  .accordion.open .accordion-header {
+    border-radius: 6px 6px 0 0;
+    border-bottom-color: transparent;
+    background: var(--accent-light);
+  }
+  .accordion-header .arrow {
+    transition: transform 0.2s;
+    font-size: 0.7rem;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+  .accordion.open .accordion-header .arrow { transform: rotate(90deg); }
+  .accordion-body {
+    display: none;
+    padding: 1.2rem 1.4rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    font-size: 0.95rem;
+  }
+  .accordion.open .accordion-body { display: block; }
+
+  /* ===== SEVERITY BADGES ===== */
+  .badge {
+    display: inline-block;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+  .badge-critical { background: var(--red-light); color: var(--red); }
+  .badge-serious { background: var(--orange-light); color: var(--orange); }
+  .badge-moderate { background: var(--purple-light); color: var(--purple); }
+  .badge-minor { background: var(--accent-light); color: var(--accent); }
+
+  /* ===== STATUS INDICATORS ===== */
+  .status {
+    display: inline-block;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .status-blocked { background: var(--red-light); color: var(--red); }
+  .status-needs-nil { background: var(--purple-light); color: var(--purple); }
+  .status-addressable { background: var(--green-light); color: var(--green); }
+  .status-decision { background: var(--orange-light); color: var(--orange); }
+
+  /* ===== CALLOUT BOXES ===== */
+  .callout {
+    padding: 1.2rem 1.4rem;
+    border-radius: 6px;
+    margin: 1.5rem 0;
+    font-size: 0.95rem;
+  }
+  .callout-blue { background: var(--accent-light); border-left: 4px solid var(--accent); }
+  .callout-red { background: var(--red-light); border-left: 4px solid var(--red); }
+  .callout-green { background: var(--green-light); border-left: 4px solid var(--green); }
+  .callout-orange { background: var(--orange-light); border-left: 4px solid var(--orange); }
+
+  /* ===== TABLES ===== */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0 1.5rem;
+    font-size: 0.9rem;
+  }
+  th, td {
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--border);
+    text-align: left;
+    vertical-align: top;
+  }
+  th {
+    background: var(--accent);
+    color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  tr:nth-child(even) { background: #f8f9fa; }
+
+  /* ===== ROADMAP CARDS ===== */
+  .roadmap-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.2rem 1.4rem;
+    margin-bottom: 1rem;
+  }
+  .roadmap-item h4 {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+  .roadmap-meta {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+  }
+
+  /* ===== VERDICT BOX ===== */
+  .verdict {
+    background: linear-gradient(135deg, #1a1a2e 0%, #2d5a8e 100%);
+    color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+  }
+  .verdict h3 {
+    color: #fff;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+  .verdict p { opacity: 0.92; }
+  .verdict strong { color: #fff; }
+
+  /* ===== COUNTER STATS ===== */
+  .stats-row {
+    display: flex;
+    gap: 1rem;
+    margin: 1.5rem 0;
+    flex-wrap: wrap;
+  }
+  .stat-box {
+    flex: 1;
+    min-width: 140px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem;
+    text-align: center;
+  }
+  .stat-num {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    display: block;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  /* ===== LINK TO PROJECT PLAN ===== */
+  .plan-link {
+    display: inline-block;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-top: 0.5rem;
+  }
+  .plan-link:hover { background: #1e4673; }
+
+  /* ===== FOOTER ===== */
+  .site-footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    border-top: 1px solid var(--border);
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 640px) {
+    .site-header h1 { font-size: 1.5rem; }
+    .tab-btn { padding: 0.7rem 1rem; font-size: 0.78rem; }
+    .tab-body { padding: 1.5rem 1rem 3rem; }
+    .stats-row { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header">
+  <h1>HAI Development Engine</h1>
+  <div class="subtitle">Critical Analysis, Resolution Roadmap &amp; Strategic Assessment</div>
+  <div class="meta">Human Agency Index &mdash; Working Draft &mdash; April 2026</div>
+</header>
+
+<!-- ===== TAB NAVIGATION ===== -->
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="overview">Overview</button>
+  <button class="tab-btn" data-tab="criticisms">Critical Analysis</button>
+  <button class="tab-btn" data-tab="roadmap">Resolution Roadmap</button>
+  <button class="tab-btn" data-tab="strategic">Strategic Assessment</button>
+  <button class="tab-btn" data-tab="gap">Gap Verification</button>
+</nav>
+
+<!-- ========================================== -->
+<!-- TAB 1: OVERVIEW                            -->
+<!-- ========================================== -->
+<div class="tab-content active" id="tab-overview">
+<div class="tab-body">
+
+<h2>What This Document Is</h2>
+<p>This is the critical companion to the <a href="HAI_Project_Plan.html">HAI Project Plan</a>. The project plan defines <em>what</em> HAI is and <em>what evidence</em> supports it. This document asks: <strong>what are the weaknesses, what would a hostile reviewer say, and what must be resolved before this paper is publishable?</strong></p>
+
+<p>Every weakness identified here is real. None of them are fatal. This document exists to ensure they are addressed head-on rather than discovered by a reviewer.</p>
+
+<div class="stats-row">
+  <div class="stat-box">
+    <span class="stat-num">10</span>
+    <span class="stat-label">Criticisms Identified</span>
+  </div>
+  <div class="stat-box">
+    <span class="stat-num">3</span>
+    <span class="stat-label">Critical Severity</span>
+  </div>
+  <div class="stat-box">
+    <span class="stat-num">4</span>
+    <span class="stat-label">Need Nil</span>
+  </div>
+  <div class="stat-box">
+    <span class="stat-num">6</span>
+    <span class="stat-label">Addressable in Paper</span>
+  </div>
+  <div class="stat-box">
+    <span class="stat-num">0</span>
+    <span class="stat-label">Fatal Flaws</span>
+  </div>
+</div>
+
+<h3>Criticism Severity Key</h3>
+<table>
+  <tr><th>Level</th><th>Meaning</th><th>Count</th></tr>
+  <tr><td><span class="badge badge-critical">Critical</span></td><td>A reviewer could reject the paper on this basis alone if unaddressed. Must be resolved or explicitly acknowledged with a mitigation plan.</td><td>3</td></tr>
+  <tr><td><span class="badge badge-serious">Serious</span></td><td>Weakens the paper significantly. Should be addressed directly, not just acknowledged.</td><td>4</td></tr>
+  <tr><td><span class="badge badge-moderate">Moderate</span></td><td>A fair point that needs a clear response, but won&rsquo;t sink the paper on its own.</td><td>2</td></tr>
+  <tr><td><span class="badge badge-minor">Minor</span></td><td>Worth noting; can be handled in a limitations section or future work.</td><td>1</td></tr>
+</table>
+
+<h3>Resolution Status Key</h3>
+<table>
+  <tr><th>Status</th><th>Meaning</th></tr>
+  <tr><td><span class="status status-addressable">Addressable</span></td><td>Can be resolved in the current paper through writing, framing, or additional research.</td></tr>
+  <tr><td><span class="status status-needs-nil">Needs Nil</span></td><td>Requires mathematical co-author&rsquo;s contribution to resolve properly.</td></tr>
+  <tr><td><span class="status status-decision">Decision Required</span></td><td>Not a flaw to fix but a strategic choice that must be made explicitly.</td></tr>
+  <tr><td><span class="status status-blocked">Future Work</span></td><td>Cannot be resolved in this paper. Must be acknowledged honestly and scoped as future research.</td></tr>
+</table>
+
+<p style="margin-top:2rem;"><a class="plan-link" href="HAI_Project_Plan.html">View the HAI Project Plan &rarr;</a></p>
+
+</div>
+</div>
+
+<!-- ========================================== -->
+<!-- TAB 2: CRITICAL ANALYSIS                   -->
+<!-- ========================================== -->
+<div class="tab-content" id="tab-criticisms">
+<div class="tab-body">
+
+<h2>Critical Analysis: 10 Weaknesses</h2>
+<p>Each criticism is something a reviewer, regulator, industry representative, or academic could reasonably raise. They are ordered by severity, not by topic.</p>
+
+<!-- CRITICISM 1 -->
+<div class="accordion">
+  <button class="accordion-header">
+    <span class="arrow">&#9654;</span>
+    <span class="badge badge-critical">Critical</span>
+    <span>1. The scoring model doesn&rsquo;t exist yet</span>
+  </button>
+  <div class="accordion-body">
+    <p><strong>The criticism:</strong> The central claim is that HAI is a &ldquo;practical grading instrument&rdquo; &mdash; comparable to LEED certification or a credit rating. But the paper, as currently planned, does not actually contain a scoring methodology. It contains dimensions and a handwave toward three possible approaches. A reviewer will say: &ldquo;You&rsquo;re proposing a scoring framework without a scoring method. That&rsquo;s a conceptual framework, not an instrument.&rdquo;</p>
+    <p><strong>Who raises it:</strong> Any quantitative reviewer. IEEE and NIST audiences will consider this disqualifying if unresolved.</p>
+    <p><strong>Why it matters:</strong> Without a defined scoring model, HAI cannot be tested, validated, compared, or adopted. The paper&rsquo;s differentiator versus Knight (which is also a taxonomy without a score) evaporates.</p>
+    <p><strong>What resolves it:</strong></p>
+    <ul style="margin:0.5rem 0 0 1.5rem;">
+      <li>Nil formalizes at least one scoring model (ideally the hybrid with mandatory minimums)</li>
+      <li>The paper presents the model with mathematical notation, not just prose descriptions</li>
+      <li>At minimum: define the scale for each dimension (e.g., 0&ndash;4), define the composite function, define the tier thresholds</li>
+      <li>Worked examples: score 3&ndash;5 of the 29 cases using the defined model to demonstrate it produces meaningful distinctions</li>
+    </ul>
+    <p style="margin-top:0.8rem;"><span class="status status-needs-nil">Needs Nil</span> &mdash; This is the primary deliverable for the mathematical co-author.</p>
+  </div>
+</div>
+
+<!-- CRITICISM 2 -->
+<div class="accordion">
+  <button class="accordion-header">
+    <span class="arrow">&#9654;</span>
+    <span class="badge badge-critical">Critical</span>
+    <span>2. The sample is biased by design &mdash; only failure cases</span>
+  </button>
+  <div class="accordion-body">
+    <p><strong>The criticism:</strong> All 29 cases are systems where oversight failed and harm occurred. This is confirmation bias with extra steps. You looked only at failures, found patterns in those failures, and called those patterns dimensions. Of course you found them. To validate that these dimensions <em>predict</em> oversight adequacy, you need to also examine systems where oversight worked &mdash; where a human caught the error, where reversibility saved someone, where transparency prevented harm.</p>
+    <p><strong>Who raises it:</strong> Any methodologist. Social science reviewers will flag this immediately.</p>
+    <p><strong>Why it matters:</strong> Without positive cases, you have a taxonomy of failure modes, not a measurement instrument. A diagnostic test that only examines sick patients cannot claim to distinguish sick from healthy.</p>
+    <p><strong>What resolves it:</strong></p>
+    <ul style="margin:0.5rem 0 0 1.5rem;">
+      <li><strong>Best option:</strong> Add 8&ndash;12 &ldquo;positive&rdquo; cases where AI systems have functional human oversight, and show they score high on HAI dimensions. Examples: FDA-cleared AI diagnostics with clinical trial data, aviation autopilot systems with strong CRM protocols, Google&rsquo;s content moderation escalation model (post-reform), financial trading circuit breakers.</li>
+      <li><strong>Minimum option:</strong> Acknowledge this explicitly as a limitation and frame the 29-case analysis as &ldquo;dimension derivation&rdquo; (which legitimately uses failure analysis), while positioning the positive-case validation as the obvious next study.</li>
+      <li>Frame it methodologically: failure mode analysis is an established engineering methodology (FMEA). The dimensions were <em>derived</em> from failures; <em>validation</em> requires testing against successes. The paper can do derivation; validation can be a follow-up.</li>
+    </ul>
+    <p style="margin-top:0.8rem;"><span class="status status-addressable">Addressable</span> &mdash; Best resolved by adding positive cases. At minimum, addressed through explicit methodological framing and an honest limitations section.</p>
+  </div>
+</div>
+
+<!-- CRITICISM 3 -->
+<div class="accordion">
+  <button class="accordion-header">
+    <span class="arrow">&#9654;</span>
+    <span class="badge badge-critical">Critical</span>
+    <span>3. The dimensions may not be independent (orthogonality problem)</span>
+  </button>
+  <div class="accordion-body">
+    <p><strong>The criticism:</strong> Several dimensions are deeply entangled. Genuine Engagement and Decision Authority overlap &mdash; if nobody&rsquo;s paying attention, they functionally don&rsquo;t have decision authority either. Transparency and Affected Party Awareness both involve information access. Intervention Accessibility and Reversibility are two temporal slices of the same concept (before vs. after harm). If dimensions aren&rsquo;t independent, a composite score double-counts certain failures, and the whole instrument is unstable.</p>
+    <p><strong>Who raises it:</strong> Mathematicians, psychometricians, anyone who builds measurement instruments. Nil will likely raise this himself.</p>
+    <p><strong>Why it matters:</strong> If you have seven dimensions but only three or four independent constructs, the weighting is misleading. A system that fails on one correlated pair gets penalized twice for the same underlying problem. The instrument would produce scores that <em>look</em> precise but are structurally inflated.</p>
+    <p><strong>What resolves it:</strong></p>
+    <ul style="margin:0.5rem 0 0 1.5rem;">
+      <li><strong>Formal approach:</strong> Nil runs discriminant validity analysis on the case data. Create a 29&times;7 binary matrix (already exists in the failure mode matrix), compute pairwise correlations, and determine which dimensions carry unique variance. If two dimensions correlate above 0.85, consider merging them or explicitly justifying their separation.</li>
+      <li><strong>Conceptual approach:</strong> For each pair that seems correlated, provide a concrete case where they diverge. For example, Transparency vs. Affected Party Awareness: a system can be fully transparent to the <em>operator</em> (the doctor sees the model&rsquo;s reasoning) while the <em>affected party</em> (the patient) knows nothing. That&rsquo;s a real distinction with real consequences.</li>
+      <li>The paper should explicitly address correlations, show they exist, and argue the dimensions remain conceptually distinct even when empirically correlated.</li>
+    </ul>
+    <p style="margin-top:0.8rem;"><span class="status status-needs-nil">Needs Nil</span> &mdash; Formal analysis of the correlation structure. Also <span class="status status-addressable">Addressable</span> through conceptual divergence examples.</p>
+  </div>
+</div>
+
+<!-- CRITICISM 4 -->
+<div class="accordion">
+  <button class="accordion-header">
+    <span class="arrow">&#9654;</span>
+    <span class="badge badge-serious">Serious</span>
+    <span>4. No inter-rater reliability</span>
+  </button>
+  <div class="accordion-body">
+    <p><strong>The criticism:</strong> If two assessors independently score the same AI system on HAI, do they get the same result? Nobody knows, because the scoring criteria are qualitative descriptions, not operationalized rubrics. &ldquo;Does the system require genuine human cognitive engagement?&rdquo; &mdash; reasonable people could disagree on what counts as &ldquo;genuine.&rdquo; Without inter-rater reliability testing, the instrument is subjective, which is the very problem it claims to solve.</p>
+    <p><strong>Who raises it:</strong> Psychometricians, social scientists, anyone who has built or validated a measurement instrument.</p>
+    <p><strong>Why it matters:</strong> An instrument that different assessors use differently is not standardized. It would produce inconsistent scores across organizations, undermining the comparability claim.</p>
+    <p><strong>What resolves it:</strong></p>
+    <ul style="margin:0.5rem 0 0 1.5rem;">
+      <li><strong>In this paper:</strong> Provide detailed scoring rubrics for each dimension with concrete anchors (what a 0 looks like, what a 1 looks like, etc.). The more specific and behavioral the anchors, the higher reliability will be.</li>
+      <li><strong>In this paper:</strong> Score 3&ndash;5 cases using the rubric and walk through the reasoning transparently so readers can see how the rubric is applied.</li>
+      <li><strong>Future work:</strong> A formal inter-rater reliability study where multiple assessors independently score the same systems. Report Cohen&rsquo;s kappa or ICC. This is legitimately a follow-up paper &mdash; most proposed instruments publish the instrument first, then the validation study.</li>
+    </ul>
+    <p style="margin-top:0.8rem;"><span class="status status-addressable">Addressable</span> &mdash; Mitigated by detailed rubric design in this paper. Full resolution is future work (standard for a first instrument paper).</p>
+  </div>
+</div>
+
+<!-- CRITICISM 5 -->
+<div class="accordion">
+  <button class="accordion-header">
+    <span class="arrow">&#9654;</span>
+    <span class="badge badge-serious">Serious</span>
+    <span>5. Cross-domain comparability may be impossible</span>
+  </button>
+  <div class="accordion-body">
+    <p><strong>The criticism:</strong> HAI claims a single instrument can meaningfully score a healthcare denial algorithm, a self-driving car, and a content moderation system on the same scale. But &ldquo;Decision Authority&rdquo; means something fundamentally different when the decision is &ldquo;approve this insurance claim&rdquo; versus &ldquo;brake for a pedestrian at 40mph&rdquo; versus &ldquo;remove this post.&rdquo; The timescales, stakes, and mechanisms of human involvement are incommensurable. Domain experts will argue that collapsing them into a single score loses the specificity that makes oversight meaningful. The SAE levels work precisely <em>because</em> they are domain-specific.</p>
+    <p><strong>Who raises it:</strong> Domain experts in any specific field (healthcare, AV, criminal justice). Also regulatory bodies that have domain-specific frameworks.</p>
+    <p><strong>Why it matters:</strong> If cross-domain comparison isn&rsquo;t valid, the instrument&rsquo;s core value proposition &mdash; a universal score &mdash; collapses.</p>
+    <p><strong>What resolves it:</strong></p>
+    <ul style="margin:0.5rem 0 0 1.5rem;">
+      <li><strong>Reframe the claim:</strong> HAI does not claim a healthcare AI and a self-driving car should get the <em>same</em> score. It claims they should be <em>assessed on the same dimensions</em>. The dimensions are universal; the acceptable thresholds are domain-specific. Analogy: the Richter scale measures all earthquakes, but &ldquo;acceptable&rdquo; magnitude depends on whether you&rsquo;re building a shed or a hospital.</li>
+      <li><strong>Domain calibration:</strong> Propose that HAI scores are interpreted within domain-specific threshold profiles. A score of 2 on Reversibility might be acceptable for content moderation (you can restore a post) but unacceptable for autonomous vehicles (you cannot un-crash). The instrument stays universal; the interpretation layer is contextual.</li>
+      <li><strong>The evidence supports universality:</strong> The 29 cases across 8 domains fail in the <em>same seven ways</em>. That cross-domain pattern is itself evidence that these dimensions capture something real and general, not domain-specific.</li>
+    </ul>
+    <p style="margin-top:0.8rem;"><span class="status status-addressable">Addressable</span> &mdash; Resolved through careful framing and the domain calibration concept.</p>
+  </div>
+</div>
+
+<!-- CRITICISM 6 -->
+<div class="accordion">
+  <button class="accordion-header">
+    <span class="arrow">&#9654;</span>
+    <span class="badge badge-serious">Serious</span>
+    <span>6. The dependency chain is asserted, not proven</span>
+  </button>
+  <div class="accordion-body">
+    <p><strong>The criticism:</strong> The paper claims each dimension is only effective if the dimensions above it in the ranking are satisfied. This is a strong structural claim with no formal justification. Counterexample: a system could have excellent Reversibility (every action undone within 24 hours) but poor Genuine Engagement (nobody watching) and <em>still be safer</em> than a system with high Engagement but zero Reversibility. The ranking is intuitive but not demonstrated, and baking it into the scoring model builds an unproven assumption into the instrument&rsquo;s core.</p>
+    <p><strong>Who raises it:</strong> Logicians, systems theorists, anyone who scrutinizes structural claims.</p>
+    <p><strong>Why it matters:</strong> If the dependency chain is wrong, the weighting scheme derived from it is wrong, and the composite scores are misleading.</p>
+    <p><strong>What resolves it:</strong></p>
+    <ul style="margin:0.5rem 0 0 1.5rem;">
+      <li><strong>Option A (strong):</strong> Nil formalizes the dependency claim mathematically. Show that, in the case data, low scores on higher-ranked dimensions correlate with worse outcomes regardless of scores on lower-ranked dimensions.</li>
+      <li><strong>Option B (softer):</strong> Present the dependency chain as a &ldquo;proposed hierarchy&rdquo; rather than a proven structure. Argue from the case evidence that it holds in the majority of observed cases, while acknowledging counterexamples. Frame the hierarchy as a design heuristic, not a mathematical law.</li>
+      <li><strong>Option C (hedge):</strong> Present the scoring model both with and without dependency weighting, and show how the scores differ. Let the data argue for which approach is more informative.</li>
+    </ul>
+    <p style="margin-top:0.8rem;"><span class="status status-needs-nil">Needs Nil</span> &mdash; Mathematical formalization or sensitivity analysis. Also a <span class="status status-decision">Decision Required</span> on how strongly to claim the hierarchy.</p>
+  </div>
+</div>
+
+<!-- CRITICISM 7 -->
+<div class="accordion">
+  <button class="accordion-header">
+    <span class="arrow">&#9654;</span>
+    <span class="badge badge-serious">Serious</span>
+    <span>7. The instrument is gameable (Goodhart&rsquo;s Law)</span>
+  </button>
+  <div class="accordion-body">
+    <p><strong>The criticism:</strong> Any published scoring rubric will be optimized against rather than optimized for. Companies will engineer systems that score well on HAI without actually improving oversight &mdash; &ldquo;Genuine Engagement theater&rdquo; the way we currently get &ldquo;human-in-the-loop theater.&rdquo; Goodhart&rsquo;s Law: when a measure becomes a target, it ceases to be a good measure.</p>
+    <p><strong>Who raises it:</strong> Industry practitioners, behavioral economists, anyone who has seen KPIs get gamed.</p>
+    <p><strong>Why it matters:</strong> If HAI is adopted but gamed, it creates a false sense of security &mdash; potentially worse than having no metric at all, because it provides a veneer of measured oversight.</p>
+    <p><strong>What resolves it:</strong></p>
+    <ul style="margin:0.5rem 0 0 1.5rem;">
+      <li><strong>Acknowledge it explicitly.</strong> Every measurement instrument faces Goodhart&rsquo;s Law. Credit ratings were gamed (2008 crisis). LEED certification has documented gaming. This is a universal challenge, not a unique flaw of HAI.</li>
+      <li><strong>Design anti-gaming features:</strong> The Genuine Engagement dimension specifically targets rubber-stamping. The distinction between <em>nominal</em> and <em>functional</em> authority (in Decision Authority) is an anti-gaming measure. Build more of these into the rubric &mdash; assess what actually happens, not what the policy says.</li>
+      <li><strong>Recommend audit-based assessment:</strong> Propose that HAI scores be determined by independent third-party audit (examining actual operations, not self-reported policies), similar to how financial audits work. Self-assessment scores are supplementary, not authoritative.</li>
+      <li><strong>Ongoing recalibration:</strong> Propose that the instrument be versioned and updated as gaming patterns emerge, the way credit rating methodologies are revised.</li>
+    </ul>
+    <p style="margin-top:0.8rem;"><span class="status status-addressable">Addressable</span> &mdash; Handled through honest acknowledgment, anti-gaming design features, and audit-based assessment recommendation.</p>
+  </div>
+</div>
+
+<!-- CRITICISM 8 -->
+<div class="accordion">
+  <button class="accordion-header">
+    <span class="arrow">&#9654;</span>
+    <span class="badge badge-moderate">Moderate</span>
+    <span>8. Regulators already have domain-specific frameworks</span>
+  </button>
+  <div class="accordion-body">
+    <p><strong>The criticism:</strong> The EU AI Act has risk tiers. The FDA has device classification. NHTSA has investigation authority. Each regime was built with domain-specific expertise over years. A regulator will ask: &ldquo;What does HAI tell me that my existing framework doesn&rsquo;t?&rdquo; Regulators don&rsquo;t <em>want</em> cross-domain comparison &mdash; they want domain-specific precision.</p>
+    <p><strong>Who raises it:</strong> Government officials, regulatory bodies, policy professionals.</p>
+    <p><strong>Why it matters:</strong> If HAI is perceived as competing with existing frameworks rather than complementing them, it will face institutional resistance from the very bodies that should adopt it.</p>
+    <p><strong>What resolves it:</strong></p>
+    <ul style="margin:0.5rem 0 0 1.5rem;">
+      <li><strong>Position HAI as a complement, not a replacement.</strong> HAI doesn&rsquo;t replace the FDA device classification or SAE levels. It provides the cross-cutting oversight assessment layer that <em>none</em> of them do. Analogy: OSHA workplace safety standards are industry-specific, but the Incident Rate (TRIR) is a cross-industry comparison metric. Both coexist.</li>
+      <li><strong>Show the regulatory gap concretely:</strong> The EU AI Act mandates human oversight (Article 14) but provides no tool to measure its adequacy. HAI operationalizes what Article 14 requires. This makes HAI a <em>tool for</em> regulators, not a competitor to their frameworks.</li>
+      <li><strong>Cite the cross-domain pattern:</strong> The 29 cases show the <em>same</em> failure modes across healthcare, criminal justice, employment, and transportation. The existing domain-specific frameworks missed this pattern precisely because they don&rsquo;t look across domains. HAI fills the gap <em>between</em> domains.</li>
+    </ul>
+    <p style="margin-top:0.8rem;"><span class="status status-addressable">Addressable</span> &mdash; Resolved through positioning and concrete use-case framing.</p>
+  </div>
+</div>
+
+<!-- CRITICISM 9 -->
+<div class="accordion">
+  <button class="accordion-header">
+    <span class="arrow">&#9654;</span>
+    <span class="badge badge-moderate">Moderate</span>
+    <span>9. Cases span two decades and multiple legal systems</span>
+  </button>
+  <div class="accordion-body">
+    <p><strong>The criticism:</strong> The 29 cases range from 2005 (Netherlands Childcare Benefits) to 2026 (ChatGPT Health). They span the US, Australia, Netherlands, Sweden, UK, and Canada. Comparing a 2005 Dutch algorithm to a 2024 American chatbot as if they are commensurable data points is a stretch. The regulatory environments, technological capabilities, public expectations, and legal standards are all different. A historian of technology would argue you&rsquo;re cherry-picking across contexts to build a pattern that may be an artifact of your selection criteria.</p>
+    <p><strong>Who raises it:</strong> Historians of technology, comparative law scholars, anyone attentive to contextual specificity.</p>
+    <p><strong>Why it matters:</strong> If the pattern is an artifact of selection rather than a genuine cross-contextual phenomenon, the inductive methodology is undermined.</p>
+    <p><strong>What resolves it:</strong></p>
+    <ul style="margin:0.5rem 0 0 1.5rem;">
+      <li><strong>Argue that the persistence of the pattern across contexts is itself evidence of its robustness.</strong> If the same seven failure modes appear whether the system is Dutch or American, medical or carceral, 2005 or 2026 &mdash; that <em>strengthens</em> the claim that these are structural features of AI oversight failure, not contextual artifacts.</li>
+      <li><strong>Acknowledge the temporal spread as a limitation</strong> but note that earlier cases (Netherlands, Michigan) involve simpler systems, while recent cases (Character.ai, ChatGPT) involve sophisticated LLMs. The failure modes persist despite radical technological change, which supports their generality.</li>
+      <li><strong>Note the selection criteria explicitly:</strong> cases were selected for documented harm with publicly available records, not cherry-picked to fit a hypothesis. Describe the selection process in the methods section.</li>
+    </ul>
+    <p style="margin-top:0.8rem;"><span class="status status-addressable">Addressable</span> &mdash; Methodological framing and honest discussion of selection criteria.</p>
+  </div>
+</div>
+
+<!-- CRITICISM 10 -->
+<div class="accordion">
+  <button class="accordion-header">
+    <span class="arrow">&#9654;</span>
+    <span class="badge badge-minor">Minor</span>
+    <span>10. Publication venue mismatch &mdash; three audiences at once</span>
+  </button>
+  <div class="accordion-body">
+    <p><strong>The criticism:</strong> The paper tries to serve three audiences simultaneously: academics (who want rigor), policymakers (who want accessibility), and practitioners (who want applicability). Papers that try to be everything to everyone often satisfy none of them. An <em>AI &amp; Society</em> reviewer wants theoretical grounding. An IEEE reviewer wants validation data. A policy audience wants implementation guidance.</p>
+    <p><strong>Who raises it:</strong> Journal editors, peer reviewers, academic advisors.</p>
+    <p><strong>Why it matters:</strong> Targeting the wrong venue or trying to serve too many audiences can lead to desk rejections or confused reviews.</p>
+    <p><strong>What resolves it:</strong></p>
+    <ul style="margin:0.5rem 0 0 1.5rem;">
+      <li><strong>Decision: pick a primary audience for the first publication.</strong> Recommended: <em>AI &amp; Society</em> or <em>Ethics and Information Technology</em>, which value conceptual frameworks grounded in real-world evidence. These venues accept framework proposals without requiring full empirical validation.</li>
+      <li><strong>Then publish derivatives:</strong> A practitioner-facing version for a policy venue (Harvard Kennedy School, Brookings). A technical validation paper for IEEE after conducting inter-rater reliability and positive-case validation.</li>
+      <li><strong>The bilingual strategy supports this:</strong> The English version targets academic venues; the Spanish version can be adapted for Latin American policy audiences with a different emphasis.</li>
+    </ul>
+    <p style="margin-top:0.8rem;"><span class="status status-decision">Decision Required</span> &mdash; Primary audience and venue must be chosen before writing begins.</p>
+  </div>
+</div>
+
+</div>
+</div>
+
+<!-- ========================================== -->
+<!-- TAB 3: RESOLUTION ROADMAP                  -->
+<!-- ========================================== -->
+<div class="tab-content" id="tab-roadmap">
+<div class="tab-body">
+
+<h2>Resolution Roadmap</h2>
+<p>A punch list: every weakness mapped to an action, an owner, and what &ldquo;resolved&rdquo; looks like. Organized by what must be done <em>before writing</em>, <em>during writing</em>, and <em>after this paper</em>.</p>
+
+<h3>Phase 1: Before Writing Begins</h3>
+<p>These items must be resolved or decided before the first draft. Writing without these decisions produces wasted pages.</p>
+
+<div class="roadmap-item">
+  <h4><span class="badge badge-critical">Critical</span> <span class="status status-needs-nil">Needs Nil</span> Define the scoring model</h4>
+  <div class="roadmap-meta">Criticism #1 &bull; Owner: Nil (with Dalton input on practitioner feasibility)</div>
+  <p><strong>What &ldquo;done&rdquo; looks like:</strong> A mathematical definition of (a) the scale for each dimension, (b) the composite function, (c) the tier classification thresholds. At least one worked example scoring a real system. Dalton validates that a non-mathematician could apply it.</p>
+</div>
+
+<div class="roadmap-item">
+  <h4><span class="badge badge-critical">Critical</span> <span class="status status-needs-nil">Needs Nil</span> Test dimension independence</h4>
+  <div class="roadmap-meta">Criticism #3 &bull; Owner: Nil</div>
+  <p><strong>What &ldquo;done&rdquo; looks like:</strong> Pairwise correlation analysis of the 29&times;7 failure mode matrix. A clear statement of which dimensions are empirically correlated and why they remain conceptually distinct. If any pair correlates above ~0.85, a decision to merge or justify the separation.</p>
+</div>
+
+<div class="roadmap-item">
+  <h4><span class="badge badge-serious">Serious</span> <span class="status status-needs-nil">Needs Nil</span> Formalize or soften the dependency chain</h4>
+  <div class="roadmap-meta">Criticism #6 &bull; Owner: Nil (decision with Dalton)</div>
+  <p><strong>What &ldquo;done&rdquo; looks like:</strong> Either (a) a formal proof or empirical demonstration that higher-ranked dimensions condition lower-ranked ones, or (b) an explicit decision to present the hierarchy as a &ldquo;proposed ordering&rdquo; rather than a proven dependency. If (b), the scoring model should not weight based on the hierarchy.</p>
+</div>
+
+<div class="roadmap-item">
+  <h4><span class="badge badge-minor">Minor</span> <span class="status status-decision">Decision Required</span> Choose primary publication venue and audience</h4>
+  <div class="roadmap-meta">Criticism #10 &bull; Owner: Dalton &amp; Nil</div>
+  <p><strong>What &ldquo;done&rdquo; looks like:</strong> A single target journal selected. The paper&rsquo;s tone, depth, and structure calibrated to that venue&rsquo;s expectations. Recommendation: <em>AI &amp; Society</em> for the initial framework paper.</p>
+</div>
+
+<h3>Phase 2: During Writing</h3>
+<p>These items are addressed through how the paper is written &mdash; in the methods section, the framing, the limitations, and the rubric design.</p>
+
+<div class="roadmap-item">
+  <h4><span class="badge badge-critical">Critical</span> <span class="status status-addressable">Addressable</span> Address sample bias (failure-only cases)</h4>
+  <div class="roadmap-meta">Criticism #2 &bull; Owner: Dalton (research &amp; writing)</div>
+  <p><strong>What &ldquo;done&rdquo; looks like:</strong> Ideally, 8&ndash;12 positive cases added where AI systems have functional human oversight (aviation, financial circuit breakers, well-designed clinical AI). Score them on HAI to show they score high. At minimum: frame the methodology as failure-mode-derivation (legitimate engineering method) and position positive-case validation as explicit next step.</p>
+</div>
+
+<div class="roadmap-item">
+  <h4><span class="badge badge-serious">Serious</span> <span class="status status-addressable">Addressable</span> Address cross-domain comparability</h4>
+  <div class="roadmap-meta">Criticism #5 &bull; Owner: Dalton (framing &amp; writing)</div>
+  <p><strong>What &ldquo;done&rdquo; looks like:</strong> The paper explicitly distinguishes between universal <em>dimensions</em> and domain-specific <em>thresholds</em>. The domain calibration concept is introduced: same measurement instrument, different acceptable scores depending on stakes and context. The 29-case cross-domain pattern is cited as evidence of dimensional generality.</p>
+</div>
+
+<div class="roadmap-item">
+  <h4><span class="badge badge-serious">Serious</span> <span class="status status-addressable">Addressable</span> Build detailed scoring rubrics with behavioral anchors</h4>
+  <div class="roadmap-meta">Criticism #4 &bull; Owner: Dalton &amp; Nil</div>
+  <p><strong>What &ldquo;done&rdquo; looks like:</strong> Each dimension has a concrete rubric: what a score of 0 looks like (with case example), what a score of 1 looks like, etc. Anchors are behavioral and observable, not subjective. A reader should be able to score a system they know without ambiguity on most dimensions.</p>
+</div>
+
+<div class="roadmap-item">
+  <h4><span class="badge badge-serious">Serious</span> <span class="status status-addressable">Addressable</span> Acknowledge and address gameability</h4>
+  <div class="roadmap-meta">Criticism #7 &bull; Owner: Dalton (writing)</div>
+  <p><strong>What &ldquo;done&rdquo; looks like:</strong> A discussion section that names Goodhart&rsquo;s Law explicitly, describes anti-gaming design features already present in HAI (Genuine Engagement targets rubber-stamping, Decision Authority distinguishes nominal vs. functional), and recommends third-party audit-based assessment rather than self-reporting.</p>
+</div>
+
+<div class="roadmap-item">
+  <h4><span class="badge badge-moderate">Moderate</span> <span class="status status-addressable">Addressable</span> Position HAI as complement to existing regulatory frameworks</h4>
+  <div class="roadmap-meta">Criticism #8 &bull; Owner: Dalton (writing); Nil for EU context</div>
+  <p><strong>What &ldquo;done&rdquo; looks like:</strong> The introduction explicitly frames HAI as an operationalization tool for existing mandates (EU AI Act Article 14), not a replacement. Analogies to cross-industry metrics (OSHA TRIR) that coexist with domain-specific standards.</p>
+</div>
+
+<div class="roadmap-item">
+  <h4><span class="badge badge-moderate">Moderate</span> <span class="status status-addressable">Addressable</span> Document case selection methodology</h4>
+  <div class="roadmap-meta">Criticism #9 &bull; Owner: Dalton (methods section)</div>
+  <p><strong>What &ldquo;done&rdquo; looks like:</strong> A methods section that describes how cases were identified, what inclusion criteria were used (documented harm, publicly available records, post-2005), and why the temporal and geographic spread strengthens rather than weakens the pattern.</p>
+</div>
+
+<h3>Phase 3: Future Work (After This Paper)</h3>
+<p>These items cannot be resolved in the first paper and should be acknowledged honestly as next steps.</p>
+
+<div class="roadmap-item">
+  <h4><span class="badge badge-serious">Serious</span> <span class="status status-blocked">Future Work</span> Inter-rater reliability study</h4>
+  <div class="roadmap-meta">Criticism #4 &bull; Standard for measurement instrument validation</div>
+  <p><strong>What &ldquo;done&rdquo; looks like:</strong> Multiple independent assessors score 10+ AI systems using the HAI rubric. Report Cohen&rsquo;s kappa or intraclass correlation coefficient. This is a separate empirical paper &mdash; standard practice for instrument development (publish instrument, then publish validation).</p>
+</div>
+
+<div class="roadmap-item">
+  <h4><span class="badge badge-critical">Critical</span> <span class="status status-blocked">Future Work</span> Positive-case validation study</h4>
+  <div class="roadmap-meta">Criticism #2 &bull; The definitive answer to sample bias</div>
+  <p><strong>What &ldquo;done&rdquo; looks like:</strong> A study that scores both high-oversight and low-oversight systems and demonstrates that HAI scores discriminate between them. This is the &ldquo;predictive validity&rdquo; test.</p>
+</div>
+
+<div class="roadmap-item">
+  <h4><span class="badge badge-serious">Serious</span> <span class="status status-blocked">Future Work</span> Domain calibration profiles</h4>
+  <div class="roadmap-meta">Criticism #5 &bull; Making cross-domain comparison actionable</div>
+  <p><strong>What &ldquo;done&rdquo; looks like:</strong> Domain-specific threshold profiles (healthcare, AV, criminal justice, employment) developed with domain experts. What HAI score is &ldquo;acceptable&rdquo; in each domain? This requires stakeholder input beyond the authors.</p>
+</div>
+
+</div>
+</div>
+
+<!-- ========================================== -->
+<!-- TAB 4: STRATEGIC ASSESSMENT                -->
+<!-- ========================================== -->
+<div class="tab-content" id="tab-strategic">
+<div class="tab-body">
+
+<h2>Strategic Assessment: Should This Paper Be Written?</h2>
+
+<div class="verdict">
+  <h3>Verdict: Yes. Write the paper.</h3>
+  <p>Every criticism identified in this document is real. None of them are fatal. They describe the limitations of a <em>first paper proposing a new framework</em>, not reasons the framework shouldn&rsquo;t be proposed. Every measurement instrument in history faced the same objections at the proposal stage.</p>
+</div>
+
+<h3>The Timing Argument</h3>
+<p>This is not wishful thinking. There is a genuine, documented regulatory vacuum, and the timing is as favorable as it is likely to get.</p>
+<p>The EU AI Act mandates human oversight in Article 14 but provides no tool to measure whether it&rsquo;s adequate. The FDA approves AI medical devices with no standardized oversight assessment. Courts are adjudicating AI harm cases &mdash; UnitedHealth, Clearview, Character.ai &mdash; without any shared vocabulary for what &ldquo;adequate oversight&rdquo; means. Every one of the 29 cases in the evidence base represents a system where someone <em>claimed</em> human oversight existed, and it didn&rsquo;t, and people were harmed or died.</p>
+<p>The absence of a measurement instrument isn&rsquo;t an abstract problem. It is the reason these failures keep repeating with the same structural pattern across completely different domains.</p>
+
+<h3>The Evidence Argument</h3>
+<p>The strongest feature of HAI, relative to competing frameworks, is its inductive grounding. The dimensions were not invented by committee or derived from first principles. They emerged from documented failure analysis across 29 real-world cases spanning 8 domains, 6 countries, and two decades of AI deployment.</p>
+<p>That cross-domain, cross-temporal, cross-jurisdictional pattern &mdash; the fact that healthcare denials, welfare fraud detection, facial recognition arrests, autonomous vehicles, and teen chatbot deaths all fail in the <em>same seven ways</em> &mdash; is the paper&rsquo;s core contribution. The domain-specific frameworks missed this because they were not looking across domains. The EU AI Act missed this because it operates at the level of risk tiers, not oversight mechanisms. The Knight taxonomy missed this because it measures intended design, not actual operational oversight.</p>
+
+<h3>The Precedent Argument</h3>
+<p>Every measurement instrument that is now standard was once a proposal with known limitations:</p>
+<table>
+  <tr><th>Instrument</th><th>At Proposal Stage</th><th>Now</th></tr>
+  <tr><td>SAE Driving Levels</td><td>Criticized as simplistic, non-transferable, ambiguous at L3</td><td>Global reference standard, cited in legislation worldwide</td></tr>
+  <tr><td>LEED Certification</td><td>Dismissed by construction industry as impractical and subjective</td><td>Green building standard in 180+ countries</td></tr>
+  <tr><td>Credit Ratings (S&amp;P/Moody&rsquo;s)</td><td>Considered impossible to standardize across industries</td><td>Structural to global financial markets (with known flaws)</td></tr>
+  <tr><td>Apgar Score (neonatal health)</td><td>One anesthesiologist&rsquo;s informal checklist, 1952</td><td>Used in every delivery room worldwide, unchanged for 70 years</td></tr>
+</table>
+<p>HAI is at the &ldquo;proposal with known limitations&rdquo; stage. The limitations identified in this document are the normal limitations of a first paper, not evidence that the idea is flawed.</p>
+
+<h3>The Competitive Window</h3>
+<p>A comprehensive literature search (October 2025 &ndash; April 2026) confirmed that no one has published a multi-dimensional, inductively derived, composite-scoring oversight instrument. But the conditions that make this necessary are obvious to many researchers. Related work is converging from multiple directions:</p>
+
+<ul style="margin: 0.5rem 0 1rem 1.5rem;">
+  <li>HumanAgencyBench (Tsinghua) is benchmarking LLM override tendencies</li>
+  <li>CLEAR framework is proposing autonomy levels for code inspection</li>
+  <li>Multiple EU AI Act operationalization papers are trying to make Article 14 concrete</li>
+  <li>Knight Institute proposed autonomy certificates</li>
+</ul>
+
+<p>None of these are HAI. But they indicate that the research community is circling the same gap from different angles. The window for being first with a comprehensive, evidence-grounded proposal is open now. It may not stay open indefinitely.</p>
+
+<h3>What This Paper Actually Is</h3>
+
+<div class="callout callout-blue">
+<p><strong>This paper is not the finished instrument.</strong> It is the evidentiary and conceptual foundation for one. It says: &ldquo;Here are 29 documented cases of AI oversight failure. Here are the seven structural patterns we identified. Here is a proposed measurement framework based on those patterns. Here is the mathematical model. Here is how it would score these systems. Here are the known limitations. Here is the validation roadmap.&rdquo;</p>
+<p style="margin-bottom:0;">That is a complete, publishable, and valuable contribution &mdash; even before inter-rater reliability, positive-case validation, or domain calibration. Those are the papers that follow.</p>
+</div>
+
+<h3>The Real-World Stakes</h3>
+<p>Between the 29 cases documented in the evidence base:</p>
+
+<div class="stats-row">
+  <div class="stat-box">
+    <span class="stat-num">65+</span>
+    <span class="stat-label">Deaths (documented)</span>
+  </div>
+  <div class="stat-box">
+    <span class="stat-num">470K+</span>
+    <span class="stat-label">False Accusations</span>
+  </div>
+  <div class="stat-box">
+    <span class="stat-num">$2B+</span>
+    <span class="stat-label">Settlements</span>
+  </div>
+  <div class="stat-box">
+    <span class="stat-num">1</span>
+    <span class="stat-label">Government Collapsed</span>
+  </div>
+</div>
+
+<p>These are not hypothetical risks. These are documented outcomes of AI systems that claimed to have human oversight and did not. The question is not whether a measurement instrument for oversight adequacy would be useful. The question is how long the world continues without one.</p>
+
+</div>
+</div>
+
+<!-- ========================================== -->
+<!-- TAB 5: GAP VERIFICATION                   -->
+<!-- ========================================== -->
+<div class="tab-content" id="tab-gap">
+<div class="tab-body">
+
+<h2>Gap Verification: Literature Search (Oct 2025 &ndash; Apr 2026)</h2>
+
+<p>A targeted search was conducted across arXiv, SSRN, IEEE Xplore, ACM Digital Library, and policy publications to determine whether the HAI gap has been closed by recent work. <strong>It has not.</strong></p>
+
+<div class="callout callout-green">
+<strong>Conclusion:</strong> No multi-dimensional, inductively derived, composite-scoring instrument for human oversight adequacy has been published as of April 2026. The HAI fills a genuine gap in the literature.
+</div>
+
+<h3>Closest Related Work</h3>
+
+<table>
+  <tr><th>Work</th><th>What It Does</th><th>Why It&rsquo;s Not HAI</th></tr>
+  <tr>
+    <td><strong>HumanAgencyBench</strong><br><span style="font-size:0.8rem;color:var(--muted);">Tsinghua, 2025&ndash;2026</span></td>
+    <td>Benchmarks whether LLMs override user preferences in task execution</td>
+    <td>Measures <em>model behavior</em> (tendency to comply/override), not <em>system-level oversight architecture</em>. Single-axis. No composite scoring. Not a governance instrument.</td>
+  </tr>
+  <tr>
+    <td><strong>CLEAR Framework</strong><br><span style="font-size:0.8rem;color:var(--muted);">2025</span></td>
+    <td>Proposes autonomy levels for AI-assisted code review/inspection</td>
+    <td>Domain-specific (software QA). Not generalizable to healthcare, criminal justice, autonomous vehicles, etc.</td>
+  </tr>
+  <tr>
+    <td><strong>EU AI Act operationalization papers</strong><br><span style="font-size:0.8rem;color:var(--muted);">Multiple, 2025&ndash;2026</span></td>
+    <td>Propose methods to implement Article 14 human oversight requirements</td>
+    <td>Regulatory commentary and implementation guidance. No multi-dimensional scoring instrument. Typically focus on a single dimension (transparency or accountability).</td>
+  </tr>
+  <tr>
+    <td><strong>Knight First Amendment Institute</strong><br><span style="font-size:0.8rem;color:var(--muted);">Feng et al., arXiv:2506.12469v2</span></td>
+    <td>5-level autonomy taxonomy (L1&ndash;L5) for AI agents; proposed &ldquo;autonomy certificates&rdquo;</td>
+    <td>Single-axis (intended design autonomy). Measures what the system is <em>designed</em> to do, not whether oversight <em>actually works</em> across multiple dimensions. Does not assess reversibility, transparency, affected party awareness, or accountability. No composite score.</td>
+  </tr>
+</table>
+
+<h3>What HAI Provides That None of These Do</h3>
+
+<table>
+  <tr><th>Feature</th><th>HAI</th><th>Knight L1&ndash;L5</th><th>EU AI Act</th><th>HumanAgencyBench</th><th>Domain Frameworks</th></tr>
+  <tr><td>Multi-dimensional</td><td><strong>Yes (7)</strong></td><td>No (1 axis)</td><td>No (risk tiers)</td><td>No (1 axis)</td><td>Varies</td></tr>
+  <tr><td>Inductively derived from evidence</td><td><strong>Yes (29 cases)</strong></td><td>No (conceptual)</td><td>No (legislative)</td><td>No (benchmark)</td><td>Varies</td></tr>
+  <tr><td>Composite scoring</td><td><strong>Yes</strong></td><td>No</td><td>No</td><td>Partial</td><td>No</td></tr>
+  <tr><td>Cross-domain applicability</td><td><strong>Yes</strong></td><td>Agent-only</td><td>Yes (but broad)</td><td>LLM-only</td><td>No</td></tr>
+  <tr><td>Measures actual oversight (not design intent)</td><td><strong>Yes</strong></td><td>No</td><td>Partially</td><td>Partially</td><td>Varies</td></tr>
+  <tr><td>Includes affected party perspective</td><td><strong>Yes</strong></td><td>No</td><td>Partially</td><td>No</td><td>Rarely</td></tr>
+</table>
+
+<h3>Historical Foundations (Pre-2025)</h3>
+<p>These are the established works HAI builds upon, differentiates from, or operationalizes:</p>
+
+<table>
+  <tr><th>Source</th><th>Relationship to HAI</th></tr>
+  <tr><td>Sheridan &amp; Verplank (1978) &mdash; 10-level automation spectrum</td><td>Historical ancestor. Single-axis. HAI is multi-dimensional.</td></tr>
+  <tr><td>Parasuraman et al. (2000) &mdash; Types and levels of human-automation interaction</td><td>Refined Sheridan. Widely cited baseline for automation research.</td></tr>
+  <tr><td>SAE J3016 (2021) &mdash; Driving automation levels</td><td>Most famous derivative. Domain-specific. HAI is cross-domain.</td></tr>
+  <tr><td>Meaningful Human Control (Cavalcante Siebert et al., 2022)</td><td>Philosophical backbone. HAI operationalizes the tracking/tracing conditions.</td></tr>
+  <tr><td>HITL vs. AI-in-the-Loop (Farooq &amp; Grudin, 2024)</td><td>Identifies the definitional problem. HAI provides the measurement tool to resolve it.</td></tr>
+  <tr><td>EU AI Act, Article 14</td><td>Regulatory mandate for human oversight. HAI operationalizes the requirement.</td></tr>
+  <tr><td>NIST AI RMF 1.0</td><td>Principles-based. Not a measurement instrument. HAI fills the measurement gap.</td></tr>
+</table>
+
+</div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div class="site-footer">
+  Human Agency Index (HAI) &mdash; Development Engine &mdash; Working Draft &mdash; April 2026<br>
+  Companion to the <a href="HAI_Project_Plan.html" style="color:var(--accent);">HAI Project Plan</a>. All content is subject to revision.
+</div>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+// Tab navigation
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    // Deactivate all tabs
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    // Activate clicked tab
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    // Scroll to top of content
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+// Accordion toggle
+document.querySelectorAll('.accordion-header').forEach(header => {
+  header.addEventListener('click', () => {
+    const accordion = header.parentElement;
+    accordion.classList.toggle('open');
+  });
+});
+</script>
+
+</body>
+</html>
