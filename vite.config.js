@@ -12,7 +12,8 @@ export default defineConfig({
                 wigglyville: resolve(__dirname, 'wigglyville/index.html'),
                 dashboard: resolve(__dirname, 'dashboard/index.html'),
                 roadmap: resolve(__dirname, 'roadmap/index.html'),
-                hai: resolve(__dirname, 'hai/index.html')
+                hai: resolve(__dirname, 'hai/index.html'),
+                haiengine: resolve(__dirname, 'hai/engine.html'),
             }
         }
     }
