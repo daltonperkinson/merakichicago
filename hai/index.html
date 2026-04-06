@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Human Agency Index (HAI) — Project Plan</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --card: #ffffff;
+    --text: #1a1a2e;
+    --muted: #555;
+    --accent: #2d5a8e;
+    --accent-light: #e8f0fa;
+    --border: #ddd;
+    --red: #c0392b;
+    --green: #27ae60;
+    --orange: #e67e22;
+    --tag-bg: #f0f0f0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+  h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    color: var(--accent);
+  }
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 2.5rem 0 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--accent);
+    color: var(--accent);
+  }
+  h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 1.8rem 0 0.6rem;
+    color: var(--text);
+  }
+  h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 1.2rem 0 0.4rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 0.8rem;
+  }
+  p { margin-bottom: 1rem; }
+  .subtitle {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+    font-style: italic;
+  }
+  .callout {
+    background: var(--accent-light);
+    border-left: 4px solid var(--accent);
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .callout-red {
+    background: #fdf0ef;
+    border-left-color: var(--red);
+  }
+  .callout-green {
+    background: #edf9f0;
+    border-left-color: var(--green);
+  }
+  .callout-orange {
+    background: #fef8f0;
+    border-left-color: var(--orange);
+  }
+  .callout strong { display: block; margin-bottom: 0.3rem; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0 1.5rem;
+    font-size: 0.88rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.5;
+  }
+  th {
+    background: var(--accent);
+    color: white;
+    padding: 0.6rem 0.75rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  td {
+    padding: 0.55rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #f8f9fa; }
+  .check { text-align: center; color: var(--red); font-weight: bold; }
+  .dim-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    margin: 1.25rem 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .dim-card h3 {
+    margin-top: 0;
+    color: var(--accent);
+    font-size: 1.1rem;
+  }
+  .dim-rank {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.15rem 0.6rem;
+    border-radius: 3px;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+  }
+  .dim-stat {
+    display: inline-block;
+    background: var(--tag-bg);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 0.75rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    color: var(--muted);
+    vertical-align: middle;
+  }
+  .case-example {
+    margin: 0.4rem 0;
+    padding-left: 1rem;
+    border-left: 2px solid #ddd;
+    font-size: 0.92rem;
+  }
+  .case-example strong { color: var(--text); }
+  .case-example em { color: var(--red); font-style: normal; font-weight: 600; }
+  .compare-table th:first-child { width: 30%; }
+  .scoring-option {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    margin: 1rem 0;
+  }
+  .scoring-option h3 { margin-top: 0; }
+  .formula {
+    background: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    margin: 0.75rem 0;
+    overflow-x: auto;
+  }
+  .phase-row {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    margin: 0.75rem 0;
+    padding: 0.75rem 1rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+  .phase-num {
+    background: var(--accent);
+    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 700;
+    font-size: 0.8rem;
+    min-width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .phase-content { flex: 1; }
+  .phase-content strong {
+    display: block;
+    font-size: 0.95rem;
+  }
+  .phase-content span {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  .tag-complete {
+    display: inline-block;
+    background: var(--green);
+    color: white;
+    font-size: 0.7rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 600;
+    padding: 0.1rem 0.5rem;
+    border-radius: 3px;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+  }
+  .toc {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+  }
+  .toc ol {
+    margin: 0;
+    padding-left: 1.5rem;
+  }
+  .toc li {
+    margin: 0.35rem 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 0.9rem;
+  }
+  .toc a { color: var(--accent); text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+  a { color: var(--accent); }
+  @media (max-width: 640px) {
+    body { padding: 1rem; }
+    h1 { font-size: 1.5rem; }
+    table { font-size: 0.78rem; }
+    td, th { padding: 0.4rem; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Human Agency Index (HAI)</h1>
+<p class="subtitle">Project Plan &amp; Research Foundation &mdash; Working Draft, April 2026</p>
+
+<div class="callout">
+<strong>What is this document?</strong>
+This is the working project plan for an academic paper proposing the Human Agency Index (HAI) &mdash; a multi-dimensional scoring framework for measuring whether meaningful human control actually exists in any AI-enabled system. The dimensions were derived inductively from 29 documented cases of AI-related harm, not asserted top-down.
+</div>
+
+<nav class="toc">
+<h4 style="margin-top:0">Contents</h4>
+<ol>
+  <li><a href="#casebank">Case Bank: 29 AI Oversight Failures</a></li>
+  <li><a href="#failurematrix">Failure Mode Matrix</a></li>
+  <li><a href="#dimensions">The Seven HAI Dimensions</a></li>
+  <li><a href="#rankings">Dimension Rankings &amp; Dependency Chain</a></li>
+  <li><a href="#knight">Differentiation from Knight Framework</a></li>
+  <li><a href="#scoring">The Open Question: Scoring Model Options</a></li>
+  <li><a href="#paperplan">Paper Structure</a></li>
+  <li><a href="#phases">Project Phases</a></li>
+  <li><a href="#bibliography">Source Bibliography</a></li>
+</ol>
+</nav>
+
+<!-- ===== SECTION 1: CASE BANK ===== -->
+<h2 id="casebank">1. Case Bank: AI Systems Where Human Oversight Failed</h2>
+
+<p>29 real-world cases across 8 domains where AI systems caused documented harm. These cases are the evidentiary foundation from which HAI dimensions are derived. Every dimension is justified by pointing to cases where <em>that specific type of oversight failure</em> caused or enabled harm.</p>
+
+<h3>Healthcare (6 cases)</h3>
+<table>
+<tr><th>#</th><th>Case</th><th>Year</th><th>What Happened</th><th>Consequences</th></tr>
+<tr><td>1</td><td><strong>UnitedHealth / nH Predict</strong></td><td>2020&ndash;2023</td><td>AI predicted "appropriate" care length; employees pressured to stay within 1% of AI prediction; 90% error rate on appeal</td><td>2 documented patient deaths; families spent $70K&ndash;$150K fighting denials; class action proceeding</td></tr>
+<tr><td>2</td><td><strong>CVS/Aetna Medicare AI</strong></td><td>2019&ndash;present</td><td>AI bypassed clinical review for prior authorization, auto-rejecting claims</td><td>Interrupted essential care; patients forced to pay out-of-pocket or forgo treatment</td></tr>
+<tr><td>3</td><td><strong>Optum Risk Algorithm</strong></td><td>Discovered 2019</td><td>Algorithm trained on spending data (not health data); recommended 50% less care for Black patients with identical conditions</td><td>Systemic denial of preventive services to Black patients nationwide</td></tr>
+<tr><td>4</td><td><strong>IBM Watson for Oncology</strong></td><td>2016&ndash;2018</td><td>Recommended "unsafe and incorrect" cancer treatments; trained on synthetic cases, not real patient data</td><td>Recommended chemo drug with black-box warning to bleeding patient; pulled from clinical use</td></tr>
+<tr><td>5</td><td><strong>ChatGPT Health</strong></td><td>2026</td><td>Failed to recognize life-threatening emergencies in &gt;50% of severe cases; told users to stay home</td><td>40M+ daily users exposed to unreliable emergency guidance; suicide-risk alerts failed</td></tr>
+<tr><td>6</td><td><strong>FDA AI Medical Device Recalls</strong></td><td>2024&ndash;2025</td><td>43% of AI device recalls within 1 year of authorization; majority never underwent clinical trials</td><td>489 adverse events, 30 injuries, 1 death across 36 devices</td></tr>
+</table>
+
+<h3>Government &amp; Criminal Justice (11 cases)</h3>
+<table>
+<tr><th>#</th><th>Case</th><th>Year</th><th>What Happened</th><th>Consequences</th></tr>
+<tr><td>7</td><td><strong>Michigan MiDAS</strong></td><td>2013&ndash;2015</td><td>Automated unemployment fraud detection; 93% error rate</td><td>~40,000 false fraud accusations; 11,000+ bankruptcies</td></tr>
+<tr><td>8</td><td><strong>Australia Robodebt</strong></td><td>2016&ndash;2020</td><td>Automated welfare debt recovery using unlawful averaging methodology</td><td>~400,000 false debt accusations; documented suicides; A$1.87B settlement</td></tr>
+<tr><td>9</td><td><strong>Netherlands Childcare Benefits</strong></td><td>2005&ndash;2019</td><td>Self-learning algorithm flagged non-Dutch nationality as fraud risk</td><td>~26,000 wrongful accusations; suicides; homelessness; government resigned</td></tr>
+<tr><td>10</td><td><strong>Sweden Welfare Fraud Algorithm</strong></td><td>2013&ndash;2024</td><td>ML fraud prediction discriminated against women, migrants, low-income</td><td>11 years of undetected discrimination; algorithm suspended</td></tr>
+<tr><td>11</td><td><strong>Indiana Welfare Automation</strong></td><td>2007&ndash;2012</td><td>Automated eligibility for SNAP, Medicaid; replaced caseworkers</td><td>~1 million benefit denials (54% increase); woman lost Medicaid while hospitalized with cancer</td></tr>
+<tr><td>12</td><td><strong>COMPAS Sentencing</strong></td><td>2016&ndash;present</td><td>Recidivism prediction with 61% accuracy; Black defendants 77% more likely flagged high-risk</td><td>Longer sentences based on flawed predictions; still in use</td></tr>
+<tr><td>13</td><td><strong>Detroit FR &mdash; Robert Williams</strong></td><td>2020</td><td>Wrongful arrest based solely on facial recognition match</td><td>30 hours detention; arrested in front of family; $300K settlement</td></tr>
+<tr><td>14</td><td><strong>Detroit FR &mdash; Porcha Woodruff</strong></td><td>2023</td><td>Wrongful arrest of 8-months-pregnant woman based on 8-year-old photo match</td><td>Contractions, dehydration; charges dropped</td></tr>
+<tr><td>15</td><td><strong>Clearview AI &mdash; Randal Reid</strong></td><td>2022</td><td>Arrested in Georgia on Louisiana warrant; detective concealed FR as basis</td><td>6 days in jail; never visited Louisiana; $200K settlement</td></tr>
+<tr><td>16</td><td><strong>Clearview AI &mdash; Angela Lipps</strong></td><td>2025</td><td>Tennessee grandmother arrested for North Dakota fraud based on FR match</td><td>5+ months wrongful detention; bank records proved innocence</td></tr>
+<tr><td>17</td><td><strong>Allegheny AFST</strong></td><td>2016&ndash;present</td><td>Child welfare predictive risk scoring; 33% of Black households flagged vs. 20% non-Black</td><td>Disproportionate investigations and child removals from Black families</td></tr>
+</table>
+
+<h3>Private Sector (12 cases)</h3>
+<table>
+<tr><th>#</th><th>Case</th><th>Year</th><th>What Happened</th><th>Consequences</th></tr>
+<tr><td>18</td><td><strong>Amazon Hiring AI</strong></td><td>2014&ndash;2018</td><td>Resume screening trained on male-dominated data; penalized female indicators</td><td>Systematic downranking of female candidates</td></tr>
+<tr><td>19</td><td><strong>Workday Hiring AI</strong></td><td>2024&ndash;2025</td><td>Applicant screening alleged to discriminate by age, race, disability</td><td>Class action certified covering millions over 40</td></tr>
+<tr><td>20</td><td><strong>HireVue Facial Analysis</strong></td><td>2020&ndash;2025</td><td>Scored candidates on micro-expressions; no scientific basis; excluded deaf applicants</td><td>Facial analysis discontinued Jan 2025</td></tr>
+<tr><td>21</td><td><strong>UK A-Level Algorithm</strong></td><td>2020</td><td>Algorithmic grading downgraded 40% of students; penalized disadvantaged schools</td><td>15,000 students rejected from first-choice universities; Ofqual head resigned</td></tr>
+<tr><td>22</td><td><strong>Uber AV &mdash; Elaine Herzberg</strong></td><td>2018</td><td>Self-driving car struck pedestrian; emergency braking disabled; backup driver watching TV</td><td>First autonomous vehicle pedestrian fatality</td></tr>
+<tr><td>23</td><td><strong>Tesla Autopilot</strong></td><td>2016&ndash;2025</td><td>Multiple fatalities with weak driver monitoring; misleading "Full Self-Driving" marketing</td><td>65+ deaths; $243M jury verdict; NHTSA investigating 2.88M vehicles</td></tr>
+<tr><td>24</td><td><strong>Cruise Robotaxi</strong></td><td>2023</td><td>Dragged pedestrian 20 feet; then falsified reports to federal regulators</td><td>Severe injuries; permit revoked; $500K criminal fine</td></tr>
+<tr><td>25</td><td><strong>Character.ai &mdash; Teen Suicides</strong></td><td>2023&ndash;2024</td><td>Chatbots formed emotional bonds with minors; no crisis escalation; explicit content</td><td>2 confirmed teen suicides; families suing</td></tr>
+<tr><td>26</td><td><strong>Proctorio Exam Proctoring</strong></td><td>2020&ndash;2025</td><td>Facial recognition failed to detect Black students&rsquo; faces 57% of time</td><td>Black students locked out of exams</td></tr>
+<tr><td>27</td><td><strong>SafeRent Tenant Screening</strong></td><td>2021&ndash;2024</td><td>Algorithm penalized Black/Hispanic applicants and housing voucher holders</td><td>Housing discrimination; $2.275M settlement</td></tr>
+<tr><td>28</td><td><strong>Air Canada Chatbot</strong></td><td>2024</td><td>Chatbot fabricated bereavement fare policy; airline denied responsibility</td><td>Airline held liable for chatbot output</td></tr>
+<tr><td>29</td><td><strong>Meta Content Moderation</strong></td><td>2024&ndash;2025</td><td>AI moderation failed in Southeast Asia elections; reduced human moderators</td><td>Political misinformation spread; real-world unrest</td></tr>
+</table>
+
+<!-- ===== SECTION 2: FAILURE MATRIX ===== -->
+<h2 id="failurematrix">2. Failure Mode Matrix</h2>
+
+<p>Each case was analyzed for the specific mechanism by which human oversight failed. The matrix below maps every case to the failure modes observed. These failure modes became the basis for deriving the HAI dimensions.</p>
+
+<table>
+<tr>
+  <th>Case</th>
+  <th>Decision hijacked</th>
+  <th>Irreversible harm</th>
+  <th>Info withheld</th>
+  <th>Hard to intervene</th>
+  <th>Accountability obscured</th>
+  <th>No genuine engagement</th>
+  <th>Affected party unaware</th>
+</tr>
+<tr><td>1. UnitedHealth nH Predict</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td></tr>
+<tr><td>2. CVS/Aetna Medicare AI</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td></tr>
+<tr><td>3. Optum Racial Bias</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td></td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td></tr>
+<tr><td>4. IBM Watson Oncology</td><td class="check">&times;</td><td></td><td class="check">&times;</td><td></td><td></td><td class="check">&times;</td><td></td></tr>
+<tr><td>5. ChatGPT Health</td><td class="check">&times;</td><td class="check">&times;</td><td></td><td class="check">&times;</td><td></td><td></td><td></td></tr>
+<tr><td>6. FDA AI Device Recalls</td><td></td><td class="check">&times;</td><td class="check">&times;</td><td></td><td></td><td class="check">&times;</td><td class="check">&times;</td></tr>
+<tr><td>7. Michigan MiDAS</td><td class="check">&times;</td><td class="check">&times;</td><td></td><td class="check">&times;</td><td></td><td class="check">&times;</td><td class="check">&times;</td></tr>
+<tr><td>8. Australia Robodebt</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td></tr>
+<tr><td>9. Netherlands Childcare</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td></tr>
+<tr><td>10. Sweden Welfare</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td></td><td class="check">&times;</td><td class="check">&times;</td></tr>
+<tr><td>11. Indiana Welfare</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td></tr>
+<tr><td>12. COMPAS Sentencing</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td></td><td class="check">&times;</td></tr>
+<tr><td>13. Detroit FR &mdash; Williams</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td></td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td></tr>
+<tr><td>14. Detroit FR &mdash; Woodruff</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td></td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td></tr>
+<tr><td>15. Clearview &mdash; Reid</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td></td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td></tr>
+<tr><td>16. Clearview &mdash; Lipps</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td></td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td></tr>
+<tr><td>17. Allegheny AFST</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td></td><td class="check">&times;</td><td class="check">&times;</td></tr>
+<tr><td>18. Amazon Hiring AI</td><td class="check">&times;</td><td></td><td class="check">&times;</td><td></td><td></td><td class="check">&times;</td><td class="check">&times;</td></tr>
+<tr><td>19. Workday Hiring AI</td><td class="check">&times;</td><td></td><td class="check">&times;</td><td></td><td></td><td class="check">&times;</td><td class="check">&times;</td></tr>
+<tr><td>20. HireVue Facial Analysis</td><td class="check">&times;</td><td></td><td class="check">&times;</td><td class="check">&times;</td><td></td><td class="check">&times;</td><td class="check">&times;</td></tr>
+<tr><td>21. UK A-Level Algorithm</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td></tr>
+<tr><td>22. Uber AV &mdash; Herzberg</td><td></td><td class="check">&times;</td><td></td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td></td></tr>
+<tr><td>23. Tesla Autopilot</td><td></td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td></td></tr>
+<tr><td>24. Cruise Robotaxi</td><td></td><td class="check">&times;</td><td></td><td class="check">&times;</td><td class="check">&times;</td><td></td><td></td></tr>
+<tr><td>25. Character.ai</td><td></td><td class="check">&times;</td><td></td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td></tr>
+<tr><td>26. Proctorio</td><td class="check">&times;</td><td></td><td class="check">&times;</td><td class="check">&times;</td><td></td><td class="check">&times;</td><td class="check">&times;</td></tr>
+<tr><td>27. SafeRent Screening</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td></td><td class="check">&times;</td><td class="check">&times;</td></tr>
+<tr><td>28. Air Canada Chatbot</td><td></td><td></td><td></td><td></td><td class="check">&times;</td><td class="check">&times;</td><td></td></tr>
+<tr><td>29. Meta Content Moderation</td><td></td><td class="check">&times;</td><td></td><td class="check">&times;</td><td class="check">&times;</td><td class="check">&times;</td><td></td></tr>
+<tr style="font-weight:700; background:#f0f4f8;"><td>TOTALS</td><td class="check">22</td><td class="check">23</td><td class="check">22</td><td class="check">19</td><td class="check">18</td><td class="check">25</td><td class="check">21</td></tr>
+</table>
+
+<!-- ===== SECTION 3: DIMENSIONS ===== -->
+<h2 id="dimensions">3. The Seven HAI Dimensions</h2>
+
+<p>The failure mode analysis reveals seven recurring, independently identifiable types of human oversight failure. Each appeared in at least 18 of 29 cases. Six of the seven were identified in initial conceptual work; the seventh &mdash; Affected Party Awareness &mdash; emerged directly from the case evidence.</p>
+
+<div class="dim-card">
+  <h3><span class="dim-rank">#1</span> Genuine Engagement <span class="dim-stat">25 of 29 cases (86%)</span></h3>
+  <p><strong>What it measures:</strong> Does the system require genuine human cognitive engagement &mdash; not just a button press, a rubber stamp, or a nominal &ldquo;review&rdquo; &mdash; at meaningful intervals in the decision process?</p>
+  <p><strong>Why it ranks #1:</strong> The single most common failure mode. In case after case, a human was technically &ldquo;in the loop&rdquo; but not genuinely engaged. If you could only measure one thing about an AI system&rsquo;s human oversight, this would be it &mdash; because every other dimension is moot if nobody is actually paying attention.</p>
+  <h4>Key Cases</h4>
+  <div class="case-example"><strong>UnitedHealth nH Predict:</strong> Clinical staff pressured to keep stays within 1% of AI prediction &mdash; transforming &ldquo;human review&rdquo; into rubber-stamping. <em>Consequence: patients died.</em></div>
+  <div class="case-example"><strong>Michigan MiDAS:</strong> Human fraud examiners eliminated to cut costs. 93% error rate. <em>Consequence: 40,000 false fraud accusations, 11,000+ bankruptcies.</em></div>
+  <div class="case-example"><strong>Uber AV &mdash; Herzberg:</strong> Backup safety driver was watching Hulu for 42 minutes before fatal collision. No system monitored whether the monitor was monitoring. <em>Consequence: first autonomous vehicle pedestrian death.</em></div>
+  <div class="case-example"><strong>Tesla Autopilot:</strong> Drivers could use the system for extended periods with hands off wheel and eyes off road. <em>Consequence: 65+ deaths.</em></div>
+  <div class="case-example"><strong>Netherlands Childcare Benefits:</strong> 26,000 cases processed at volume without individual human assessment. <em>Consequence: suicides, homelessness, government resigned.</em></div>
+</div>
+
+<div class="dim-card">
+  <h3><span class="dim-rank">#2</span> Reversibility <span class="dim-stat">23 of 29 cases (79%)</span></h3>
+  <p><strong>What it measures:</strong> After the AI has acted or produced a decision, can a human effectively undo, reverse, or remedy the outcome? How much time exists between AI action and irreversible consequence?</p>
+  <p><strong>Why it ranks #2:</strong> Severity scales directly with irreversibility. When AI actions cannot be undone &mdash; a patient dies, a person spends months in jail, a pedestrian is struck &mdash; no amount of accountability or transparency after the fact helps the victim.</p>
+  <h4>Key Cases</h4>
+  <div class="case-example"><strong>Australia Robodebt:</strong> 400,000 people received automated debt demands. Even after the scheme was found unlawful, the suicides could not be reversed. <em>Consequence: A$1.87 billion settlement cannot restore lives.</em></div>
+  <div class="case-example"><strong>Uber AV / Tesla / Cruise:</strong> Vehicle strikes are irreversible within milliseconds. Uber had <em>disabled</em> the emergency braking. <em>Consequence: 65+ deaths across these systems.</em></div>
+  <div class="case-example"><strong>Character.ai:</strong> Two teenagers died. No crisis escalation existed. <em>Consequence: two children dead.</em></div>
+  <div class="case-example"><strong>Clearview AI &mdash; Lipps:</strong> Five months of wrongful imprisonment. <em>Consequence: 5+ months stolen from a grandmother&rsquo;s life.</em></div>
+</div>
+
+<div class="dim-card">
+  <h3><span class="dim-rank">#3</span> Decision Authority <span class="dim-stat">22 of 29 cases (76%)</span></h3>
+  <p><strong>What it measures:</strong> Who <em>actually</em> makes the consequential decision &mdash; the human or the AI? Not who is <em>supposed to</em> make it, but who <em>functionally</em> makes it in practice.</p>
+  <p><strong>Why it ranks #3:</strong> The most intuitive dimension, but ranked below Engagement and Reversibility because nominal authority without engagement is meaningless, and authority without reversibility is reckless.</p>
+  <h4>Key Cases</h4>
+  <div class="case-example"><strong>UnitedHealth nH Predict:</strong> Designed authority: clinical staff. Actual authority: AI predicts, employees pressured to stay within 1%. The AI decided; the human signed. <em>Consequence: patients died.</em></div>
+  <div class="case-example"><strong>COMPAS Sentencing:</strong> Judges routinely followed scores with minimal scrutiny of the proprietary methodology. <em>Consequence: Black defendants received longer sentences based on 61%-accurate algorithm.</em></div>
+  <div class="case-example"><strong>All facial recognition cases:</strong> FR match treated as sufficient for arrest warrants &mdash; no corroborating investigation. <em>Consequence: wrongful arrests, months of imprisonment.</em></div>
+</div>
+
+<div class="dim-card">
+  <h3><span class="dim-rank">#4</span> Transparency <span class="dim-stat">22 of 29 cases (76%)</span></h3>
+  <p><strong>What it measures:</strong> Does the human decision-maker have sufficient information about <em>how</em> the AI reached its output, <em>what data</em> it used, <em>what its known limitations are</em>, and <em>what confidence level</em> should be assigned to its recommendation?</p>
+  <h4>Key Cases</h4>
+  <div class="case-example"><strong>COMPAS Sentencing:</strong> Proprietary algorithm. Judges told a score; couldn&rsquo;t examine methodology, weighting, or error rates. <em>Consequence: Black defendants 77% more likely flagged high-risk.</em></div>
+  <div class="case-example"><strong>Optum Risk Algorithm:</strong> Clinicians didn&rsquo;t know algorithm used spending-as-proxy-for-health. <em>Consequence: Black patients received 50% less recommended care.</em></div>
+  <div class="case-example"><strong>Tesla Autopilot:</strong> &ldquo;Full Self-Driving&rdquo; marketing created false impression of capability. <em>Consequence: 65+ fatalities where drivers over-trusted the system.</em></div>
+</div>
+
+<div class="dim-card">
+  <h3><span class="dim-rank">#5</span> Affected Party Awareness <span class="dim-stat">21 of 29 cases (72%)</span></h3>
+  <p><strong>What it measures:</strong> Does the person <em>affected by</em> the AI&rsquo;s decision know that an AI system was involved? Do they have enough information to understand the basis for the decision and challenge it if warranted?</p>
+  <div class="callout callout-orange">
+  <strong>This dimension is new.</strong> It was not in the original six &mdash; it emerged directly from the case evidence. In 21 of 29 cases, the subject of the decision had no idea an algorithm was involved. This is distinct from operator Transparency and from Intervention Accessibility. A person cannot use an override mechanism they don&rsquo;t know they need.
+  </div>
+  <h4>Key Cases</h4>
+  <div class="case-example"><strong>Netherlands Childcare:</strong> 26,000 families accused of fraud by an algorithm that used nationality as a risk factor. Not told an algorithm made the determination. <em>Consequence: suicides, homelessness; the government resigned.</em></div>
+  <div class="case-example"><strong>SafeRent Tenant Screening:</strong> Only 3% of denied renters knew the name of the screening company. <em>Consequence: systemic housing discrimination.</em></div>
+  <div class="case-example"><strong>Sweden Welfare:</strong> Affected individuals had no way to learn they were assessed. System operated 11 years before journalists exposed it. <em>Consequence: decade of undetected discrimination.</em></div>
+  <div class="case-example"><strong>All facial recognition arrest cases:</strong> Defendants not told FR was the basis. Warrants said &ldquo;credible source.&rdquo; <em>Consequence: inability to mount a meaningful defense.</em></div>
+</div>
+
+<div class="dim-card">
+  <h3><span class="dim-rank">#6</span> Intervention Accessibility <span class="dim-stat">19 of 29 cases (66%)</span></h3>
+  <p><strong>What it measures:</strong> How easy is it for a human to stop, redirect, override, or correct the AI mid-process? This includes both technical accessibility (is there a mechanism?) and practical accessibility (can a real person actually use it?).</p>
+  <p><em>Key distinction from Reversibility:</em> Reversibility measures whether harm can be undone <em>after</em> it occurs. Intervention Accessibility measures whether a human can prevent the harm <em>before</em> it occurs.</p>
+  <h4>Key Cases</h4>
+  <div class="case-example"><strong>UnitedHealth nH Predict:</strong> Appeals existed on paper but were described by the federal judge as &ldquo;futile.&rdquo; <em>Consequence: patients died waiting for the process to work.</em></div>
+  <div class="case-example"><strong>Uber AV:</strong> Emergency braking was <em>deliberately disabled</em>. <em>Consequence: pedestrian death.</em></div>
+  <div class="case-example"><strong>Character.ai:</strong> No crisis escalation pathway. When a teenager expressed suicidal ideation, no mechanism to alert anyone. <em>Consequence: teen suicides.</em></div>
+</div>
+
+<div class="dim-card">
+  <h3><span class="dim-rank">#7</span> Accountability Traceability <span class="dim-stat">18 of 29 cases (62%)</span></h3>
+  <p><strong>What it measures:</strong> Can you identify a specific human (or role) who is responsible for a given AI-driven outcome? Is the chain of responsibility documented, auditable, and enforceable?</p>
+  <p><strong>Why it ranks #7:</strong> Essential for deterrence and remediation, but primarily a <em>retrospective</em> dimension &mdash; it matters most after harm has occurred. The other six are <em>preventive</em>.</p>
+  <h4>Key Cases</h4>
+  <div class="case-example"><strong>Cruise Robotaxi:</strong> Submitted falsified reports to regulators, omitting the dragging. Accountability chain actively destroyed. <em>Consequence: $500K criminal fine for obstruction.</em></div>
+  <div class="case-example"><strong>Clearview AI &mdash; Reid:</strong> Detective wrote &ldquo;credible source&rdquo; instead of disclosing facial recognition. Broke the accountability chain at every subsequent stage. <em>Consequence: wrongful arrest; concealment prevented oversight.</em></div>
+  <div class="case-example"><strong>Tesla Autopilot:</strong> Marketing implied autonomy; terms of service required attention. Deliberate accountability gap. <em>Consequence: 65+ deaths with unresolved accountability.</em></div>
+</div>
+
+<!-- ===== SECTION 4: RANKINGS ===== -->
+<h2 id="rankings">4. Dimension Rankings &amp; Dependency Chain</h2>
+
+<table>
+<tr><th>Rank</th><th>Dimension</th><th>Cases</th><th>Why This Rank</th></tr>
+<tr><td><strong>1</strong></td><td><strong>Genuine Engagement</strong></td><td>25 (86%)</td><td>Most pervasive failure. Every other dimension is moot if nobody is paying attention.</td></tr>
+<tr><td><strong>2</strong></td><td><strong>Reversibility</strong></td><td>23 (79%)</td><td>Determines severity ceiling. Irreversible outcomes make all other failures permanent.</td></tr>
+<tr><td><strong>3</strong></td><td><strong>Decision Authority</strong></td><td>22 (76%)</td><td>The core question &mdash; but nominal authority without engagement is meaningless.</td></tr>
+<tr><td><strong>4</strong></td><td><strong>Transparency</strong></td><td>22 (76%)</td><td>Tied in frequency, ranked lower because transparent info is wasted without engagement.</td></tr>
+<tr><td><strong>5</strong></td><td><strong>Affected Party Awareness</strong></td><td>21 (72%)</td><td>The &ldquo;last mile&rdquo; &mdash; protects the subject, not just the operator. NEW dimension.</td></tr>
+<tr><td><strong>6</strong></td><td><strong>Intervention Accessibility</strong></td><td>19 (66%)</td><td>The practical mechanism of control. Irrelevant without engagement and awareness.</td></tr>
+<tr><td><strong>7</strong></td><td><strong>Accountability Traceability</strong></td><td>18 (62%)</td><td>Retrospective. Essential for deterrence, but doesn&rsquo;t prevent the initial harm.</td></tr>
+</table>
+
+<div class="callout">
+<strong>The Dependency Chain</strong>
+<p style="margin-bottom:0">Each dimension is only effective if the dimensions above it are satisfied. This structure provides a principled basis for <em>weighting</em> the composite score:</p>
+<p style="margin-bottom:0">
+<strong>1.</strong> Genuine Engagement &rarr; Is anyone actually watching?<br>
+<strong>2.</strong> Reversibility &rarr; If something goes wrong, can it be undone?<br>
+<strong>3.</strong> Decision Authority &rarr; Who actually decides?<br>
+<strong>4.</strong> Transparency &rarr; Does the decider have enough information?<br>
+<strong>5.</strong> Affected Party Awareness &rarr; Does the affected person know?<br>
+<strong>6.</strong> Intervention Accessibility &rarr; Can someone stop or redirect?<br>
+<strong>7.</strong> Accountability Traceability &rarr; Can you identify who&rsquo;s responsible?
+</p>
+</div>
+
+<!-- ===== SECTION 5: KNIGHT COMPARISON ===== -->
+<h2 id="knight">5. Differentiation from Knight Framework</h2>
+
+<table class="compare-table">
+<tr><th>Feature</th><th>Knight (2025)</th><th>HAI</th></tr>
+<tr><td><strong>Dimensions</strong></td><td>1 (autonomy level)</td><td>7 (independently measurable)</td></tr>
+<tr><td><strong>What it measures</strong></td><td>Intended autonomy design</td><td>Actual human control adequacy</td></tr>
+<tr><td><strong>Perspective</strong></td><td>System-centric</td><td>Outcome-centric</td></tr>
+<tr><td><strong>Scoring</strong></td><td>Categorical (L1&ndash;L5)</td><td>Continuous per dimension + composite</td></tr>
+<tr><td><strong>Affected party</strong></td><td>Not addressed</td><td>Dedicated dimension (#5)</td></tr>
+<tr><td><strong>Reversibility</strong></td><td>Not addressed</td><td>Dedicated dimension (#2)</td></tr>
+<tr><td><strong>Design vs. practice gap</strong></td><td>Assumes alignment</td><td>Explicitly measures the gap</td></tr>
+<tr><td><strong>Validation</strong></td><td>Theoretical + running example</td><td>29 real-world failure cases</td></tr>
+<tr><td><strong>Regulatory utility</strong></td><td>Autonomy certificates (proposed)</td><td>Scoring instrument for risk assessment and certification</td></tr>
+</table>
+
+<div class="callout callout-green">
+<strong>Core differentiator:</strong> Knight tells you what level the thermostat is set to. HAI tells you whether the heating system actually works &mdash; and checks every component separately.
+</div>
+
+<!-- ===== SECTION 6: SCORING MODEL ===== -->
+<h2 id="scoring">6. The Open Question: Scoring Model Options</h2>
+
+<p>The seven dimensions and their ranking are empirically grounded. The open question &mdash; and the area where mathematical expertise is essential &mdash; is: <strong>how do we turn seven per-dimension scores into a defensible composite index?</strong></p>
+
+<p>Below are three candidate approaches. Each has different mathematical properties, different strengths, and different trade-offs. The right answer likely involves elements of more than one. The goal of this section is to frame the question precisely enough that a mathematician can evaluate the options, identify weaknesses, and propose a rigorous formalization.</p>
+
+<div class="scoring-option">
+  <h3>Option A: Weighted Linear Composite</h3>
+  <p><strong>Approach:</strong> Each dimension is scored on a defined scale (e.g., 1&ndash;5). Weights are derived from the dependency chain &mdash; Genuine Engagement weighted highest, Accountability Traceability weighted lowest. The composite is a weighted average, mapped to tier classifications.</p>
+  <div class="formula">
+    HAI = &Sigma;(w<sub>i</sub> &times; s<sub>i</sub>) / &Sigma;(w<sub>i</sub>)<br><br>
+    Example weights: GE=7, RE=6, DA=5, TR=4, APA=3, IA=2, AT=1<br>
+    Score range: 1.0 &ndash; 5.0 &rarr; mapped to tiers (e.g., A/B/C/D/F or HAI-1 through HAI-5)
+  </div>
+  <p><strong>Strengths:</strong> Simple, intuitive, easy to communicate. Familiar to anyone who has worked with credit ratings or LEED scores. Weighting reflects the empirically derived dependency chain.</p>
+  <p><strong>Weaknesses:</strong> A high score on one dimension can compensate for a catastrophically low score on another. For example, a system with perfect Accountability Traceability but zero Genuine Engagement could still produce a moderate composite &mdash; but the case evidence shows such a system is dangerous. Linear models assume dimensional independence, which the dependency chain explicitly contradicts.</p>
+  <h4>Questions for Mathematical Review</h4>
+  <p>Are the proposed weights defensible, or should they be derived differently (e.g., from case frequency, from principal component analysis of the failure matrix, from expert elicitation)? How sensitive is the composite to weight selection? Can we demonstrate that the ranking is robust under reasonable weight perturbations?</p>
+</div>
+
+<div class="scoring-option">
+  <h3>Option B: Minimum-Gated Model (&ldquo;Weakest Link&rdquo;)</h3>
+  <p><strong>Approach:</strong> Each dimension is scored 1&ndash;5. The composite score is <em>gated</em> by the lowest-scoring dimension: the overall HAI cannot exceed the minimum score by more than one tier. This captures the dependency chain directly &mdash; a system cannot achieve high overall human agency if any single dimension is critically deficient.</p>
+  <div class="formula">
+    HAI = min(mean(s<sub>1</sub>...s<sub>7</sub>), min(s<sub>i</sub>) + 1)<br><br>
+    Example: scores = [5, 5, 5, 5, 5, 5, 1]<br>
+    Mean = 4.43, but min + 1 = 2<br>
+    HAI = 2 (gated by the weakest dimension)
+  </div>
+  <p><strong>Strengths:</strong> Directly encodes the insight from the case evidence: a single critical failure in any dimension can make the entire system dangerous. UnitedHealth had nominal human authority but zero genuine engagement &mdash; a gated model would correctly flag this as high-risk. Prevents &ldquo;averaging away&rdquo; catastrophic gaps.</p>
+  <p><strong>Weaknesses:</strong> May be overly punitive for systems with one moderately low score. The &ldquo;+1&rdquo; threshold is arbitrary &mdash; what is the principled basis for the gate width? Might discourage investment in dimensions other than the weakest (if improving a strong dimension cannot raise the composite).</p>
+  <h4>Questions for Mathematical Review</h4>
+  <p>What is the right gating function? Is +1 too generous, too restrictive? Could the gate be dimension-specific (e.g., Genuine Engagement and Reversibility gate more tightly than Accountability Traceability)? Is there a mathematical formulation that captures both the weakest-link property and the weighted importance of dimensions?</p>
+</div>
+
+<div class="scoring-option">
+  <h3>Option C: Hybrid &mdash; Weighted Composite with Mandatory Minimums</h3>
+  <p><strong>Approach:</strong> Combines elements of Options A and B. The composite uses a weighted average (Option A) but the tier classification imposes floor requirements. To achieve a given HAI tier, <em>every</em> dimension must meet a minimum threshold for that tier &mdash; similar to how LEED certification requires points across categories, not just total points.</p>
+  <div class="formula">
+    Composite = &Sigma;(w<sub>i</sub> &times; s<sub>i</sub>) / &Sigma;(w<sub>i</sub>)<br><br>
+    Tier requirements:<br>
+    &nbsp;&nbsp;HAI-A (Excellent): Composite &ge; 4.0 AND all dimensions &ge; 3<br>
+    &nbsp;&nbsp;HAI-B (Adequate): Composite &ge; 3.0 AND all dimensions &ge; 2<br>
+    &nbsp;&nbsp;HAI-C (Deficient): Composite &ge; 2.0 AND no dimension = 1<br>
+    &nbsp;&nbsp;HAI-D (Critical): Any dimension = 1<br>
+    &nbsp;&nbsp;HAI-F (Absent): Three or more dimensions = 1
+  </div>
+  <p><strong>Strengths:</strong> Preserves the information value of the weighted composite while preventing dangerous gaps from being hidden. The tier classification is intuitive for policymakers (similar to bond ratings or food safety grades). Incentivizes improvement across all dimensions, not just the weakest.</p>
+  <p><strong>Weaknesses:</strong> More complex to communicate. The floor thresholds for each tier need principled justification. The system has more degrees of freedom (weights + thresholds), which means more parameters to calibrate and defend.</p>
+  <h4>Questions for Mathematical Review</h4>
+  <p>Can we derive the floor thresholds empirically from the case bank (e.g., what minimum scores would have flagged systems that caused documented harm)? Is there a way to mathematically prove that the tier classification is consistent (i.e., that improving any dimension score never worsens the tier)? Should the top two dimensions (Genuine Engagement, Reversibility) have stricter floor requirements than the bottom two?</p>
+</div>
+
+<div class="callout callout-red">
+<strong>What we need from a mathematical co-author</strong>
+<p>The research, case bank, failure mode analysis, dimension derivation, and ranking are complete. The lit review and practitioner validation can be handled independently. The critical gap is the mathematical formalization of the scoring model. Specifically:</p>
+<p style="margin-bottom:0.5rem"><strong>1. Scale definition:</strong> What scoring scale for each dimension (1&ndash;5? 0&ndash;10? continuous?) and what anchors define each level?</p>
+<p style="margin-bottom:0.5rem"><strong>2. Composite function:</strong> Which of the three options above (or a fourth alternative) produces the most defensible composite?</p>
+<p style="margin-bottom:0.5rem"><strong>3. Mathematical properties:</strong> Independence testing &mdash; are the seven dimensions actually measuring distinct constructs? Sensitivity analysis &mdash; how robust is the composite to scoring noise? Boundary conditions &mdash; does the model behave sensibly at extremes?</p>
+<p style="margin-bottom:0"><strong>4. Validation:</strong> Score 6&ndash;8 real-world systems from the case bank using the formalized model. Demonstrate that HAI differentiates systems that existing single-axis frameworks (Knight, SAE) cannot.</p>
+</div>
+
+<!-- ===== SECTION 7: PAPER PLAN ===== -->
+<h2 id="paperplan">7. Paper Structure</h2>
+
+<p>Target length: ~19,000 words (~35&ndash;40 pages with tables and figures). Target venues: <em>AI &amp; Society</em>, <em>Ethics and Information Technology</em>, Harvard Kennedy School Belfer Center, IEEE Transactions on Human-Machine Systems.</p>
+
+<table>
+<tr><th>Section</th><th>Est. Words</th><th>Content</th></tr>
+<tr><td><strong>1. Introduction</strong></td><td>~1,500</td><td>Open with UnitedHealth nH Predict as motivating case. Show existing frameworks would not have flagged it. State the gap. Preview HAI.</td></tr>
+<tr><td><strong>2. Background &amp; Related Work</strong></td><td>~3,000</td><td>Sheridan &amp; Verplank &rarr; Parasuraman &rarr; SAE J3016. Knight (2025): differentiate. MHC (Springer 2022): philosophical backbone. HITL vs AI-in-the-Loop (2024). EU AI Act Art. 14, NIST AI RMF, ISO/IEC 42105.</td></tr>
+<tr><td><strong>3. Case Analysis</strong></td><td>~4,000</td><td>Present the 29-case bank. Systematic failure mode extraction. Show failures cluster into 7 types. Inductive foundation.</td></tr>
+<tr><td><strong>4. The HAI Framework</strong></td><td>~4,000</td><td>Define 7 dimensions with scoring criteria. Formalize scoring model. Mathematical properties. Dependency chain. Tier classification.</td></tr>
+<tr><td><strong>5. Framework Validation</strong></td><td>~3,000</td><td>Score 6&ndash;8 real systems using HAI. Compare to Knight. Demonstrate HAI differentiates what Knight cannot. Sensitivity analysis.</td></tr>
+<tr><td><strong>6. Policy Implications</strong></td><td>~2,000</td><td>Operationalizing EU AI Act Art. 14. How HAI could have prevented documented harms. Certification proposal. Practitioner adoption.</td></tr>
+<tr><td><strong>7. Limitations &amp; Future Work</strong></td><td>~1,000</td><td>Dimension exhaustiveness. Empirical calibration needs. Cross-cultural applicability. Dynamic systems.</td></tr>
+<tr><td><strong>8. Conclusion</strong></td><td>~500</td><td>&mdash;</td></tr>
+</table>
+
+<!-- ===== SECTION 8: PHASES ===== -->
+<h2 id="phases">8. Project Phases</h2>
+
+<div class="phase-row">
+  <div class="phase-num">1</div>
+  <div class="phase-content">
+    <strong>Dimension Derivation &amp; Case Bank <span class="tag-complete">COMPLETE</span></strong>
+    <span>29 cases analyzed; 7 dimensions derived; failure mode matrix built; ranking established.</span>
+  </div>
+</div>
+
+<div class="phase-row">
+  <div class="phase-num">2</div>
+  <div class="phase-content">
+    <strong>Team Formation &amp; Dimension Refinement</strong>
+    <span>Confirm collaborators. Review dimensions for mathematical defensibility. Challenge or validate the 7th dimension (Affected Party Awareness). Agree on scoring model direction.</span>
+  </div>
+</div>
+
+<div class="phase-row">
+  <div class="phase-num">3</div>
+  <div class="phase-content">
+    <strong>Scoring Model Formalization</strong>
+    <span>Define scoring scales and anchors. Select and formalize composite function. Test mathematical properties (independence, sensitivity, boundary conditions). ~2&ndash;3 weeks after Phase 2.</span>
+  </div>
+</div>
+
+<div class="phase-row">
+  <div class="phase-num">4</div>
+  <div class="phase-content">
+    <strong>Literature Review &amp; Deep Source Reading</strong>
+    <span>Deep-read all core sources. Identify additional post-2025 regulatory developments. Ensure no recent work has closed the gap. ~Concurrent with Phase 3.</span>
+  </div>
+</div>
+
+<div class="phase-row">
+  <div class="phase-num">5</div>
+  <div class="phase-content">
+    <strong>First Draft</strong>
+    <span>Full paper draft across all 8 sections. ~4&ndash;5 weeks after Phase 2.</span>
+  </div>
+</div>
+
+<div class="phase-row">
+  <div class="phase-num">6</div>
+  <div class="phase-content">
+    <strong>Framework Validation</strong>
+    <span>Score 6&ndash;8 real-world systems. Compare HAI vs. Knight classifications. Sensitivity analysis. ~Concurrent with Phase 5.</span>
+  </div>
+</div>
+
+<div class="phase-row">
+  <div class="phase-num">7</div>
+  <div class="phase-content">
+    <strong>Internal Review &amp; Revision</strong>
+    <span>Full review cycle. Challenge arguments. Address weaknesses a skeptical reviewer would find. ~2 weeks after Phase 5.</span>
+  </div>
+</div>
+
+<div class="phase-row">
+  <div class="phase-num">8</div>
+  <div class="phase-content">
+    <strong>Submission</strong>
+    <span>Final formatting. Submit to target journal. ~3 months from Phase 2 completion.</span>
+  </div>
+</div>
+
+<div class="phase-row">
+  <div class="phase-num">9</div>
+  <div class="phase-content">
+    <strong>Spanish Translation</strong>
+    <span>Full bilingual version for Latin American and Spanish audience. ~Concurrent with Phases 7&ndash;8.</span>
+  </div>
+</div>
+
+<!-- ===== SECTION 9: BIBLIOGRAPHY ===== -->
+<h2 id="bibliography">9. Source Bibliography</h2>
+
+<h3>Core Literature</h3>
+<table>
+<tr><th>Source</th><th>Role in Paper</th></tr>
+<tr><td>Sheridan, T.B. &amp; Verplank, W.L. (1978). Human and computer control of undersea teleoperators.</td><td>Original 10-level automation spectrum. Historical foundation.</td></tr>
+<tr><td>Parasuraman, R., Sheridan, T.B., &amp; Wickens, C.D. (2000). A model for types and levels of human interaction with automation. <em>IEEE Trans. SMC.</em></td><td>Refined Sheridan model. Widely cited baseline.</td></tr>
+<tr><td>SAE International. (2021). J3016: Taxonomy and definitions for driving automation.</td><td>Most famous derivative. Being borrowed outside transportation.</td></tr>
+<tr><td>Feng, K.J.K., McDonald, D.W., &amp; Zhang, A.X. (2025). Levels of autonomy for AI agents. <em>Knight 1st Amendment Institute.</em> arXiv:2506.12469v2.</td><td>Closest analog. Must differentiate clearly.</td></tr>
+<tr><td>Cavalcante Siebert, L. et al. (2022). Meaningful human control. <em>AI and Ethics.</em></td><td>Philosophical backbone. Tracking &amp; tracing conditions.</td></tr>
+<tr><td>Farooq, U. &amp; Grudin, J. (2024). Human-in-the-Loop or AI-in-the-Loop? arXiv:2412.14232.</td><td>The definitional problem HAI resolves.</td></tr>
+<tr><td>EU AI Act, Article 14: Human oversight.</td><td>Regulatory landscape. HAI could operationalize.</td></tr>
+<tr><td>NIST AI Risk Management Framework 1.0.</td><td>Principles-based. Not a measurement instrument.</td></tr>
+</table>
+
+<h3>Case Sources (Selected)</h3>
+<table>
+<tr><th>Case</th><th>Primary Source</th></tr>
+<tr><td>UnitedHealth</td><td><em>Estate of Lokken v. UnitedHealth Group</em>, 0:23-cv-03514 (D. Minn.)</td></tr>
+<tr><td>Australia Robodebt</td><td>Royal Commission into the Robodebt Scheme (2023)</td></tr>
+<tr><td>Netherlands Childcare</td><td>Dutch Parliamentary Committee of Inquiry (2020)</td></tr>
+<tr><td>Michigan MiDAS</td><td><em>Bauserman v. Unemployment Insurance Agency</em> (2022 settlement)</td></tr>
+<tr><td>Detroit Facial Recognition</td><td><em>Williams v. City of Detroit</em>; ACLU documentation</td></tr>
+<tr><td>Clearview AI</td><td>Multiple federal court filings (2022&ndash;2025)</td></tr>
+<tr><td>COMPAS</td><td>ProPublica, &ldquo;Machine Bias&rdquo; (2016)</td></tr>
+<tr><td>Optum</td><td>Obermeyer et al. (2019), <em>Science</em> 366(6464)</td></tr>
+<tr><td>Character.ai</td><td>Multiple federal court filings (2025&ndash;2026)</td></tr>
+<tr><td>Tesla Autopilot</td><td>NHTSA investigations; NTSB reports</td></tr>
+<tr><td>Uber AV</td><td>NTSB investigation report (2019)</td></tr>
+<tr><td>Cruise</td><td>California DMV suspension order; DOJ filings</td></tr>
+<tr><td>UK A-Levels</td><td>Ofqual investigation; UK Parliament reports (2020)</td></tr>
+<tr><td>SafeRent</td><td><em>Louis v. SafeRent Solutions</em>, D. Mass. (2024 settlement)</td></tr>
+</table>
+
+<hr style="margin-top:3rem">
+<p style="color:var(--muted); font-size:0.85rem; text-align:center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
+Human Agency Index (HAI) &mdash; Working Draft &mdash; April 2026<br>
+This is a working project plan, not a finished publication. All content is subject to revision.
+</p>
+
+</body>
+</html>
