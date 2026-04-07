@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HAI — Introduction (Draft) / Introducción (Borrador)</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --text: #e0e0e0;
+    --text-muted: #9a9fb0;
+    --accent: #5b9bd5;
+    --border: #2a2d3a;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    padding: 2rem;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  h1 {
+    font-size: 1.6rem;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  .subtitle {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 2.5rem;
+    font-style: italic;
+  }
+  .lang-label {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--bg);
+    font-family: sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.25rem 0.75rem;
+    border-radius: 3px;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 2rem 2.5rem;
+    margin-bottom: 2.5rem;
+  }
+  p {
+    margin-bottom: 1.25rem;
+    text-align: justify;
+    font-size: 1.02rem;
+  }
+  p:last-child { margin-bottom: 0; }
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 3rem 0;
+  }
+  .note {
+    background: rgba(91,155,213,0.08);
+    border-left: 3px solid var(--accent);
+    padding: 1rem 1.5rem;
+    margin-bottom: 2rem;
+    font-family: sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    border-radius: 0 6px 6px 0;
+  }
+  .footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-family: sans-serif;
+    font-size: 0.8rem;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Human Agency Index (HAI)</h1>
+<div class="subtitle">Introduction — Working Draft — April 2026<br>Dalton Perkinson &amp; Nil Redón Orriols</div>
+
+<div class="note">
+  This is a working draft of the paper's introduction. The English version is the primary text. The Spanish translation below is provided for reference — if any nuance feels off in the translation, the English is authoritative.
+</div>
+
+<!-- ===== ENGLISH ===== -->
+<div class="lang-label">English — Original</div>
+
+<div class="section">
+
+<p>In 2023, a federal judge reviewed the process by which UnitedHealth Group denied post-acute care to elderly patients. The company's AI system, nH Predict, generated predictions for how long a patient's recovery should take. Clinical staff were pressured to keep denial decisions within one percent of the algorithm's output. On appeal, the system was reversed ninety percent of the time — but most patients never appealed, because the process was designed to be, as the judge described it, futile. Two patients whose cases reached the court had died. The algorithm had made the decision. A human had signed it.</p>
+
+<p>UnitedHealth's system had human oversight. That is the problem.</p>
+
+<p>Professionals across every industry are now leaning on AI-enabled tools to work faster, produce more, and reduce costs. Decades of human factors research have studied the dynamics of human-automation interaction in controlled environments — aviation, manufacturing, military command (Parasuraman &amp; Riley, 1997; Lee &amp; See, 2004). But the current generation of AI-enabled decision tools is being deployed at a scale, speed, and breadth of application that outpaces the evidence base built from those earlier systems. A hiring manager using an AI screening tool has no longitudinal evidence about its failure modes. A clinician reviewing an AI-generated care recommendation has no benchmark for when the model is reliable and when it is not. We are running the experiment in production, on real people, and the consequences are accumulating faster than the research can follow.</p>
+
+<p>The experience of practitioners who work closely with AI reveals a telling asymmetry. When an AI output is surfaced through a chatbot interface — raw, unpolished, visibly machine-generated — a human can usually tell when something is off. The response feels generic, the reasoning seems thin, and the user instinctively double-checks. But when the same underlying technology is embedded behind layers of tooling, producing scores in a clinical dashboard or generating risk assessments in a polished enterprise interface, something changes. The human takes that output at face value. The professional presentation confers an authority that the underlying model has not earned.</p>
+
+<p>This is, at its core, a problem of trust calibration. The automation bias literature has long established that humans tend to over-rely on automated recommendations, particularly when those recommendations are presented through authoritative interfaces (Goddard et al., 2012; Parasuraman &amp; Riley, 1997). But the dynamic here extends beyond automation bias into something more fundamental: a framing effect. Boettcher and Cobb (2009) demonstrated that identical information about wartime casualties, presented through different rhetorical frames, produced diametrically opposite conclusions in the same population — increasing support among war proponents while simultaneously decreasing support among skeptics. The same dynamic operates in AI-enabled systems. An output that would provoke scrutiny in a chatbot window commands unquestioned authority when it arrives as a clinical recommendation, a risk score, or a hiring decision. The frame changes; the underlying model does not. And in the gap between what the interface implies and what the model actually does, consequential decisions are being made without meaningful human engagement.</p>
+
+<p>The framing problem becomes a systemic problem when there is no mechanism to see through the frame. Without a standardized way to assess which AI-enabled products place humans in genuine control and which merely perform the appearance of oversight, decision-makers cannot tell the difference. An executive evaluating vendor tools, a regulator writing oversight policy, a patient choosing a health plan — none of them can distinguish a system that genuinely supports human judgment from one that automates around it. The organizations building responsible AI systems, investing in genuine human oversight mechanisms, are providing market cover for the organizations that are not. A product that automates care denial with a one-percent override tolerance competes in the same market as a product that truly supports clinical judgment, and no standardized mechanism exists to tell them apart. The FDA's AI medical device approval process illustrates the problem concretely: a diagnostic tool that underwent rigorous clinical trials and a tool that was cleared through the predicate pathway with no trial data both carry the same "FDA cleared" label — functionally indistinguishable to the clinician choosing between them.</p>
+
+<p>This gap matters because it is invisible to the people making those decisions. Somewhere in the workflow — between the model's output and the human's signature — there exists an expert who could determine whether the AI's recommendation is useful or harmful in the specific context at hand. A clinician who understands the patient's history. A caseworker who knows the family's circumstances. A hiring manager who can assess what a resume score misses. The question is whether the system is designed to put that expert in a position of genuine authority, or whether it is designed to route around them. The distinction between human-in-the-loop and AI-in-the-loop (Farooq &amp; Grudin, 2024) is precisely this: in one design, the human orchestrates the AI; in the other, the AI orchestrates the human, and the human's role is reduced to pressing "confirm."</p>
+
+<p>This is not a hypothetical risk. Between 2005 and 2026, we have identified twenty-nine documented cases across eight domains — healthcare, criminal justice, government welfare, employment, education, autonomous vehicles, consumer AI, and housing — where AI systems caused serious, measurable harm to human beings. In each case, the deploying organization claimed or implied that human oversight existed. In each case, it failed. The harm ranges from wrongful arrest and imprisonment to denial of medical care to death. The common thread is not that these systems lacked oversight mechanisms on paper. It is that the mechanisms did not work in practice.</p>
+
+<p>The building blocks for a solution exist, but they have not been assembled. The automation spectrum tradition — originating with Sheridan and Verplank (1978), refined by Parasuraman et al. (2000), and operationalized for autonomous vehicles in SAE J3016 (2021) — established that human-automation relationships can be described on a continuum and that the degree of automation matters for performance and safety. The Meaningful Human Control framework (Cavalcante Siebert et al., 2022) contributed the philosophical conditions that oversight must satisfy: the tracking condition, in which the system responds to human values, and the tracing condition, in which decisions can be traced to a responsible human. Regulatory frameworks added urgency: the EU AI Act mandates human oversight in Article 14 for high-risk systems, and the NIST AI Risk Management Framework articulated organizational principles for responsible deployment. Most recently, Feng et al. (2025) proposed a five-level autonomy taxonomy for AI agents on behalf of the Knight First Amendment Institute, introducing the concept of autonomy certificates. Each of these contributions advances the conversation. But none of them, individually or collectively, provides a multi-dimensional instrument that measures whether human oversight is actually functioning in a deployed system. The automation spectrum describes where a system sits; it does not assess whether the human at that level is genuinely engaged. The MHC framework defines what oversight should achieve; it does not measure whether it does. The regulatory mandates require oversight; they do not define what adequate oversight looks like. The Knight taxonomy classifies intended design; it does not evaluate operational reality. What is missing is the measurement layer — a way to take these conceptual and regulatory foundations and turn them into a standardized, comparable assessment.</p>
+
+<p>The principle underlying this paper is straightforward: machines should not make decisions that are consequential to human outcomes without meaningful human engagement in that process. This does not mean machines cannot act autonomously — in time-critical scenarios, such as automated emergency braking or cardiac defibrillation, autonomous execution is essential precisely because it saves lives. The distinction is between autonomy in execution and autonomy in governance. A system may act faster than a human can in the moment, but the design of that system — its boundaries, its failure modes, its escalation paths, and the accountability for its outcomes — must remain under genuine human authority. The human condition is the priority. Humans should make decisions for humans, and the systems that support those decisions should be designed, measured, and held accountable for whether they actually enable that.</p>
+
+<p>This paper proposes the Human Agency Index, or HAI: a multi-dimensional scoring framework for evaluating the adequacy of human oversight in any AI-enabled system. Unlike prior frameworks derived from theoretical taxonomies or expert consensus, HAI's dimensions emerged empirically from a comprehensive failure analysis of twenty-nine real-world cases where AI caused documented harm. This inductive approach ensures that every dimension in the framework corresponds to an observable, real-world mechanism of oversight failure — not a hypothesized risk, but a documented pattern that has already caused harm. From that analysis, seven recurring dimensions of oversight failure emerged, each representing a distinct, measurable aspect of whether human control is genuine or performative. The framework produces a composite score and a tier classification that can be applied across domains, providing decision-makers, regulators, and the public with a standardized, comparable assessment of how much meaningful human agency exists in a given system.</p>
+
+</div>
+
+<hr class="divider">
+
+<!-- ===== SPANISH ===== -->
+<div class="lang-label">Castellano — Traducción de referencia</div>
+
+<div class="section">
+
+<p>En 2023, un juez federal revisó el proceso mediante el cual UnitedHealth Group denegaba la atención post-aguda a pacientes de edad avanzada. El sistema de IA de la compañía, nH Predict, generaba predicciones sobre cuánto debería durar la recuperación de un paciente. El personal clínico era presionado para mantener las decisiones de denegación dentro del uno por ciento de lo que indicaba el algoritmo. En apelación, la decisión del sistema se revertía en el noventa por ciento de los casos, pero la mayoría de los pacientes nunca apelaban, porque el proceso estaba diseñado para ser, según lo describió el juez, fútil. Dos pacientes cuyos casos llegaron al tribunal habían fallecido. El algoritmo había tomado la decisión. Un ser humano la había firmado.</p>
+
+<p>El sistema de UnitedHealth tenía supervisión humana. Ese es el problema.</p>
+
+<p>Profesionales de todos los sectores recurren ahora a herramientas habilitadas por IA para trabajar más rápido, producir más y reducir costes. Décadas de investigación en factores humanos han estudiado la dinámica de la interacción humano-automatización en entornos controlados: aviación, manufactura, mando militar (Parasuraman y Riley, 1997; Lee y See, 2004). Pero la generación actual de herramientas de decisión basadas en IA se está desplegando a una escala, velocidad y amplitud de aplicación que supera la base de evidencia construida a partir de aquellos sistemas anteriores. Un responsable de selección de personal que utiliza una herramienta de cribado por IA no dispone de evidencia longitudinal sobre sus modos de fallo. Un clínico que revisa una recomendación de atención generada por IA no tiene un punto de referencia para saber cuándo el modelo es fiable y cuándo no. Estamos ejecutando el experimento en producción, con personas reales, y las consecuencias se acumulan más rápido de lo que la investigación puede seguir.</p>
+
+<p>La experiencia de los profesionales que trabajan de cerca con IA revela una asimetría reveladora. Cuando la salida de una IA se presenta a través de una interfaz de chatbot — en bruto, sin pulir, visiblemente generada por una máquina — un ser humano generalmente puede detectar cuando algo no encaja. La respuesta se siente genérica, el razonamiento parece superficial, y el usuario instintivamente verifica. Pero cuando la misma tecnología subyacente se integra detrás de capas de herramientas, produciendo puntuaciones en un panel clínico o generando evaluaciones de riesgo en una interfaz empresarial pulida, algo cambia. El ser humano acepta esa salida como válida. La presentación profesional confiere una autoridad que el modelo subyacente no se ha ganado.</p>
+
+<p>Esto es, en su esencia, un problema de calibración de confianza. La literatura sobre sesgo de automatización ha establecido desde hace tiempo que los seres humanos tienden a depender en exceso de las recomendaciones automatizadas, particularmente cuando estas se presentan a través de interfaces con apariencia de autoridad (Goddard et al., 2012; Parasuraman y Riley, 1997). Pero la dinámica aquí va más allá del sesgo de automatización hacia algo más fundamental: un efecto de encuadre. Boettcher y Cobb (2009) demostraron que información idéntica sobre bajas en tiempos de guerra, presentada mediante diferentes marcos retóricos, producía conclusiones diametralmente opuestas en la misma población — aumentando el apoyo entre los partidarios de la guerra mientras simultáneamente disminuía el apoyo entre los escépticos. La misma dinámica opera en los sistemas habilitados por IA. Una salida que provocaría escrutinio en una ventana de chatbot impone una autoridad incuestionable cuando llega como recomendación clínica, puntuación de riesgo o decisión de contratación. El marco cambia; el modelo subyacente no. Y en la brecha entre lo que la interfaz sugiere y lo que el modelo realmente hace, se están tomando decisiones con consecuencias reales sin una participación humana significativa.</p>
+
+<p>El problema de encuadre se convierte en un problema sistémico cuando no existe un mecanismo para ver a través del marco. Sin una forma estandarizada de evaluar qué productos habilitados por IA sitúan a los seres humanos en un control genuino y cuáles simplemente escenifican la apariencia de supervisión, los tomadores de decisiones no pueden distinguir la diferencia. Un directivo evaluando herramientas de proveedores, un regulador redactando política de supervisión, un paciente eligiendo un plan de salud — ninguno de ellos puede distinguir un sistema que genuinamente apoya el juicio humano de uno que automatiza a su alrededor. Las organizaciones que construyen sistemas de IA responsables, invirtiendo en mecanismos genuinos de supervisión humana, están proporcionando cobertura de mercado a las organizaciones que no lo hacen. Un producto que automatiza la denegación de atención con una tolerancia de anulación del uno por ciento compite en el mismo mercado que un producto que verdaderamente apoya el juicio clínico, y no existe un mecanismo estandarizado para distinguirlos. El proceso de aprobación de dispositivos médicos con IA de la FDA ilustra el problema de manera concreta: una herramienta diagnóstica que pasó por ensayos clínicos rigurosos y una herramienta que fue autorizada mediante la vía de predicado sin datos de ensayo llevan ambas la misma etiqueta de «autorizada por la FDA» — funcionalmente indistinguibles para el clínico que elige entre ellas.</p>
+
+<p>Esta brecha importa porque es invisible para las personas que toman esas decisiones. En algún punto del flujo de trabajo — entre la salida del modelo y la firma del ser humano — existe un experto que podría determinar si la recomendación de la IA es útil o perjudicial en el contexto específico en cuestión. Un clínico que entiende el historial del paciente. Un trabajador social que conoce las circunstancias de la familia. Un responsable de contratación que puede evaluar lo que una puntuación de currículum omite. La cuestión es si el sistema está diseñado para situar a ese experto en una posición de autoridad genuina, o si está diseñado para esquivarlo. La distinción entre human-in-the-loop y AI-in-the-loop (Farooq y Grudin, 2024) es precisamente esta: en un diseño, el ser humano orquesta la IA; en el otro, la IA orquesta al ser humano, y el papel del ser humano se reduce a pulsar «confirmar».</p>
+
+<p>Esto no es un riesgo hipotético. Entre 2005 y 2026, hemos identificado veintinueve casos documentados en ocho dominios — sanidad, justicia penal, bienestar gubernamental, empleo, educación, vehículos autónomos, IA de consumo y vivienda — donde sistemas de IA causaron daños graves y medibles a seres humanos. En cada caso, la organización que lo desplegó afirmó o dio a entender que existía supervisión humana. En cada caso, esta falló. El daño va desde detención y encarcelamiento injustificados hasta denegación de atención médica y muerte. El hilo común no es que estos sistemas carecieran de mecanismos de supervisión sobre el papel. Es que los mecanismos no funcionaron en la práctica.</p>
+
+<p>Los elementos para construir una solución existen, pero no han sido ensamblados. La tradición del espectro de automatización — originada con Sheridan y Verplank (1978), refinada por Parasuraman et al. (2000) y operacionalizada para vehículos autónomos en SAE J3016 (2021) — estableció que las relaciones humano-automatización pueden describirse en un continuo y que el grado de automatización importa para el rendimiento y la seguridad. El marco de Control Humano Significativo (Cavalcante Siebert et al., 2022) contribuyó las condiciones filosóficas que la supervisión debe satisfacer: la condición de seguimiento, en la que el sistema responde a los valores humanos, y la condición de trazabilidad, en la que las decisiones pueden rastrearse hasta un ser humano responsable. Los marcos regulatorios añadieron urgencia: la Ley de IA de la UE exige supervisión humana en su Artículo 14 para sistemas de alto riesgo, y el Marco de Gestión de Riesgos de IA del NIST articuló principios organizacionales para el despliegue responsable. Más recientemente, Feng et al. (2025) propusieron una taxonomía de autonomía de cinco niveles para agentes de IA en nombre del Knight First Amendment Institute, introduciendo el concepto de certificados de autonomía. Cada una de estas contribuciones hace avanzar la conversación. Pero ninguna de ellas, individual ni colectivamente, proporciona un instrumento multidimensional que mida si la supervisión humana está realmente funcionando en un sistema desplegado. El espectro de automatización describe dónde se sitúa un sistema; no evalúa si el ser humano en ese nivel está genuinamente implicado. El marco de CHC define lo que la supervisión debería lograr; no mide si lo logra. Los mandatos regulatorios exigen supervisión; no definen cómo es una supervisión adecuada. La taxonomía de Knight clasifica el diseño previsto; no evalúa la realidad operativa. Lo que falta es la capa de medición — una forma de tomar estos fundamentos conceptuales y regulatorios y convertirlos en una evaluación estandarizada y comparable.</p>
+
+<p>El principio que subyace a este artículo es directo: las máquinas no deberían tomar decisiones que sean determinantes para los resultados humanos sin una participación humana significativa en ese proceso. Esto no significa que las máquinas no puedan actuar de forma autónoma — en escenarios críticos en tiempo, como el frenado de emergencia automático o la desfibrilación cardíaca, la ejecución autónoma es esencial precisamente porque salva vidas. La distinción es entre autonomía en la ejecución y autonomía en la gobernanza. Un sistema puede actuar más rápido de lo que un ser humano puede en el momento, pero el diseño de ese sistema — sus límites, sus modos de fallo, sus rutas de escalamiento y la rendición de cuentas por sus resultados — debe permanecer bajo autoridad humana genuina. La condición humana es la prioridad. Los seres humanos deben tomar decisiones para seres humanos, y los sistemas que apoyan esas decisiones deben ser diseñados, medidos y responsabilizados de si realmente lo permiten.</p>
+
+<p>Este artículo propone el Índice de Agencia Humana, o HAI (por sus siglas en inglés): un marco de puntuación multidimensional para evaluar la adecuación de la supervisión humana en cualquier sistema habilitado por IA. A diferencia de marcos anteriores derivados de taxonomías teóricas o consenso de expertos, las dimensiones del HAI surgieron empíricamente de un análisis exhaustivo de fallos en veintinueve casos reales donde la IA causó daños documentados. Este enfoque inductivo asegura que cada dimensión del marco corresponde a un mecanismo observable y real de fallo de supervisión — no un riesgo hipotético, sino un patrón documentado que ya ha causado daño. De ese análisis emergieron siete dimensiones recurrentes de fallo de supervisión, cada una representando un aspecto distinto y medible de si el control humano es genuino o performativo. El marco produce una puntuación compuesta y una clasificación por niveles que puede aplicarse en todos los dominios, proporcionando a los tomadores de decisiones, reguladores y al público una evaluación estandarizada y comparable de cuánta agencia humana significativa existe en un sistema dado.</p>
+
+</div>
+
+<div class="footer">
+  Human Agency Index (HAI) — Working Draft — April 2026<br>
+  English is the authoritative text. Spanish translation provided for reference.
+</div>
+
+</div>
+</body>
+</html>
