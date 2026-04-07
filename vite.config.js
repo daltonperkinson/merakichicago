@@ -14,7 +14,7 @@ export default defineConfig({
                 roadmap: resolve(__dirname, 'roadmap/index.html'),
                 hai: resolve(__dirname, 'hai/index.html'),
                 haiengine: resolve(__dirname, 'hai/engine.html'),
-                haiintro: resolve(__dirname, 'hai/intro-preuba-bilingue.html'),
+                haiintro: resolve(__dirname, 'hai/intro-prueba-bilingue.html'),
             }
         }
     }
