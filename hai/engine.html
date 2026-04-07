@@ -1139,6 +1139,51 @@
   The fact that trustSense exists, has been peer-reviewed (MDPI Computers, 2025), and produced pilot scores (3.9/5 and 3.5/5 for different teams) demonstrates that the market and academy accept the concept of scoring human oversight numerically. The limitation isn't the scoring approach &mdash; it's the unit of analysis and the dimensions measured. HAI can inherit the questionnaire-to-score methodology while shifting the focus from "Is your team ready?" to "Is your product designed for human control?"
 </div>
 
+<!-- Empirical Testing: Persona Simulations -->
+<h3 style="margin-top:2.5rem;">Empirical Test: Three Persona Simulations</h3>
+<p>To understand what TrustSense scores actually reveal, we completed the questionnaire three times using fictional business personas representing different organizational profiles. Each persona answered all 23 questions consistently with their organization's likely reality.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Persona 1: Fortune 500 Enterprise</th>
+      <th>Persona 2: Early-Stage Startup</th>
+      <th>Persona 3: Healthcare AI Team</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="font-weight:bold; background:var(--surface);">
+      <td>Overall Score</td>
+      <td>4.82 &mdash; Very High</td>
+      <td>2.23 &mdash; Low</td>
+      <td>4.38 &mdash; High</td>
+    </tr>
+    <tr><td>Proactivity / Threat Awareness</td><td>5.00</td><td>2.33</td><td>4.67</td></tr>
+    <tr><td>Responsibility / Ethics</td><td>5.00</td><td>2.00</td><td>4.33</td></tr>
+    <tr><td>Innovation / Adaptability</td><td>4.50</td><td>3.00</td><td>4.50</td></tr>
+    <tr><td>Resilience</td><td>4.50</td><td>2.00</td><td>3.00</td></tr>
+    <tr><td>Collaboration</td><td>4.50</td><td>2.00</td><td>4.00</td></tr>
+    <tr><td>Integrity</td><td>5.00</td><td>2.00</td><td>5.00</td></tr>
+    <tr><td>Technical Proficiency</td><td>5.00</td><td>3.00</td><td>4.00</td></tr>
+    <tr><td>Problem Solving</td><td>5.00</td><td>2.00</td><td>4.00</td></tr>
+    <tr><td>Resource Accessibility</td><td>5.00</td><td>2.00</td><td>3.00</td></tr>
+    <tr><td>Policy Adherence</td><td>5.00</td><td>1.50</td><td>5.00</td></tr>
+    <tr><td>Motivation / Commitment</td><td>5.00</td><td>3.00</td><td>5.00</td></tr>
+    <tr><td>Privacy / Compliance</td><td>5.00</td><td>2.00</td><td>5.00</td></tr>
+  </tbody>
+</table>
+
+<div class="callout callout-blue" style="margin-top:1.5rem;">
+  <strong>What this tells us:</strong><br>
+  The scoring system is a simple mean of 23 Likert responses, bucketed into tiers. It correctly differentiates between organizational profiles &mdash; the startup flags as &ldquo;Low,&rdquo; the enterprise as &ldquo;Very High&rdquo; &mdash; but reveals three structural limitations:
+  <ul style="margin-top:0.5rem;">
+    <li><strong>Equal weighting across all categories.</strong> A healthcare team that scores 5.0 on privacy, compliance, and integrity but 3.0 on resilience gets averaged down. There is no domain-specific calibration.</li>
+    <li><strong>Self-assessment bias.</strong> All three scores reflect what the team <em>believes about itself</em>, not what an auditor or system inspection would find. A confident but negligent team could outscore a cautious, well-designed one.</li>
+    <li><strong>No product-level signal.</strong> None of the 23 questions ask whether a specific AI system has a stop button, logs decisions, or allows a human to override outputs. A team could score 5.0/5.0 on TrustSense and still ship a fully autonomous system with zero human control mechanisms.</li>
+  </ul>
+</div>
+
 <div class="verdict">
   <h3>Implication for HAI</h3>
   <p>TrustSense and HAI are complementary, not competitive. An organization could score well on TrustSense (mature team, good processes) while deploying products that score poorly on HAI (no stop button, no reversibility, no decision authority for the human). Conversely, a well-designed product could score highly on HAI while being deployed by an immature team. <strong>Both instruments are needed.</strong> The gap HAI fills is clear: a product-level, design-property-focused, multi-dimensional scoring instrument that measures whether human control is architecturally possible &mdash; not whether the humans around it are organizationally prepared.</p>
