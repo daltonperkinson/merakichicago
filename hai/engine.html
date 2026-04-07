@@ -350,6 +350,7 @@
   <button class="tab-btn" data-tab="roadmap">Resolution Roadmap</button>
   <button class="tab-btn" data-tab="strategic">Strategic Assessment</button>
   <button class="tab-btn" data-tab="gap">Gap Verification</button>
+  <button class="tab-btn" data-tab="trustsense">TrustSense Analysis</button>
 </nav>
 
 <!-- ========================================== -->
@@ -876,6 +877,272 @@
   <tr><td>EU AI Act, Article 14</td><td>Regulatory mandate for human oversight. HAI operationalizes the requirement.</td></tr>
   <tr><td>NIST AI RMF 1.0</td><td>Principles-based. Not a measurement instrument. HAI fills the measurement gap.</td></tr>
 </table>
+
+</div>
+</div>
+
+<!-- ===== TAB: TRUSTSENSE ANALYSIS ===== -->
+<div class="tab-content" id="tab-trustsense">
+<div class="tab-body">
+
+<h2>TrustSense Questionnaire: Critical Analysis</h2>
+<p>
+  <strong>trustSense</strong> (Kioskli et al., 2025) is the closest existing tool to what the HAI aims to become: a structured questionnaire that produces a numerical maturity score for human oversight of AI. On April 7, 2026, we completed the assessment from the "AI Technical Team" perspective to evaluate how its approach compares to HAI's proposed dimensions. Below is a question-by-question mapping, followed by a gap analysis.
+</p>
+
+<div class="callout callout-blue">
+  <strong>Source:</strong> trustSense is developed by trustilio B.V. (Amsterdam), published in <em>Computers</em> (2025, Vol. 14, Issue 11, Art. 483). The tool is available at <a href="https://trustsense-xu4xd.ondigitalocean.app/Index.html" style="color:var(--accent);">trustsense-xu4xd.ondigitalocean.app</a>. It uses a Likert-scale format (Strongly Disagree to Strongly Agree) across 23 questions for four role profiles: AI Technical Team, Domain AI User Team, Cybersecurity Team (Defenders), and Potential Adversary (Attacker).
+</div>
+
+<h3>Question-by-Question Mapping to HAI Dimensions</h3>
+<p>Each of the 23 TrustSense questions is mapped below to the HAI dimension it most closely touches, if any. Questions that don't map to any HAI dimension are marked accordingly &mdash; these reveal the fundamental difference in what each instrument measures.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:5%">#</th>
+      <th style="width:40%">TrustSense Question (paraphrased)</th>
+      <th style="width:25%">Nearest HAI Dimension</th>
+      <th style="width:30%">Mapping Quality</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Established routine for implementing mitigation actions (tech controls, policy, procedure)</td>
+      <td>Intervention Accessibility</td>
+      <td><span class="badge badge-serious">Indirect</span> Measures whether mitigation processes exist, not whether a human can actually intervene in a running AI system</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Monthly review sessions ensuring all members understand their oversight roles</td>
+      <td>Frequency of Contact</td>
+      <td><span class="badge badge-serious">Indirect</span> Asks about team meeting cadence, not the frequency of human checkpoints within an AI workflow</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Compliance score on Trustworthy AI above 95% during regular audits</td>
+      <td>Accountability Traceability</td>
+      <td><span class="badge badge-serious">Indirect</span> Audit compliance is organizational; HAI traces responsibility for specific AI outputs to specific humans</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>High-performance computing tools and engagement with external experts</td>
+      <td>&mdash;</td>
+      <td><span class="badge badge-critical">No match</span> Measures team capability/resources, not human control over AI</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Adherence to AI trustworthiness best practices even under high pressure</td>
+      <td>&mdash;</td>
+      <td><span class="badge badge-critical">No match</span> Organizational culture and discipline; no HAI dimension equivalent</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Welcomes external feedback, attends annual training</td>
+      <td>&mdash;</td>
+      <td><span class="badge badge-critical">No match</span> Professional development; not a human-control-over-AI question</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>Upholds ethical principles, legal compliance, professional codes of conduct</td>
+      <td>Accountability Traceability</td>
+      <td><span class="badge badge-serious">Indirect</span> Ethical posture is a precondition for accountability, but doesn't measure traceability itself</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>Proficiency in data quality, data wrangling, synthetic datasets, routine audits</td>
+      <td>Transparency</td>
+      <td><span class="badge badge-serious">Indirect</span> Data quality supports informed oversight, but this is about technical capability, not whether the human has enough information to exercise control</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>Routinely identifies potential technological, operational, or social AI threats</td>
+      <td>&mdash;</td>
+      <td><span class="badge badge-critical">No match</span> Threat identification is risk management, not human agency over AI decisions</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>Technological failures do not lead to a drop in team performance metrics</td>
+      <td>&mdash;</td>
+      <td><span class="badge badge-critical">No match</span> Team resilience metric; no analog in HAI's product-level oversight dimensions</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>After significant errors, develops revised processes to prevent recurrence (per QMS)</td>
+      <td>Reversibility</td>
+      <td><span class="badge badge-serious">Indirect</span> Post-hoc process improvement is related to but distinct from the ability to undo or override a specific AI action</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>Ensures recovery and business continuity within 24 hours, >90% success rate</td>
+      <td>Intervention Accessibility</td>
+      <td><span class="badge badge-serious">Indirect</span> Recovery time is an organizational metric; HAI asks how easy it is to stop or redirect an AI mid-process</td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>Resolves 90% of challenges through interdisciplinary collaboration</td>
+      <td>&mdash;</td>
+      <td><span class="badge badge-critical">No match</span> Team problem-solving effectiveness; not a human-over-AI control measure</td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>Knows intended use of AI systems, their normal operation, and expected outcomes</td>
+      <td>Transparency</td>
+      <td><span class="badge badge-moderate">Partial</span> Closest match in the questionnaire &mdash; asks whether the human understands the AI system. But framed as team knowledge, not as a design property of the system itself</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>Limited interaction with external tech communities is detrimental</td>
+      <td>&mdash;</td>
+      <td><span class="badge badge-critical">No match</span> Community engagement; no HAI analog</td>
+    </tr>
+    <tr>
+      <td>16</td>
+      <td>Shares key insights and data points addressing technological threats</td>
+      <td>&mdash;</td>
+      <td><span class="badge badge-critical">No match</span> Information sharing culture; not product-level human control</td>
+    </tr>
+    <tr>
+      <td>17</td>
+      <td>Acts to mitigate AI threats/incidents in line with QMS requirements</td>
+      <td>Intervention Accessibility</td>
+      <td><span class="badge badge-serious">Indirect</span> Incident response exists, but this measures organizational procedure, not the technical ease of intervention in a specific system</td>
+    </tr>
+    <tr>
+      <td>18</td>
+      <td>Regular ethical reviews, discussions, and professional trainings</td>
+      <td>&mdash;</td>
+      <td><span class="badge badge-critical">No match</span> Ethics culture; no direct HAI dimension</td>
+    </tr>
+    <tr>
+      <td>19</td>
+      <td>Resistance to workflow changes that enhance trustworthiness is a challenge</td>
+      <td>&mdash;</td>
+      <td><span class="badge badge-critical">No match</span> Change management friction; organizational culture question</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>Privacy and legal compliance at &ge;95% adherence in internal audits</td>
+      <td>Accountability Traceability</td>
+      <td><span class="badge badge-serious">Indirect</span> Compliance rates support accountability infrastructure but don't measure whether a responsible human is identifiable for a given AI outcome</td>
+    </tr>
+    <tr>
+      <td>21</td>
+      <td>Builds professional relationships with partners to enhance threat intelligence</td>
+      <td>&mdash;</td>
+      <td><span class="badge badge-critical">No match</span> Partner ecosystem; not a human-control measure</td>
+    </tr>
+    <tr>
+      <td>22</td>
+      <td>Understands multidimensional trustworthiness requirements (cybersecurity, privacy, transparency, etc.)</td>
+      <td>Transparency</td>
+      <td><span class="badge badge-serious">Indirect</span> Awareness of trustworthiness dimensions is a prerequisite for oversight, but doesn't measure whether a specific system provides adequate transparency</td>
+    </tr>
+    <tr>
+      <td>23</td>
+      <td>Applies advanced tools for model transparency, interpretability, adversarial protection, bias reduction</td>
+      <td>Transparency</td>
+      <td><span class="badge badge-moderate">Partial</span> Most technically aligned question &mdash; but still measures whether the team uses these tools, not whether a given AI product has these properties built in</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Coverage Summary</h3>
+
+<div class="stats-row">
+  <div class="stat-box">
+    <span class="stat-num">0</span>
+    <span class="stat-label">Direct Matches</span>
+  </div>
+  <div class="stat-box">
+    <span class="stat-num">10</span>
+    <span class="stat-label">Indirect / Partial</span>
+  </div>
+  <div class="stat-box">
+    <span class="stat-num">13</span>
+    <span class="stat-label">No HAI Match</span>
+  </div>
+  <div class="stat-box">
+    <span class="stat-num">0 / 23</span>
+    <span class="stat-label">Product-Level Questions</span>
+  </div>
+</div>
+
+<h3>HAI Dimension Coverage by TrustSense</h3>
+<table>
+  <thead>
+    <tr>
+      <th>HAI Dimension</th>
+      <th>TrustSense Questions</th>
+      <th>Coverage Assessment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Decision Authority</strong></td>
+      <td>None</td>
+      <td><span class="badge badge-critical">Absent</span> No question asks who makes the final call on consequential AI outputs. This is HAI's most fundamental dimension and TrustSense does not address it at all.</td>
+    </tr>
+    <tr>
+      <td><strong>Reversibility</strong></td>
+      <td>Q11 (loosely)</td>
+      <td><span class="badge badge-critical">Absent</span> Q11 asks about post-error process revision, which is organizational learning &mdash; not whether a human can undo or override a specific AI action after the fact.</td>
+    </tr>
+    <tr>
+      <td><strong>Transparency</strong></td>
+      <td>Q8, Q14, Q22, Q23</td>
+      <td><span class="badge badge-serious">Indirect</span> Four questions touch on whether the team understands AI systems and uses transparency tools. But all are framed as team competencies, not system design properties. HAI asks: "Does the system give the human enough information?" TrustSense asks: "Does the team have the skills?"</td>
+    </tr>
+    <tr>
+      <td><strong>Intervention Accessibility</strong></td>
+      <td>Q1, Q12, Q17</td>
+      <td><span class="badge badge-serious">Indirect</span> Three questions address mitigation routines, recovery time, and incident response. All at the organizational level. None ask whether a specific AI system has a stop button, escalation path, or mid-process redirect capability.</td>
+    </tr>
+    <tr>
+      <td><strong>Accountability Traceability</strong></td>
+      <td>Q3, Q7, Q20</td>
+      <td><span class="badge badge-serious">Indirect</span> Compliance scores and ethical posture support accountability infrastructure. But none ask the HAI question: "For any given AI output, can you identify the responsible human?"</td>
+    </tr>
+    <tr>
+      <td><strong>Frequency of Contact</strong></td>
+      <td>Q2 (loosely)</td>
+      <td><span class="badge badge-critical">Absent</span> Q2 asks about monthly team meetings. HAI measures how often the AI system itself requires genuine human input during operation &mdash; a fundamentally different concept.</td>
+    </tr>
+    <tr>
+      <td><strong>Affected Party Awareness</strong></td>
+      <td>None</td>
+      <td><span class="badge badge-critical">Absent</span> No question addresses whether the people impacted by AI decisions know that AI is involved, can contest outcomes, or have recourse. TrustSense is entirely team/organization-facing.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Key Findings</h3>
+
+<div class="callout callout-red">
+  <strong>Finding 1: TrustSense measures organizational maturity, not product-level human control.</strong><br>
+  Every single question is framed as "The team does X" &mdash; evaluating whether a team or organization has good practices. Not one question evaluates the design properties of a specific AI product or workflow. This is the fundamental unit-of-analysis difference: TrustSense scores organizations, HAI would score products.
+</div>
+
+<div class="callout callout-orange">
+  <strong>Finding 2: Two of HAI's seven dimensions are entirely absent.</strong><br>
+  Decision Authority (who makes the final call?) and Affected Party Awareness (do impacted people know AI is involved?) have zero representation in TrustSense's 23 questions. These are arguably the two most consequential dimensions for end-user protection.
+</div>
+
+<div class="callout callout-orange">
+  <strong>Finding 3: The Likert scale measures self-perception, not system properties.</strong><br>
+  A team can "Strongly Agree" that they understand their AI systems while the systems themselves offer no transparency mechanisms. TrustSense captures confidence, not capability. HAI needs to measure observable, verifiable design properties &mdash; does the system log decisions? Does it expose a stop mechanism? Can outputs be reversed? These are binary or measurable facts, not sentiment.
+</div>
+
+<div class="callout callout-green">
+  <strong>Finding 4: TrustSense validates the demand for a scoring instrument.</strong><br>
+  The fact that trustSense exists, has been peer-reviewed (MDPI Computers, 2025), and produced pilot scores (3.9/5 and 3.5/5 for different teams) demonstrates that the market and academy accept the concept of scoring human oversight numerically. The limitation isn't the scoring approach &mdash; it's the unit of analysis and the dimensions measured. HAI can inherit the questionnaire-to-score methodology while shifting the focus from "Is your team ready?" to "Is your product designed for human control?"
+</div>
+
+<div class="verdict">
+  <h3>Implication for HAI</h3>
+  <p>TrustSense and HAI are complementary, not competitive. An organization could score well on TrustSense (mature team, good processes) while deploying products that score poorly on HAI (no stop button, no reversibility, no decision authority for the human). Conversely, a well-designed product could score highly on HAI while being deployed by an immature team. <strong>Both instruments are needed.</strong> The gap HAI fills is clear: a product-level, design-property-focused, multi-dimensional scoring instrument that measures whether human control is architecturally possible &mdash; not whether the humans around it are organizationally prepared.</p>
+</div>
 
 </div>
 </div>
