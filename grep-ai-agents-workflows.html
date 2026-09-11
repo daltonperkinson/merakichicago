@@ -44,228 +44,95 @@
             </div>
 
             <div class="markdown-content">
-                <p>For most of my adult life I've lived with a mild congestion I was so used to that I assumed it was
-                    normal. Nothing major, nothing that had me hacking through a conversation or while I was out walking
-                    the dog, just a persistent cloudiness I rarely paid any mind to. When I moved to Chicago I mentioned
-                    it to my doctor and he recommended a nose spray twice a day.</p>
+                <p>For most of my adult life I've lived with a mild congestion I was so used to that I assumed it was normal. Nothing major, nothing that had me hacking through a conversation or while I was out walking the dog, just a persistent cloudiness I rarely paid any mind to. When I moved to Chicago I mentioned it to my doctor and he recommended a nose spray twice a day.</p>
 
-                <p>Day one, morning, check. Evening, check. Day two, morning, check. Day eight, and I'd forgotten the
-                    last five entirely. I tried again. Made it three days. Again and again I tried, and I never once
-                    made it the full two weeks it takes to know whether the thing actually helps. Four years later I had
-                    a drawer of half-used bottles and no answer.</p>
+                <p>Day one, morning, check. Evening, check. Day two, morning, check. Day eight, and I'd forgotten the last five entirely. I tried again. Made it three days. Again and again I tried, and I never once made it the full two weeks it takes to know whether the thing actually helps. Four years later I had a drawer of half-used bottles and no answer.</p>
 
-                <p>Bored, and right around the time Antigravity launched in November of 2025, I decided to build
-                    something that would nag me relentlessly about it. I used AI to build it, and what came out the
-                    other side is almost entirely deterministic. A schedule. A text. A confirmation. An escalation if I
-                    don't answer. The only part that's genuinely AI is the phone call at the end, which has a bit of a
-                    personality and some room to improvise on what it says to me.</p>
+                <p>Bored, and right around the time Antigravity launched in November of 2025, I decided to build something that would nag me relentlessly about it. I used AI to build it, and what came out the other side is almost entirely deterministic. A schedule. A text. A confirmation. An escalation if I don't answer. The only part that's genuinely AI is the phone call at the end, which has a bit of a personality and some room to improvise on what it says to me.</p>
 
-                <p>It texts me. It waits for me to confirm. If I ignore it long enough, it calls my phone and tells me
-                    to go to the bathroom and take the spray.</p>
+                <p>It texts me. It waits for me to confirm. If I ignore it long enough, it calls my phone and tells me to go to the bathroom and take the spray.</p>
 
                 <p><strong>I've missed four doses in 207 days.</strong></p>
 
-                <p>I have spent the better part of a year building tools with AI. Workflows, skills, local apps I run
-                    just for myself, agents that call other agents. What I've found is that it's easy to fall into a
-                    trap where you think you're optimizing, connecting everything together for greater value, aiming at
-                    a future state where it's all handled and you never have to think about the machine behind the
-                    OAuth. More often than not I regret letting AI tell me how the tool should work, how the data should
-                    flow, and where the edges are that need a person.</p>
+                <p>I have spent the better part of a year building tools with AI. Workflows, skills, local apps I run just for myself, agents that call other agents. What I've found is that it's easy to fall into a trap where you think you're optimizing, connecting everything together for greater value, aiming at a future state where it's all handled and you never have to think about the machine behind the OAuth. More often than not I regret letting AI tell me how the tool should work, how the data should flow, and where the edges are that need a person.</p>
 
-                <p>I want to be clear about where I'm standing. I'm not an AI skeptic, and at the same time I am. I use
-                    these tools every day and they have made me faster at real work. What I've lost faith in is the
-                    promise that a system will orchestrate that work reliably without me guiding it at every step. I
-                    chased that one hard enough to know that it comes at an annoying cost. It costs a lot of time and
-                    energy, and what you get back is fragile, and you end up spending more of your week figuring out
-                    what the hell you built than it spends doing work on your behalf. You try to straighten one thing
-                    out and wind up with a bigger knot in your lap.</p>
+                <p>I want to be clear about where I'm standing. I'm not an AI skeptic, and at the same time I am. I use these tools every day and they have made me faster at real work. What I've lost faith in is the promise that a system will orchestrate that work reliably without me guiding it at every step. I chased that one hard enough to know that it comes at an annoying cost. It costs a lot of time and energy, and what you get back is fragile, and you end up spending more of your week figuring out what the hell you built than it spends doing work on your behalf. You try to straighten one thing out and wind up with a bigger knot in your lap.</p>
 
-                <h2>A big ol' plate of spaghetti</h2>
+                <h2>A big 'ol plate of spaghetti</h2>
 
-                <p>The pitch I'm seeing right now is AI everything. An AI workflow for every task. An agent to monitor
-                    and control each workflow. An agent to make sure those agents are doing their job. A big plate of
-                    spaghetti.</p>
+                <p>The pitch I'm seeing right now is AI everything. An AI workflow for every task. An agent to monitor and control each workflow. An agent to make sure those agents are doing their job. A big plate of spaghetti.</p>
 
-                <p>I've built some decently complex tools and I have wasted a lot of hours refining a fragile pipeline
-                    that grew tenfold, or sitting there having a conversation with the AI so it can explain to me what's
-                    working and what isn't. More than once I've asked it bluntly, what does this tool even do now?</p>
+                <p>I've built some decently complex tools and I have wasted a lot of hours refining a fragile pipeline that grew tenfold, or sitting there having a conversation with the AI so it can explain to me what's working and what isn't. More than once I've asked it bluntly, what does this tool even do now?</p>
 
-                <p>You wind up with a dozen moving parts saving you a small amount of time, and then you have to ask for
-                    a debrief of what happened while you were away. The agents hit a nuanced scenario nobody programmed
-                    them for and go about generating the wrong output as fact, confidently, or they fail mid-flight and
-                    nothing tells you. Then they recommend some error handling. Then a patch. Then another thing. It
-                    never ends.</p>
+                <p>You wind up with a dozen moving parts saving you a small amount of time, and then you have to ask for a debrief of what happened while you were away. The agents hit a nuanced scenario nobody programmed them for and go about generating the wrong output as fact, confidently, or they fail mid-flight and nothing tells you. Then they recommend some error handling. Then a patch. Then another thing. It never ends.</p>
 
-                <p>They are very good at finding work. Point one at a codebase and it will find plenty to fix. What it
-                    lacks is any sense of the critical path, so it sends you down a rabbit hole after something you
-                    didn't need. Iterate on that for a few weeks and you have a Frankenstein monster that does a lot of
-                    things poorly and one, maybe two, things well.</p>
+                <p>They are very good at finding work. Point one at a codebase and it will find plenty to fix. What it lacks is any sense of the critical path, so it sends you off on a rabbit chase after something you didn't need. Iterate on that for a few weeks and you have a Frankenstein monster that does a lot of things poorly and one, maybe two, things well.</p>
 
-                <p>I've noticed it usually wants to reach for a model to solve every problem, too. Almost always. So you
-                    burn tokens and fight context windows to do something a few hundred lines of deterministic code has
-                    done reliably since before I joined the workforce. It's easy to wall yourself in as you oblige one
-                    reasonable addition after another, until you're on the wrong side of something you built and have to
-                    break back through it.</p>
+                <p>I've noticed it usually wants to reach for a model to solve every problem, too. Almost always. So you burn tokens and fight context windows to do something a few hundred lines of deterministic code has done reliably since before I joined the workforce. It's easy to wall yourself in as you oblige one reasonable addition after another, until you're on the wrong side of something you built and have to break back through it.</p>
 
                 <h2>Hitting the (fire)wall</h2>
 
-                <p>At some point in every one of these builds I hit a wall where I'm not solving the problem I started
-                    with anymore. I'm herding digital cats into a swimming pool, chasing enhancements that were never
-                    going to give me value.</p>
+                <p>At some point in every one of these builds I hit a wall where I'm not solving the problem I started with anymore. I'm herding digital cats into a swimming pool, chasing enhancements that were never going to give me value.</p>
 
                 <p>The research says the same thing, but more precisely.</p>
 
-                <p>OSWorld 2.0 benchmarks models against real computer tasks. The median one takes a skilled person
-                    about an hour and a half, and seven in ten take more than an hour. The best model finished about 21%
-                    of them outright. Past about two and three quarter hours, every model on the chart scored zero.</p>
+                <p>OSWorld 2.0 benchmarks models against real computer tasks. Seven in ten take a person more than an hour. The best model finished about 21% of them. On the long ones, the tasks running close to three hours, every model tested scored zero.</p>
 
-                <p>METR measures something narrower than most people repeating the number seem to think. Not how long an
-                    AI can run on its own. How much serial human work it can replace. As of this spring the frontier sat
-                    around a twelve hour task at a 50% success rate, and the range on that estimate runs from five hours
-                    to sixty one. Ask for 80% instead and the twelve hours drops to ninety minutes. METR's own note on
-                    the limits of the number says some work, the kind that has to be reliable and is hard to check,
-                    needs to clear 98% before automating it is worth the trouble. That describes most of what I'd
-                    actually want to hand off.</p>
+                <p>METR measures how much serial human work an AI can replace. Not how long it can run on its own. As of this spring the frontier could handle roughly a twelve hour task at a 50% success rate. Ask for an 80% success rate and that twelve hours drops to ninety minutes. METR's own note on this says the bar is higher for work that has to be reliable and is hard to check. That work needs to clear 98% before automating it is worth the trouble.</p>
 
-                <p>Chain those systems together and the failures multiply. A Berkeley team built a taxonomy of
-                    multi-agent failures and ran it across 1,642 traces of systems falling over. Most of the labeling
-                    was done by another model, so take it as a rough map rather than a survey. About a third of the
-                    failures landed in one bucket they call inter-agent misalignment. Agents talking past each other,
-                    withholding information, or doing something other than what they'd just said they were going to do.
-                    That last one is the single biggest piece of it. It's also the most human relatable. A handoff
-                    between two people almost always carries a caveat at the bottom of the email, or a Slack ping an
-                    hour later that starts with one more thing on that report. Why would it be any different for agents,
-                    except that there's nobody around to send the second message?</p>
+                <p>Chain those systems together and the failures multiply. A Berkeley team ran a failure taxonomy over 1,642 traces of multi-agent systems falling over. Most of the labeling was done by another model, so take it as a rough map. About a third of the failures were agents talking past each other, withholding information, or doing something other than what they'd just said they would do. That's human relatable. A handoff between two people almost always carries a caveat at the bottom of the email, or a Slack ping an hour later that starts with one more thing on that report. Why would it be any different for agents, except that there's nobody around to send the second message.</p>
 
-                <p>Anthropic published numbers on a multi-agent research system it built in-house. It works, and it
-                    costs about fifteen times the tokens of a plain chat. That's the trade. The more of these things we
-                    daisy-chain together, the more we spend to get a result we then have to go verify ourselves. Our
-                    resources are better spent elsewhere. That's the view from up high, anyway. Down where the work
-                    actually gets done, it's muddier.</p>
+                <p>Anthropic published numbers on a multi-agent research system it built in-house. It works, and it costs about fifteen times the tokens of a plain chat. That's what we trade. The more of these things we daisy-chain together, the more we spend to get a result we then have to go verify ourselves. Our resources are better spent elsewhere. That's the view from up high, anyway. Down where the work actually gets done is muddier.</p>
 
                 <h2>What it feels like in the trenches</h2>
 
                 <p>Let's chat real-world.</p>
 
-                <p>Atlassian surveyed twelve thousand knowledge workers and 173 Fortune 1000 executives this year.
-                    Eighty-nine percent of the executives said AI has increased the speed of the work. Six percent were
-                    sure they could point to clear returns across the organization. Atlassian has a name for that gap.
-                    They call it the AI efficiency paradox. Both numbers can be true at once, and I'd bet the space
-                    between them is where a lot of next year's budget goes to die.</p>
+                <p>Atlassian surveyed twelve thousand knowledge workers and 173 executives this year. Eighty-nine percent of the executives said AI has increased the speed of the work. Six percent were sure they could point to clear returns across the organization. Both of those can be true at once, and I'd bet the space between them is where a lot of next year's budget goes to die.</p>
 
-                <p>Stack Overflow's 2025 developer survey asked what frustrates people about these tools and let them
-                    check every box that applied. Two thirds checked the same one. Solutions that are almost right, but
-                    not quite. Almost right is the most expensive kind of wrong. It takes longer to find than the
-                    obvious kind.</p>
+                <p>Stack Overflow asked developers what frustrates them most about these tools. Two thirds gave the same answer: solutions that are almost right, but not quite. Almost right is the most expensive kind of wrong. It takes longer to find than the obviously-wrong, and you spend a lot of time and money to learn the answer.</p>
 
-                <p>One caveat, and this part is guesswork. METR ran a study in 2025 that found experienced developers
-                    took about 19% longer on real tasks when they used AI. They expected to be 24% faster going in. They
-                    still believed they'd been 20% faster coming out. That matched what I was living at the time. Then
-                    METR ran it again in late 2025 and got what they called an unreliable signal. In February they said
-                    they now think developers are probably more sped up than that first number implied, while noting
-                    their own data is only very weak evidence for the size of it. Their point estimates were still
-                    negative. So they're rebuilding the experiment rather than publishing a number.</p>
+                <p>One caveat worth thinking about even if conjecture. METR ran a study in 2025 that found experienced developers took about 19% longer on real tasks when they used AI, and the kicker was that those same developers came out of it convinced they had been faster. That matched what I was living at the time. Then METR tried to run it again, couldn't get a clean answer, and said in February that they think developers are probably more sped up than that first number implied. Their point estimates were still negative and they couldn't size the change with the design they had, so they're rebuilding it.</p>
 
-                <p>I don't take that as the first result being wrong. My read is that people got better at knowing where
-                    the edges are. The developers in that first study were probably doing what I was doing, handing over
-                    too much and paying for it on the back end, and a year of hard lessons has taught a lot of us to
-                    stop. That's just my hunch. Worth noting, though, that part of why METR couldn't get a clean second
-                    answer is that somewhere between a third and a half of their developers held back tasks they didn't
-                    want to do without AI. But it lines up with everything I've seen. Pointed at a narrow job, it's
-                    fast. Hand it the wheel, it wraps you around the axle.</p>
+                <p>I don't take that as the first result being wrong. My read is that people got better at knowing where the edges are. The developers in that first study were probably doing what I was doing, handing over too much and paying for it on the back end, and a year of hard lessons has taught a lot of us to stop. That's just my hunch. But it lines up with everything I've seen. Pointed at a narrow job, it's fast. Hand it the wheel, it wraps you around the axle.</p>
 
                 <h2>Asleep at the wheel</h2>
 
-                <p>None of this is new. In 1983 a researcher named Lisanne Bainbridge wrote five pages about automated
-                    control rooms, the kind you find in power plants and chemical plants and cockpits, and those five
-                    pages explain my last year better than anything published this decade.</p>
+                <p>None of this is new. In 1983 a researcher named Lisanne Bainbridge wrote five pages about automated control rooms, the kind you find in power plants and chemical plants and cockpits, and those five pages explain my last year better than anything published this decade.</p>
 
-                <p>Her point was that automating a job doesn't get rid of the person. It leaves them the parts the
-                    designer couldn't figure out how to automate. Sit and watch a machine that hardly ever breaks. Take
-                    over the second it does. The machine went in because it does the job better than they did, and now
-                    they're the one who has to catch it being wrong. Nobody stays sharp doing that. You lose the skill
-                    because you stopped using it, and whoever gets hired after you never gets the practice to pick it up
-                    in the first place.</p>
+                <p>Her point was that automating a job doesn't get rid of the person. It leaves them the two worst parts of it. Sit and watch a machine that hardly ever breaks. Take over the second it does. The machine went in because it does the job better than they did, and now they're the one who has to catch it being wrong. Nobody stays sharp doing that. You lose the skill because you stopped using it, and whoever gets hired after you never picks it up in the first place.</p>
 
-                <p>Twenty-seven years later Parasuraman and Manzey pulled together the research on the human side of
-                    that arrangement. Two things stuck with me. Experience helps less than you'd hope. Pilots caught
-                    more automation failures than people who had never flown, and they still went complacent. Piling on
-                    more time with the system doesn't fix it either. An hour of extra practice moved the needle not at
-                    all. What did move it was training where the automation failed in front of them.</p>
+                <p>Twenty-seven years later Parasuraman and Manzey went looking at the human side of that arrangement. Two things stuck with me. Twenty years on the job doesn't protect you. Pilots caught more failures than people who had never flown and they still went complacent. Piling on more hours with the system doesn't fix it either. What did help was training where the automation failed in front of them. The second one is worse. What makes people stop checking isn't how good the machine is. It's how steady it is. Operators caught 82% of the failures when the system's reliability wobbled around, and 33% when it hummed along the same way every day.</p>
 
-                <p>The second one is worse. What makes people stop checking isn't how good the machine is. It's how
-                    steady it is. In one study they cite, operators caught 82% of the failures when the system's
-                    reliability wobbled around, and 33% when it hummed along the same way every day. Both of those were
-                    people juggling other work at the same time. Give them nothing else to do and they caught nearly
-                    everything, which tells you the problem isn't the watching. It's the watching while you have a job.
-                </p>
-
-                <p>Picture what that looks like at a desk. Week one you read every word of what the model gives you. By
-                    month three it's been steady enough for long enough that you're skimming. By month six you're
-                    hitting approve while you eat lunch. Nobody decided to stop paying attention. It just stopped. And
-                    that's one person at one desk, which is the smaller half of it.</p>
+                <p>Picture what that looks like at a desk. Week one you read every word of what the model gives you. By month three it's been steady enough for long enough that you're skimming. By month six you're hitting approve while you eat lunch. Nobody decided to stop paying attention. It just stopped. And that's one person at one desk, which is the smaller half of it.</p>
 
                 <h2>The other half of this</h2>
 
-                <p>That is a bigger problem than my frustration with brittle pipelines. If a person is supposed to be
-                    the control layer, the honest question is whether that control is real or performative. Most systems
-                    that claim a human in the loop have a human near the loop, holding a pen, playing Wordle on their
-                    phone, signing whatever comes out the other end.</p>
+                <p>That is a bigger problem than my frustration with brittle pipelines. If a person is supposed to be the control layer, the honest question is whether that control is real or performative. Most systems that claim a human in the loop have a human near the loop, holding a pen, playing Wordle on their phone, signing whatever comes out the other end.</p>
 
-                <p>I've been working on a paper with Nil Red&oacute;n Orriols, a mathematician in Barcelona, on a way to
-                    actually score that. We call it the Human Agency Index, and it came out of reading through
-                    documented cases where AI caused real harm and a human was nominally responsible and functionally
-                    powerless. It's still in progress and I'll write about it properly when it's finished. I mention it
-                    because it's my problem at a different altitude. At the institutional level, oversight nobody
-                    measures is a governance failure. At my desk it's a Tuesday spent debugging a workflow that was
-                    supposed to save me an afternoon. Different stakes, same missing piece.</p>
+                <p>I've been working on a paper with Nil Red&oacute;n Orriols, an AI thought leader and mathematician in Barcelona, on a way to actually score that. We call it the Human Agency Index, and it came out of reading through documented cases where AI caused real harm and a human was nominally responsible and functionally powerless. It's still in progress and I'll write about it properly when it's finished. I mention it because it's my problem at a different altitude. At the institutional level, oversight nobody measures is a governance failure. At my desk it's a Tuesday spent debugging a workflow that was supposed to save me an afternoon. Different stakes, same missing piece.</p>
 
                 <h2>What doesn't get automated</h2>
 
-                <p>Here's where I land. Orchestration doesn't get automated. Not soon, and I can't see the path to it.
-                </p>
+                <p>Here's where I land. Orchestration doesn't get automated. Not soon, and I can't see the path to it.</p>
 
-                <p>Orchestration isn't picking the next step. Agents do that fine. Orchestration is sitting in a room
-                    with a client who wants a dashboard and figuring out, half an hour in, that a dashboard won't fix
-                    anything. Two employees are typing the same numbers into two systems that don't talk to each other.
-                    And the one who knows how all of it works is retiring in March. Nobody said either of those things.
-                    I had to ask. You hear that kind of thing by listening for what nobody says, and that takes years in
-                    those rooms and being wrong in a few of them.</p>
+                <p>Orchestration isn't picking the next step. Agents do that fine. Orchestration is sitting in a room with a client who asks for a dashboard, and realizing half an hour in that a dashboard won't solve anything. The real issue is that two employees are manually copying the exact same numbers between two disconnected systems every day, duplicating the effort by hand. On top of that, the main person handling all that manual data re-entry is retiring in March&ndash;a critical detail that nobody brought up until you started digging deeper with targeted questions. You only uncover those hidden realities by paying attention to what isn't being said, a skill earned from years of sitting in those rooms and being wrong a few times.</p>
 
-                <p>The thing getting automated is taking a clear spec and turning it into code. Everything else is still
-                    yours. Deciding what to build. Deciding whether it's worth building at all. Knowing what will break
-                    once it's live. And the faster the code gets written, the more of that work there is, because now
-                    you've shipped five things instead of one and every one of them needs a person who understands it.
-                    Trying to replace human review to clear a bottleneck is a losing game. So I quit playing that one.
-                </p>
+                <p>The thing getting automated is taking a clear spec and turning it into code. Everything else is still yours. Deciding what to build. Deciding whether it's worth building at all. Knowing what will break once it's live. And the faster the code gets written, the more of that work there is, because now you've shipped five things instead of one and every one of them needs a person who understands it. Trying to replace human review to clear a bottleneck is a losing game. So I quit playing that one.</p>
 
                 <h2>What I do instead</h2>
 
-                <p>Small tools that do one thing, built for a specific person with a specific problem, fired off by a
-                    human who decided right then that this was the moment.</p>
+                <p>Small tools that do one thing, built for a specific person with a specific problem, fired off by a human who decided right then that this was the moment.</p>
 
-                <p>Go back to the nose spray. It isn't clever, and the one clever part is guardrailed inside a phone
-                    call. It has one job and no say in what that job is, and it has never once surprised me. That's the
-                    whole feature. It doesn't know anything about my health, it isn't optimizing my morning, and it has
-                    never proposed a second agent to supervise it. It just refuses to let me off the hook. Four missed
-                    doses in 207 days.</p>
+                <p>Go back to the nose spray. It isn't clever, and the one clever part is guardrailed inside a phone call. It has one job and no say in what that job is, and it has never once surprised me. That's the whole feature. It doesn't know anything about my health, it isn't optimizing my morning, and it has never proposed a second agent to supervise it. It just refuses to let me off the hook. Four missed doses in 207 days.</p>
 
-                <p>Everything I've built that delivers real value came out the same way. Somebody told me about a
-                    problem, usually sideways, in the middle of talking about something else. I sat with it longer than
-                    felt productive. Then I built one narrow thing and fixed it until it quit breaking. The decision
-                    about which tool to use, when to use it, and what to do when something is wrong, all of that stayed
-                    with me. That isn't a gap a better model closes in a few releases. Making those decisions is the
-                    actual work, and that stays with us.</p>
+                <p>Everything I've built that delivers real value came out the same way. Somebody told me about a problem, usually in a convoluted way, in the middle of talking about something else. I sat with it longer than felt productive. Then I built one narrow thing and fixed it until it quit breaking. The decision about which tool to use, when to use it, and what to do when something is wrong, all of that stayed with me. That isn't a gap a better model closes in a few releases. Making those decisions is the actual work, and that stays with us.</p>
 
-                <p>There's one more piece of that nose spray story. The thing that actually changed the outcome wasn't
-                    the build. It was a doctor listening to me describe something I had stopped noticing years ago and
-                    telling me what the solution should be. Nobody automated that part. All I built was the thing that
-                    keeps me honest about it, and I built it dumb on purpose.</p>
+                <p>There's one more piece of that nose spray story. The thing that actually changed the outcome wasn't the build. It was a doctor listening to me describe something I had stopped noticing years ago and telling me what the solution should be. Nobody automated that part. All I built was the thing that keeps me honest about it, and I built it dumb on purpose.</p>
 
                 <p>The tools are good. They're getting better. I use them constantly and I'd be slower without them.</p>
 
-                <p><strong>I just don't think they're going to run the show. Somebody still has to notice the thing you
-                        stopped noticing.</strong></p>
+                <p><strong>I just don't think they're going to run the show. Somebody still has to notice the thing you stopped noticing.</strong></p>
 
                 <div
                     style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(251, 224, 228, 0.1); font-size: 0.95rem; line-height: 1.7; color: var(--text-muted);">
@@ -283,19 +150,16 @@
                         <a href="https://www.anthropic.com/engineering/multi-agent-research-system" target="_blank"
                             rel="noopener">Anthropic on multi-agent systems</a> &middot;
                         <a href="https://www.atlassian.com/blog/state-of-teams-2026" target="_blank"
-                            rel="noopener">Atlassian State of Teams 2026</a> and <a
-                            href="https://www.atlassian.com/blog/ai-at-work/the-ai-efficiency-paradox-what-to-do-when-ai-boosts-productivity-but-not-results"
-                            target="_blank" rel="noopener">their write-up of the efficiency paradox</a> &middot;
+                            rel="noopener">Atlassian State of Teams 2026</a> &middot;
                         <a href="https://survey.stackoverflow.co/2025/ai" target="_blank" rel="noopener">Stack Overflow
-                            2025 Developer Survey</a> &middot;
+                            Developer Survey</a> &middot;
                         <a href="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/"
                             target="_blank" rel="noopener">METR's developer productivity study</a> and <a
                             href="https://metr.org/blog/2026-02-24-uplift-update/" target="_blank" rel="noopener">their
                             update on the design</a> &middot;
-                        Bainbridge, "Ironies of Automation," <em>Automatica</em> 19(6), 1983 &middot;
+                        Bainbridge, "Ironies of Automation," <em>Automatica</em> 1983 &middot;
                         Parasuraman &amp; Manzey, "Complacency and Bias in Human Use of Automation," <em>Human
-                            Factors</em> 52(3), 2010, reporting detection rates from Parasuraman, Molloy &amp; Singh
-                        (1993)
+                            Factors</em> 2010
                     </p>
                 </div>
 
